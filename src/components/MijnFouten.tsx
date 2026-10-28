@@ -7,16 +7,18 @@ import {
   type CheckResult,
 } from '@execution/verb_engine';
 import {
-  Brain,
+  BookOpen,
   Play,
+  CheckCircle,
   CheckCircle2,
   AlertCircle,
+  RotateCcw,
   Plus,
   Trash2,
   Sparkles,
   Search,
   ChevronRight,
-  Crown,
+  X,
 } from 'lucide-react';
 
 export interface SavedWord {
@@ -413,7 +415,7 @@ export function MijnFouten({
       <header className="flex items-start justify-between gap-4">
         <div>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-2xl bg-indigo-950/40 text-indigo-300 border border-indigo-500/30 mb-1.5 shadow-sm">
-            <Brain className="w-3.5 h-3.5 text-indigo-400" />
+            <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
             Spaced Repetition
           </span>
           <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-100">
@@ -426,7 +428,7 @@ export function MijnFouten({
 
         <button
           onClick={() => setIsAddingVerb(!isAddingVerb)}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95 shrink-0"
+          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Voeg Toe</span>
@@ -439,13 +441,14 @@ export function MijnFouten({
           className="w-full flex items-center justify-between p-3.5 rounded-2xl border border-indigo-500/20 backdrop-blur-2xl bg-indigo-950/20 hover:bg-indigo-950/30 shadow-2xl text-xs transition-all group active:scale-98"
         >
           <div className="flex items-center gap-2.5">
-            <Crown className="w-4 h-4 text-amber-400 shrink-0" />
+            <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
             <span className="font-semibold text-slate-200">
               Pro: Onbeperkte herhaallijsten & AI Coach
             </span>
           </div>
-          <span className="text-[11px] font-bold text-indigo-300 group-hover:text-indigo-200">
-            €14.99 Lifetime →
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-300 group-hover:text-indigo-200">
+            <span>€14.99 Lifetime</span>
+            <Sparkles className="w-3 h-3 text-amber-300" />
           </span>
         </button>
       )}
@@ -470,9 +473,10 @@ export function MijnFouten({
             />
             <button
               type="submit"
-              className="px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-600/30 border border-indigo-400/30 active:scale-95 transition-all shrink-0"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-600/30 border border-indigo-400/30 active:scale-95 transition-all shrink-0"
             >
-              Opslaan
+              <CheckCircle className="w-3.5 h-3.5" />
+              <span>Opslaan</span>
             </button>
           </div>
         </form>
@@ -488,9 +492,10 @@ export function MijnFouten({
             </span>
             <button
               onClick={() => setIsPracticing(false)}
-              className="text-xs text-slate-400 hover:text-slate-100 font-semibold px-2 py-1 rounded-lg hover:bg-indigo-900/40 transition-colors"
+              className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-100 font-semibold px-2.5 py-1.5 rounded-xl hover:bg-indigo-900/40 transition-colors active:scale-95"
             >
-              Sluiten ✕
+              <X className="w-3.5 h-3.5" />
+              <span>Sluiten</span>
             </button>
           </div>
 
@@ -535,16 +540,18 @@ export function MijnFouten({
                     <button
                       type="submit"
                       disabled={!practiceAnswer.trim()}
-                      className="flex-1 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95"
+                      className="inline-flex items-center justify-center gap-2 flex-1 py-2.5 px-4 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95"
                     >
-                      Controleer Vervoeging
+                      <CheckCircle className="w-4 h-4" />
+                      <span>Controleer Vervoeging</span>
                     </button>
                     <button
                       type="button"
                       onClick={() => setHasEvaluated(true)}
-                      className="px-4 py-2.5 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/40 text-slate-300 hover:text-slate-100 font-semibold text-xs rounded-xl border border-indigo-500/20 shadow-sm transition-all active:scale-95"
+                      className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/40 text-slate-300 hover:text-slate-100 font-semibold text-xs rounded-xl border border-indigo-500/20 shadow-sm transition-all active:scale-95"
                     >
-                      Toon Antwoord
+                      <BookOpen className="w-3.5 h-3.5 text-indigo-300" />
+                      <span>Toon Antwoord</span>
                     </button>
                   </div>
                 </form>
@@ -602,29 +609,33 @@ export function MijnFouten({
                     <div className="grid grid-cols-4 gap-2 text-center">
                       <button
                         onClick={() => handleApplyRating('again')}
-                        className="py-2.5 px-1 backdrop-blur-xl bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-500/30 rounded-xl font-bold text-xs flex flex-col items-center active:scale-95 transition-all shadow-sm"
+                        className="py-2.5 px-1.5 backdrop-blur-xl bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-sm"
                       >
+                        <RotateCcw className="w-3.5 h-3.5 mb-1 text-rose-300" />
                         <span>Opnieuw</span>
                         <span className="text-[10px] opacity-75 mt-0.5">Vandaag</span>
                       </button>
                       <button
                         onClick={() => handleApplyRating('hard')}
-                        className="py-2.5 px-1 backdrop-blur-xl bg-amber-950/40 hover:bg-amber-900/50 text-amber-300 border border-amber-500/30 rounded-xl font-bold text-xs flex flex-col items-center active:scale-95 transition-all shadow-sm"
+                        className="py-2.5 px-1.5 backdrop-blur-xl bg-amber-950/40 hover:bg-amber-900/50 text-amber-300 border border-amber-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-sm"
                       >
+                        <RotateCcw className="w-3.5 h-3.5 mb-1 text-amber-300 opacity-80" />
                         <span>Moeilijk</span>
                         <span className="text-[10px] opacity-75 mt-0.5">1-2 d</span>
                       </button>
                       <button
                         onClick={() => handleApplyRating('good')}
-                        className="py-2.5 px-1 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/50 text-indigo-300 border border-indigo-500/30 rounded-xl font-bold text-xs flex flex-col items-center active:scale-95 transition-all shadow-sm"
+                        className="py-2.5 px-1.5 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/50 text-indigo-300 border border-indigo-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-sm"
                       >
+                        <CheckCircle className="w-3.5 h-3.5 mb-1 text-indigo-300" />
                         <span>Goed</span>
                         <span className="text-[10px] opacity-75 mt-0.5">4 d</span>
                       </button>
                       <button
                         onClick={() => handleApplyRating('easy')}
-                        className="py-2.5 px-1 backdrop-blur-xl bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 border border-emerald-500/30 rounded-xl font-bold text-xs flex flex-col items-center active:scale-95 transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                        className="py-2.5 px-1.5 backdrop-blur-xl bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 border border-emerald-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)]"
                       >
+                        <CheckCircle className="w-3.5 h-3.5 mb-1 text-emerald-400" />
                         <span>Makkelijk</span>
                         <span className="text-[10px] opacity-75 mt-0.5">7+ d</span>
                       </button>
@@ -662,7 +673,7 @@ export function MijnFouten({
             <button
               onClick={startPractice}
               disabled={practiceQueue.length === 0}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
               <span>Start Drill</span>
@@ -709,8 +720,18 @@ export function MijnFouten({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Filter opgeslagen woorden..."
-            className="w-full pl-10 pr-4 py-2.5 backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 rounded-xl text-xs font-medium text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 shadow-xl transition-all"
+            className="w-full pl-10 pr-9 py-2.5 backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 rounded-xl text-xs font-medium text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 shadow-xl transition-all"
           />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              aria-label="Wissen"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-100 rounded-lg active:scale-95 transition-all"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
         {/* Tabs */}

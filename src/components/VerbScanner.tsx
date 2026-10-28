@@ -16,9 +16,8 @@ import {
   AlertCircle,
   RotateCcw,
   Languages,
-  BookmarkPlus,
-  ArrowRight,
-  Crown,
+  Bookmark,
+  Search,
   FileText,
   Loader2,
   Check,
@@ -189,14 +188,18 @@ export function VerbScanner({
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);
-      console.error('[VerbScanner] Scan failed:', err);
-      // Fallback result
-      const fallback = analyzeDutchTextDeterministically(
-        'Gisteren werkte ik hard en leefte hij in Utrecht.',
-        nativeLanguage
-      );
-      recordScanAttempt();
-      setScanResult(fallback);
+      console.error('[VerbScanner] Unexpected error:', err);
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      setScanResult({
+        success: false,
+        rawText: '',
+        sentences: [],
+        detectedVerbs: [],
+        overallCoaching: '',
+        nativeLanguage,
+        isMock: false,
+        error: `Scan mislukt: ${errorMsg}. Controleer je verbinding en probeer opnieuw.`,
+      });
     } finally {
       setIsScanning(false);
       setScanProgressStage('');
@@ -238,10 +241,10 @@ export function VerbScanner({
   return (
     <div className="space-y-4 text-slate-100">
       {/* Header & Daily Free Scan Counter Card */}
-      <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl p-5 transition-colors">
+      <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-indigo-400 text-white flex items-center justify-center shadow-lg shadow-indigo-600/30 border border-indigo-400/40 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
               <Camera className="w-5 h-5" />
             </div>
             <div>
@@ -256,7 +259,7 @@ export function VerbScanner({
 
           {/* Daily Limit Badge */}
           {isPremium ? (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-xl bg-emerald-950/40 text-emerald-300 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/40 text-emerald-300 border border-emerald-500/30">
               <Check className="w-3.5 h-3.5 text-emerald-400" />
               <span>Pro: Onbeperkt</span>
             </span>
@@ -265,15 +268,15 @@ export function VerbScanner({
               onClick={() => {
                 if (isLimitReached) onOpenPaywall();
               }}
-              className={`px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-xl transition-all active:scale-95 ${
+              className={`inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all active:scale-95 ${
                 isLimitReached
-                  ? 'bg-rose-950/40 text-rose-300 border-rose-500/30 shadow-[0_0_15px_rgba(244,63,94,0.2)] hover:bg-rose-900/40'
-                  : 'bg-indigo-950/40 text-indigo-300 border-indigo-500/25 hover:bg-indigo-900/40'
+                  ? 'bg-rose-950/40 text-rose-300 border-rose-500/30'
+                  : 'bg-indigo-950/40 text-indigo-300 border-indigo-500/25'
               }`}
             >
               {isLimitReached ? (
                 <span className="flex items-center gap-1.5">
-                  <Crown className="w-3.5 h-3.5 text-amber-400" /> Limiet bereikt (3/3)
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" /> Limiet bereikt (3/3)
                 </span>
               ) : (
                 <span>
@@ -285,7 +288,7 @@ export function VerbScanner({
         </div>
 
         {/* Native Language Coach Selector */}
-        <div className="mt-4 pt-3.5 border-t border-indigo-500/15 flex items-center justify-between text-xs">
+        <div className="mt-4 pt-3.5 border-t border-white/10 flex items-center justify-between text-xs">
           <span className="inline-flex items-center gap-1.5 text-slate-400 font-medium">
             <Languages className="w-4 h-4 text-indigo-400" />
             <span>AI Coach taal:</span>
@@ -293,7 +296,7 @@ export function VerbScanner({
           <select
             value={nativeLanguage}
             onChange={(e) => handleLanguageChange(e.target.value)}
-            className="text-xs backdrop-blur-xl bg-indigo-950/50 border border-indigo-500/25 text-slate-200 rounded-xl px-3 py-1.5 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/25 focus:border-indigo-400 shadow-sm transition-all"
+            className="text-xs bg-indigo-950/50 border border-indigo-500/25 text-slate-200 rounded-xl px-3 py-1.5 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/25 transition-all"
           >
             {APP_CONFIG.nativeLanguages.map((lang) => (
               <option key={lang.code} value={lang.code} className="bg-[#0B0F19] text-slate-100">
@@ -304,10 +307,10 @@ export function VerbScanner({
         </div>
       </div>
 
-      {/* Paywall Alert Banner if limit reached */}
+      {/* Paywall Alert Banner */}
       {limitWarning && (
-        <div className="rounded-2xl border border-amber-500/30 backdrop-blur-2xl bg-amber-950/20 p-4 shadow-xl flex items-start gap-3 animate-fadeIn">
-          <Crown className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-950/20 p-4 flex items-start gap-3">
+          <Sparkles className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
           <div className="flex-1 text-xs">
             <p className="font-bold text-slate-100">{limitWarning}</p>
             <p className="text-slate-400 mt-0.5 leading-relaxed">
@@ -315,31 +318,29 @@ export function VerbScanner({
             </p>
             <button
               onClick={onOpenPaywall}
-              className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/30 active:scale-95 transition-all"
+              className="mt-2.5 inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition-all active:scale-95"
             >
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
               <span>Upgrade naar Pro (€14.99)</span>
-              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
       )}
 
-      {/* Image Capture & Upload Viewfinder Card */}
+      {/* Image Capture & Upload Viewfinder */}
       {!scanResult && !isScanning && (
-        <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl p-6 sm:p-7 text-center space-y-5 transition-colors">
-          {/* Frosted Camera Viewfinder Overlay */}
-          <div className="relative w-full max-w-sm mx-auto aspect-[4/3] rounded-2xl border border-indigo-500/30 bg-[#0B0F19]/60 backdrop-blur-xl overflow-hidden flex flex-col items-center justify-center p-6 shadow-2xl">
-            {/* Viewfinder 4 Corner Brackets */}
+        <div className="rounded-2xl bg-white/5 border border-white/10 p-6 text-center space-y-5">
+          {/* Viewfinder */}
+          <div className="relative w-full max-w-sm mx-auto aspect-[4/3] rounded-2xl border border-indigo-500/30 bg-[#0B0F19]/60 overflow-hidden flex flex-col items-center justify-center p-6">
+            {/* Corner Brackets */}
             <div className="absolute top-3 left-3 w-5 h-5 border-t-2 border-l-2 border-indigo-400 rounded-tl-sm pointer-events-none" />
             <div className="absolute top-3 right-3 w-5 h-5 border-t-2 border-r-2 border-indigo-400 rounded-tr-sm pointer-events-none" />
             <div className="absolute bottom-3 left-3 w-5 h-5 border-b-2 border-l-2 border-indigo-400 rounded-bl-sm pointer-events-none" />
             <div className="absolute bottom-3 right-3 w-5 h-5 border-b-2 border-r-2 border-indigo-400 rounded-br-sm pointer-events-none" />
 
-            {/* Viewfinder Center Icon */}
-            <div className="w-14 h-14 rounded-2xl bg-indigo-950/50 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3 shadow-[0_0_25px_rgba(99,102,241,0.25)]">
+            <div className="w-14 h-14 rounded-2xl bg-indigo-950/50 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-3">
               <Scan className="w-7 h-7" />
             </div>
-
             <h3 className="font-extrabold text-slate-100 text-base tracking-tight">
               Scan Nederlandse Tekst
             </h3>
@@ -375,7 +376,7 @@ export function VerbScanner({
                   cameraInputRef.current?.click();
                 }
               }}
-              className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 active:scale-95 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all"
+              className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-bold text-xs transition-all"
             >
               <Camera className="w-4 h-4" />
               <span>Camera Openen</span>
@@ -389,15 +390,15 @@ export function VerbScanner({
                   fileInputRef.current?.click();
                 }
               }}
-              className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/40 active:scale-95 text-slate-200 font-semibold text-xs border border-indigo-500/25 shadow-sm transition-all"
+              className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 active:scale-95 text-slate-200 font-semibold text-xs border border-white/10 transition-all"
             >
               <Upload className="w-4 h-4 text-indigo-400" />
               <span>Foto Uploaden</span>
             </button>
           </div>
 
-          {/* Quick Preset Selector for instant demo / testing */}
-          <div className="pt-4 border-t border-indigo-500/15 max-w-sm mx-auto">
+          {/* Quick Preset Selector */}
+          <div className="pt-4 border-t border-white/10 max-w-sm mx-auto">
             <p className="text-[11px] font-bold text-slate-400 mb-2.5 flex items-center justify-center gap-1.5 uppercase tracking-wider">
               <Zap className="w-3.5 h-3.5 text-amber-400" />
               <span>Of test direct met een voorbeeldzin:</span>
@@ -407,11 +408,9 @@ export function VerbScanner({
                 <button
                   key={idx}
                   onClick={() => handleRunPreset(preset.text)}
-                  className="text-left p-3 rounded-xl backdrop-blur-xl bg-indigo-950/30 hover:bg-indigo-900/40 border border-indigo-500/15 hover:border-indigo-500/30 transition-all text-xs active:scale-98"
+                  className="text-left p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-xs active:scale-[0.98]"
                 >
-                  <div className="font-bold text-slate-100 text-xs">
-                    {preset.title}
-                  </div>
+                  <div className="font-bold text-slate-100 text-xs">{preset.title}</div>
                   <div className="text-slate-400 text-[11px] italic truncate mt-0.5">
                     "{preset.text}"
                   </div>
@@ -422,18 +421,17 @@ export function VerbScanner({
         </div>
       )}
 
-      {/* Real-time Scanning Indicator with Frosted Viewfinder & Neon Accent Scanning Beam */}
+      {/* Scanning Indicator */}
       {isScanning && (
-        <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/20 shadow-2xl p-8 text-center transition-colors relative overflow-hidden">
-          {/* Frosted Viewfinder with Scanning Beam */}
+        <div className="rounded-2xl bg-white/5 border border-white/10 p-8 text-center relative overflow-hidden">
           {selectedImage ? (
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 mx-auto mb-4 rounded-2xl overflow-hidden border border-indigo-500/40 shadow-2xl">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 mx-auto mb-4 rounded-2xl overflow-hidden border border-indigo-500/40">
               <img
                 src={selectedImage}
                 alt="Scan preview"
-                className="w-full h-full object-cover filter brightness-90"
+                className="w-full h-full object-cover brightness-90"
               />
-              <div className="absolute inset-0 bg-[#0B0F19]/40 backdrop-blur-[1px] flex items-center justify-center pointer-events-none">
+              <div className="absolute inset-0 bg-[#0B0F19]/40 flex items-center justify-center pointer-events-none">
                 <Loader2 className="w-8 h-8 text-indigo-300 animate-spin" />
               </div>
               {/* Corner brackets */}
@@ -441,18 +439,15 @@ export function VerbScanner({
               <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-emerald-400 pointer-events-none" />
               <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-emerald-400 pointer-events-none" />
               <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-emerald-400 pointer-events-none" />
-              {/* Neon Accent Scanning Beam */}
-              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_18px_#10B981,0_0_35px_#10B981] animate-scan-beam pointer-events-none" />
+              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-scan-beam pointer-events-none" />
             </div>
           ) : (
-            <div className="relative w-48 h-36 mx-auto mb-4 rounded-2xl overflow-hidden border border-indigo-500/40 bg-[#0B0F19]/60 backdrop-blur-md flex items-center justify-center shadow-2xl">
-              {/* Corner brackets */}
+            <div className="relative w-48 h-36 mx-auto mb-4 rounded-2xl overflow-hidden border border-indigo-500/40 bg-[#0B0F19]/60 flex items-center justify-center">
               <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-emerald-400 pointer-events-none" />
               <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-emerald-400 pointer-events-none" />
               <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-emerald-400 pointer-events-none" />
               <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-emerald-400 pointer-events-none" />
-              {/* Neon Accent Scanning Beam */}
-              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_18px_#10B981,0_0_35px_#10B981] animate-scan-beam pointer-events-none" />
+              <div className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-emerald-400 to-transparent animate-scan-beam pointer-events-none" />
               <Loader2 className="w-8 h-8 text-indigo-400 animate-spin" />
             </div>
           )}
@@ -470,17 +465,19 @@ export function VerbScanner({
         </div>
       )}
 
-      {/* High-Contrast Result Feedback & Diagnostic Error Overlays */}
+      {/* Result Panel */}
       {scanResult && !isScanning && (
         <div className="space-y-4">
           {/* Top Result Bar */}
-          <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl p-4 flex items-center justify-between transition-colors">
+          <div className="rounded-2xl bg-white/5 border border-white/10 p-4 flex items-center justify-between">
             <div>
-              <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400">
+              <span className="text-[10px] font-bold tracking-wider uppercase text-slate-500">
                 Scan Resultaat
               </span>
               <h3 className="text-sm font-bold text-slate-100 tracking-tight">
-                {scanResult.detectedVerbs.length} werkwoord(en) geanalyseerd
+                {scanResult.error
+                  ? 'Scan mislukt'
+                  : `${scanResult.detectedVerbs.length} werkwoord(en) geanalyseerd`}
               </h3>
             </div>
             <button
@@ -488,59 +485,65 @@ export function VerbScanner({
                 setScanResult(null);
                 setSelectedImage(null);
               }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/40 text-slate-200 border border-indigo-500/20 active:scale-95 transition-all shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-slate-200 border border-white/10 active:scale-95 transition-all"
             >
               <RotateCcw className="w-3.5 h-3.5 text-indigo-400" />
               <span>Nieuwe Scan</span>
             </button>
           </div>
 
-          {/* Extracted Text Box with Sentence Highlights */}
-          <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl p-4 space-y-2">
-            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-300">
-              <FileText className="w-4 h-4 text-indigo-400" />
-              <span>Herkende Nederlandse Tekst:</span>
+          {/* Error state */}
+          {scanResult.error && (
+            <div className="rounded-2xl border border-rose-500/30 bg-rose-950/20 p-4 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+              <p className="text-xs text-rose-200 leading-relaxed">{scanResult.error}</p>
             </div>
-            <div className="p-3.5 backdrop-blur-xl bg-indigo-950/30 rounded-xl text-xs text-slate-200 leading-relaxed border border-indigo-500/15 italic font-medium">
-              "{scanResult.rawText}"
-            </div>
-          </div>
+          )}
 
-          {/* Detected Verbs & Diagnostic Error Overlays */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider px-1">
-              Werkwoord Diagnoses & Valkuilen
-            </h4>
-
-            {scanResult.detectedVerbs.length === 0 ? (
-              <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl p-6 text-center text-xs text-slate-400">
-                Geen werkwoorden herkend in deze tekst. Probeer een duidelijkere foto van een Nederlandse zin.
+          {/* Extracted Text — only when we have text */}
+          {scanResult.rawText && (
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-4 space-y-2">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-300">
+                <FileText className="w-4 h-4 text-indigo-400" />
+                <span>Herkende Nederlandse Tekst:</span>
               </div>
-            ) : (
-              scanResult.detectedVerbs.map((v: DetectedVerb, idx: number) => {
+              <div className="p-3.5 bg-indigo-950/30 rounded-xl text-xs text-slate-200 leading-relaxed border border-indigo-500/15 italic font-medium">
+                "{scanResult.rawText}"
+              </div>
+            </div>
+          )}
+
+          {/* Detected Verbs */}
+          {scanResult.detectedVerbs.length > 0 && (
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">
+                Werkwoord Diagnoses & Valkuilen
+              </h4>
+
+              {scanResult.detectedVerbs.map((v: DetectedVerb, idx: number) => {
                 const isSaved = !!savedVerbs[v.infinitive];
 
                 return (
                   <div
                     key={`${v.verb}-${idx}`}
-                    className={`rounded-2xl backdrop-blur-2xl border p-4 sm:p-5 transition-all space-y-3.5 shadow-2xl ${
+                    className={`rounded-2xl border p-4 sm:p-5 transition-all space-y-3.5 ${
                       v.isCorrect
-                        ? 'bg-indigo-950/20 border-emerald-500/30 hover:border-emerald-500/40'
-                        : 'bg-rose-950/20 border-rose-500/30 hover:border-rose-500/40 shadow-[0_0_25px_rgba(244,63,94,0.12)]'
+                        ? 'bg-white/5 border-emerald-500/30'
+                        : 'bg-rose-950/10 border-rose-500/30'
                     }`}
                   >
                     {/* Status Pill Header */}
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2">
                         {v.isCorrect ? (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-xl bg-emerald-950/40 text-emerald-300 border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950/40 text-emerald-300 border border-emerald-500/30">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                             <span>Correct</span>
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-xl bg-rose-950/40 text-rose-300 border border-rose-500/30 shadow-[0_0_12px_rgba(244,63,94,0.2)]">
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-950/40 text-rose-300 border border-rose-500/30">
                             <AlertCircle className="w-3.5 h-3.5 text-rose-400" />
-                            <span>Valkuil Gedetecteerd</span>
+                            <span>Valkuil</span>
                           </span>
                         )}
 
@@ -549,14 +552,14 @@ export function VerbScanner({
                         </span>
                       </div>
 
-                      <span className="text-xs text-slate-400 font-medium">
-                        Infinitief: <strong className="text-slate-100 font-bold">{v.infinitive}</strong>
+                      <span className="text-xs text-slate-400 font-medium shrink-0">
+                        ∞ <strong className="text-slate-100 font-bold">{v.infinitive}</strong>
                       </span>
                     </div>
 
-                    {/* Diagnostic Comparison (Gevonden vs. Moet zijn) */}
+                    {/* Diagnostic Comparison */}
                     {!v.isCorrect && (
-                      <div className="grid grid-cols-2 gap-2.5 p-3 backdrop-blur-xl bg-indigo-950/40 rounded-xl border border-indigo-500/20 text-xs">
+                      <div className="grid grid-cols-2 gap-2.5 p-3 bg-indigo-950/40 rounded-xl border border-indigo-500/20 text-xs">
                         <div>
                           <span className="text-[10px] text-rose-400 font-bold block uppercase tracking-wider">
                             Gevonden (Fout)
@@ -567,7 +570,7 @@ export function VerbScanner({
                         </div>
                         <div>
                           <span className="text-[10px] text-emerald-400 font-bold block uppercase tracking-wider">
-                            Correcte Vervoeging
+                            Correct
                           </span>
                           <span className="font-bold text-emerald-300 flex items-center gap-1 text-sm font-mono mt-0.5">
                             {v.correction}
@@ -577,36 +580,36 @@ export function VerbScanner({
                       </div>
                     )}
 
-                    {/* Native Language Coach Box */}
-                    <div className="p-3.5 backdrop-blur-xl bg-indigo-950/40 rounded-xl border border-indigo-500/20 text-xs space-y-1">
+                    {/* AI Coach Explanation */}
+                    <div className="p-3.5 bg-indigo-950/30 rounded-xl border border-indigo-500/15 text-xs space-y-1">
                       <div className="flex items-center gap-1.5 text-indigo-300 font-bold text-xs">
                         <Sparkles className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
                         <span>AI Coach ({getNativeLanguageLabel(nativeLanguage)}):</span>
                       </div>
-                      <p className="text-slate-200 leading-relaxed text-xs font-normal">
+                      <p className="text-slate-300 leading-relaxed text-xs font-normal">
                         {v.ruleExplanation}
                       </p>
                     </div>
 
-                    {/* Actions: Save to Mijn Fouten or Open in Checker */}
-                    <div className="pt-2.5 border-t border-indigo-500/15 flex items-center justify-between gap-2">
+                    {/* Actions */}
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between gap-2">
                       <button
                         onClick={() => handleSaveVerb(v.infinitive)}
                         disabled={isSaved}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
+                        className={`inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
                           isSaved
-                            ? 'backdrop-blur-xl bg-emerald-950/40 text-emerald-300 border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
-                            : 'backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/40 text-slate-200 border-indigo-500/20 shadow-sm'
+                            ? 'bg-emerald-950/40 text-emerald-300 border-emerald-500/30'
+                            : 'bg-white/5 hover:bg-white/10 text-slate-200 border-white/10'
                         }`}
                       >
                         {isSaved ? (
                           <>
-                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                             <span>Opgeslagen!</span>
                           </>
                         ) : (
                           <>
-                            <BookmarkPlus className="w-3.5 h-3.5 text-indigo-400" />
+                            <Bookmark className="w-3.5 h-3.5 text-indigo-400" />
                             <span>Mijn Fouten</span>
                           </>
                         )}
@@ -615,29 +618,36 @@ export function VerbScanner({
                       {onInspectVerb && (
                         <button
                           onClick={() => onInspectVerb(v.infinitive)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-indigo-300 hover:text-indigo-100 backdrop-blur-xl bg-indigo-950/30 hover:bg-indigo-900/40 border border-indigo-500/20 active:scale-95 transition-all"
+                          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-indigo-300 hover:text-indigo-100 bg-white/5 hover:bg-white/10 border border-white/10 active:scale-95 transition-all"
                         >
+                          <Search className="w-3.5 h-3.5 text-indigo-400" />
                           <span>Open in Checker</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
                         </button>
                       )}
                     </div>
                   </div>
                 );
-              })
-            )}
-          </div>
+              })}
+            </div>
+          )}
+
+          {/* No verbs empty state */}
+          {!scanResult.error && scanResult.detectedVerbs.length === 0 && (
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-6 text-center text-xs text-slate-400">
+              Geen werkwoorden herkend in deze tekst. Probeer een duidelijkere foto van een Nederlandse zin.
+            </div>
+          )}
 
           {/* Overall AI Coach Summary */}
           {scanResult.overallCoaching && (
-            <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/20 shadow-2xl p-4 sm:p-5 space-y-1.5">
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-4 sm:p-5 space-y-1.5">
               <div className="flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-indigo-400" />
                 <h4 className="text-xs font-bold text-indigo-300 uppercase tracking-wider">
                   Algemeen Coach Advies
                 </h4>
               </div>
-              <p className="text-xs text-slate-200 leading-relaxed font-normal">
+              <p className="text-xs text-slate-300 leading-relaxed font-normal">
                 {scanResult.overallCoaching}
               </p>
             </div>

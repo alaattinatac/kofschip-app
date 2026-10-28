@@ -126,13 +126,13 @@ export function PaywallModal({
           <button
             onClick={onClose}
             aria-label="Sluit upgrade venster"
-            className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-100 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/50 rounded-xl border border-indigo-500/20 transition-all active:scale-95"
+            className="absolute top-4 right-4 inline-flex items-center justify-center p-2 text-slate-400 hover:text-slate-100 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/50 rounded-xl border border-indigo-500/20 transition-all active:scale-95"
           >
             <X className="w-4 h-4" />
           </button>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur-xl bg-emerald-950/40 text-emerald-300 text-xs font-semibold border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)] mb-2">
-            <Crown className="w-3.5 h-3.5 text-emerald-400" />
+          <span className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full backdrop-blur-xl bg-emerald-950/40 text-emerald-300 text-xs font-semibold border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)] mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
             <span>Lifetime Pro Toegang</span>
           </span>
 
@@ -234,7 +234,7 @@ export function PaywallModal({
             <button
               onClick={handlePurchase}
               disabled={isProcessing}
-              className="w-full py-3.5 px-5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-emerald-500 hover:from-indigo-500 hover:to-emerald-400 disabled:opacity-50 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-indigo-600/30 hover:shadow-[0_0_25px_rgba(16,185,129,0.35)] border border-indigo-400/30 transition-all active:scale-95 flex items-center justify-center gap-2"
+              className="w-full py-3.5 px-5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-emerald-500 hover:from-indigo-500 hover:to-emerald-400 disabled:opacity-50 text-white font-extrabold text-sm rounded-xl shadow-lg shadow-indigo-600/30 hover:shadow-[0_0_25px_rgba(16,185,129,0.35)] border border-indigo-400/30 transition-all active:scale-95 inline-flex items-center justify-center gap-2"
             >
               {isProcessing ? (
                 <>
@@ -243,6 +243,7 @@ export function PaywallModal({
                 </>
               ) : (
                 <>
+                  <Sparkles className="w-4 h-4 text-amber-300 animate-pulse" />
                   <span>Ontgrendel Nu voor €{APP_CONFIG.premiumPrice.toFixed(2)}</span>
                   <ArrowRight className="w-4 h-4" />
                 </>
@@ -312,9 +313,9 @@ export function BannerAdContainer({
         <button
           onClick={onOpenPaywall}
           aria-label="Verwijder advertenties met Pro"
-          className="shrink-0 inline-flex items-center gap-1.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all ml-2"
+          className="shrink-0 inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all ml-2"
         >
-          <Crown className="w-3.5 h-3.5" />
+          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
           <span>Ga Pro</span>
         </button>
       </div>

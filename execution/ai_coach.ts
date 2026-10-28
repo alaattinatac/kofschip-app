@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Kofschip AI Coach & Camera OCR Scan Integration
  *
  * File: /execution/ai_coach.ts
@@ -315,8 +315,9 @@ export function getLocalizedCoaching(
 // ============================================================================
 
 /**
- * Deterministically analyzes sample Dutch text, extracts verbs,
- * and generates native coaching explanations using verb_engine.ts.
+ * Deterministically analyzes Dutch text (for preset/sample text scenarios only).
+ * Used for the quick-test preset buttons, NOT for real camera scans.
+ * Real camera scans always go through the Gemini Vision API (scanPhotoAndCoach).
  */
 export function analyzeDutchTextDeterministically(
   text: string,
@@ -335,7 +336,9 @@ export function analyzeDutchTextDeterministically(
   for (const token of tokens) {
     const lower = token.toLowerCase();
 
-    // Check v->f pitfall: e.g. "leefte", "leeffte"
+    // ── Hardcoded NT2 pitfall patterns ──────────────────────────────────────
+
+    // v→f pitfall: leefte / leeffte (incorrect past of leven)
     if (lower === 'leefte' || lower === 'leeffte') {
       const coach = getLocalizedCoaching('v_z_shift', lower, 'leven', 'leefde', nativeLanguage);
       detectedVerbs.push({
@@ -350,7 +353,7 @@ export function analyzeDutchTextDeterministically(
       continue;
     }
 
-    // Check z->s pitfall: e.g. "reiste", "reisste"
+    // z→s pitfall: reiste / reisste (incorrect past of reizen)
     if (lower === 'reiste' || lower === 'reisste') {
       const coach = getLocalizedCoaching('v_z_shift', lower, 'reizen', 'reisde', nativeLanguage);
       detectedVerbs.push({
@@ -365,7 +368,7 @@ export function analyzeDutchTextDeterministically(
       continue;
     }
 
-    // Check separable participle mistake: e.g. "geopbeld", "geuitnodigd"
+    // Separable participle mistake: geopbeld (should be opgebeld)
     if (lower === 'geopbeld') {
       const coach = getLocalizedCoaching('separable', lower, 'opbellen', 'opgebeld', nativeLanguage);
       detectedVerbs.push({
@@ -380,7 +383,7 @@ export function analyzeDutchTextDeterministically(
       continue;
     }
 
-    // Check wrong kofschip past tense: e.g. "werkde"
+    // Wrong kofschip past tense: werkde, kookde
     if (lower === 'werkde' || lower === 'kookde') {
       const inf = lower.startsWith('werk') ? 'werken' : 'koken';
       const corr = lower.startsWith('werk') ? 'werkte' : 'kookte';
@@ -397,7 +400,7 @@ export function analyzeDutchTextDeterministically(
       continue;
     }
 
-    // Check correct known verbs:
+    // ── Correct known verb forms ─────────────────────────────────────────────
     if (lower === 'werkte' || lower === 'gewerkt') {
       const coach = getLocalizedCoaching('correct', lower, 'werken', lower, nativeLanguage);
       detectedVerbs.push({
@@ -454,6 +457,35 @@ export function analyzeDutchTextDeterministically(
       continue;
     }
 
+    if (lower === 'verhuisde' || lower === 'verhuisd') {
+      const coach = getLocalizedCoaching('correct', lower, 'verhuizen', lower, nativeLanguage);
+      detectedVerbs.push({
+        verb: token,
+        infinitive: 'verhuizen',
+        tense: lower === 'verhuisde' ? 'past' : 'pastParticiple',
+        isCorrect: true,
+        correction: lower,
+        ruleExplanation: coach.advice,
+        ruleCategory: 'correct',
+      });
+      continue;
+    }
+
+    if (lower === 'gebleven') {
+      const coach = getLocalizedCoaching('irregular', lower, 'blijven', lower, nativeLanguage);
+      detectedVerbs.push({
+        verb: token,
+        infinitive: 'blijven',
+        tense: 'pastParticiple',
+        isCorrect: true,
+        correction: lower,
+        ruleExplanation: coach.advice,
+        ruleCategory: 'irregular',
+      });
+      continue;
+    }
+
+    // ── Irregular verb detection ─────────────────────────────────────────────
     // Check irregular verbs
     if (isIrregular(lower)) {
       const info = getIrregularInfo(lower);
@@ -464,13 +496,13 @@ export function analyzeDutchTextDeterministically(
         tense: 'infinitive',
         isCorrect: true,
         correction: lower,
-        ruleExplanation: `${coach.advice} (Auxiliary: ${info?.auxiliary})`,
+        ruleExplanation: `${coach.advice} (Hulpww.: ${info?.auxiliary})`,
         ruleCategory: 'irregular',
       });
     }
   }
 
-  // Deduplicate detected verbs by verb word
+  // Deduplicate by verb word
   const seen = new Set<string>();
   const uniqueVerbs = detectedVerbs.filter((v) => {
     const key = v.verb.toLowerCase();
@@ -483,8 +515,8 @@ export function analyzeDutchTextDeterministically(
   const incorrectCount = uniqueVerbs.filter((v) => !v.isCorrect).length;
   const overallCoaching =
     incorrectCount > 0
-      ? `AI Coach (${langLabel}): ${incorrectCount} valkuil(en) gedetecteerd. Let vooral op 't kofschip en de v->f klankverschuiving!`
-      : `AI Coach (${langLabel}): Uitstekend werk! De gedetecteerde werkwoorden volgen de Nederlandse grammaticaregels correct.`;
+      ? `AI Coach (${langLabel}): ${incorrectCount} valkuil(en) gedetecteerd. Let op 't kofschip en de v→f / z→s klankverschuiving!`
+      : `AI Coach (${langLabel}): Uitstekend! De gedetecteerde werkwoorden volgen de Nederlandse grammaticaregels correct.`;
 
   return {
     success: true,
@@ -531,15 +563,20 @@ export async function scanPhotoAndCoach(
   const apiKey = getGeminiApiKey(explicitKey);
   const langLabel = getNativeLanguageLabel(nativeLanguage);
 
-  // If no Gemini API key is configured, fallback to high-fidelity deterministic engine
+  // If no Gemini API key is configured, return an empty result with an error message
   if (!apiKey) {
-    console.warn(
-      '[ai_coach] No Gemini API key provided. Falling back to deterministic OCR simulation.'
-    );
-    return analyzeDutchTextDeterministically(
-      'Gisteren werkte ik thuis en leefte hij in Utrecht. Ik heb opgebeld.',
-      nativeLanguage
-    );
+    console.warn('[ai_coach] No Gemini API key provided. Cannot perform real OCR scan.');
+    return {
+      success: false,
+      rawText: '',
+      sentences: [],
+      detectedVerbs: [],
+      overallCoaching: '',
+      nativeLanguage,
+      isMock: false,
+      error:
+        'Geen Gemini API-sleutel geconfigureerd. Voeg VITE_GEMINI_API_KEY toe aan je .env bestand om echte camera-scans te activeren.',
+    };
   }
 
   try {
@@ -655,16 +692,18 @@ OUTPUT FORMAT: Return pure JSON conforming exactly to this structure:
     };
   } catch (err: unknown) {
     const errorMsg = err instanceof Error ? err.message : String(err);
-    console.error('[ai_coach] Gemini OCR Scan failed, falling back:', errorMsg);
+    console.error('[ai_coach] Gemini OCR Scan failed:', errorMsg);
 
-    // Fallback to deterministic analysis with realistic sample
-    const fallback = analyzeDutchTextDeterministically(
-      'Gisteren werkte ik thuis en leefte hij in Amsterdam.',
-      nativeLanguage
-    );
+    // Return a clean error result — do NOT substitute hardcoded mock data for a real photo
     return {
-      ...fallback,
-      error: `Gemini API: ${errorMsg}. Fallback-analyse getoond.`,
+      success: false,
+      rawText: '',
+      sentences: [],
+      detectedVerbs: [],
+      overallCoaching: '',
+      nativeLanguage,
+      isMock: false,
+      error: `Scan mislukt: ${errorMsg}. Controleer je API-sleutel en internetverbinding.`,
     };
   }
 }
