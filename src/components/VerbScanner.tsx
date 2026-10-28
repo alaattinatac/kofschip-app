@@ -4,6 +4,7 @@ import {
   scanPhotoAndCoach,
   analyzeDutchTextDeterministically,
   getNativeLanguageLabel,
+  getGeminiApiKey,
   type DetectedVerb,
   type ScanAnalysisResult,
 } from '@execution/ai_coach';
@@ -55,6 +56,9 @@ export function VerbScanner({
   onSaveToMijnFouten,
   onInspectVerb,
 }: VerbScannerProps) {
+  // Check Gemini API key availability upfront
+  const hasGeminiApiKey = !!getGeminiApiKey();
+
   // Native language preference
   const [nativeLanguage, setNativeLanguage] = useState<string>(() => {
     return localStorage.getItem(STORAGE_NATIVE_LANG_KEY) || 'tr';
@@ -306,6 +310,19 @@ export function VerbScanner({
           </select>
         </div>
       </div>
+
+      {/* API Key Missing Banner */}
+      {!hasGeminiApiKey && (
+        <div className="rounded-2xl border border-amber-500/30 bg-amber-950/20 p-4 flex items-start gap-3">
+          <Sparkles className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
+          <div className="flex-1 text-xs">
+            <p className="font-bold text-slate-100">Gemini API-sleutel vereist voor Camera OCR</p>
+            <p className="text-slate-400 mt-1 leading-relaxed">
+              Voeg <code className="bg-indigo-950/60 border border-indigo-500/25 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-[11px]">VITE_GEMINI_API_KEY</code> toe aan je <code className="bg-indigo-950/60 border border-indigo-500/25 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-[11px]">.env</code> bestand om echte camera-scans met Gemini Vision AI te activeren. Voorbeeldzinnen werken nog steeds zonder sleutel.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Paywall Alert Banner */}
       {limitWarning && (

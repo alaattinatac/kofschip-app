@@ -139,10 +139,18 @@ export function HomePage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#0B0F19] text-slate-100 flex flex-col overflow-x-hidden selection:bg-indigo-500/30 selection:text-indigo-200">
+    <div className={`relative min-h-screen flex flex-col overflow-x-hidden selection:bg-indigo-500/30 selection:text-indigo-200 transition-colors duration-200 ${
+      isDarkMode
+        ? 'bg-[#0B0F19] text-slate-100'
+        : 'bg-slate-50 text-slate-900'
+    }`}>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 backdrop-blur-2xl bg-[#0B0F19]/80 border-b border-white/8 safe-area-top">
+      <header className={`sticky top-0 z-40 backdrop-blur-2xl border-b safe-area-top transition-colors duration-200 ${
+        isDarkMode
+          ? 'bg-[#0B0F19]/80 border-white/8'
+          : 'bg-slate-50/90 border-slate-200'
+      }`}>
         <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
           <button
             onClick={() => {
@@ -161,7 +169,11 @@ export function HomePage() {
               onClick={() => handlePronounce(activeVerbForChecker)}
               title={`Beluister '${activeVerbForChecker}'`}
               aria-label={`Beluister '${activeVerbForChecker}'`}
-              className="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/8 transition-colors"
+              className={`p-2 rounded-lg transition-colors ${
+                isDarkMode
+                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8'
+                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+              }`}
             >
               <Volume2 className="w-4 h-4" />
             </button>
@@ -170,9 +182,13 @@ export function HomePage() {
               onClick={() => setIsDarkMode((prev) => !prev)}
               title="Wissel thema"
               aria-label="Wissel thema"
-              className="p-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/8 transition-colors"
+              className={`p-2 rounded-lg transition-colors ${
+                isDarkMode
+                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8'
+                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+              }`}
             >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-300" />}
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
             </button>
 
             {isPremium ? (
@@ -202,15 +218,23 @@ export function HomePage() {
             {/* Search input */}
             <form
               onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
-              className="flex items-center gap-2 bg-white/6 border border-white/10 rounded-2xl px-4 py-3 focus-within:border-indigo-500/50 focus-within:bg-white/8 transition-all"
+              className={`flex items-center gap-2 border rounded-2xl px-4 py-3 transition-all ${
+                isDarkMode
+                  ? 'bg-white/6 border-white/10 focus-within:border-indigo-500/50 focus-within:bg-white/8'
+                  : 'bg-white border-slate-200 focus-within:border-indigo-400 focus-within:shadow-md shadow-sm'
+              }`}
             >
-              <Search className="w-4 h-4 text-slate-500 shrink-0" />
+              <Search className={`w-4 h-4 shrink-0 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`} />
               <input
                 type="text"
                 value={searchInputValue}
                 onChange={(e) => setSearchInputValue(e.target.value)}
                 placeholder="Zoek een infinitief… (bv. wonen, reizen)"
-                className="flex-1 bg-transparent border-0 text-slate-100 placeholder:text-slate-500 text-sm font-medium focus:outline-none"
+                className={`flex-1 bg-transparent border-0 text-sm font-medium focus:outline-none ${
+                  isDarkMode
+                    ? 'text-slate-100 placeholder:text-slate-500'
+                    : 'text-slate-900 placeholder:text-slate-400'
+                }`}
                 autoCapitalize="none"
                 autoCorrect="off"
                 spellCheck={false}
@@ -220,7 +244,7 @@ export function HomePage() {
                   type="button"
                   onClick={() => setSearchInputValue('')}
                   aria-label="Wissen"
-                  className="text-slate-500 hover:text-slate-300 transition-colors"
+                  className={`transition-colors ${isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -229,7 +253,7 @@ export function HomePage() {
                 type="button"
                 onClick={() => handlePronounce(searchInputValue)}
                 aria-label="Beluister"
-                className="text-slate-500 hover:text-indigo-300 transition-colors hidden sm:block"
+                className={`transition-colors hidden sm:block ${isDarkMode ? 'text-slate-500 hover:text-indigo-300' : 'text-slate-400 hover:text-indigo-500'}`}
               >
                 <Volume2 className="w-4 h-4" />
               </button>
@@ -252,7 +276,9 @@ export function HomePage() {
                     className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-medium border transition-all shrink-0 active:scale-95 ${
                       isActive
                         ? 'bg-indigo-600 text-white border-indigo-500'
-                        : 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10 hover:text-slate-200'
+                        : isDarkMode
+                          ? 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10 hover:text-slate-200'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100 hover:text-slate-800 shadow-sm'
                     }`}
                   >
                     {item.verb}
@@ -264,7 +290,11 @@ export function HomePage() {
 
             {/* Save toast */}
             {saveToast && (
-              <div className="p-3 bg-emerald-950/40 border border-emerald-500/25 text-emerald-200 text-xs rounded-xl flex items-center justify-between">
+              <div className={`p-3 border text-xs rounded-xl flex items-center justify-between ${
+                isDarkMode
+                  ? 'bg-emerald-950/40 border-emerald-500/25 text-emerald-200'
+                  : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+              }`}>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   <span className="font-medium">{saveToast}</span>
@@ -288,6 +318,7 @@ export function HomePage() {
             onSaveToMijnFouten={handleSaveToMijnFouten}
             onOpenPaywall={() => setIsPaywallOpen(true)}
             hideSearch={true}
+            isDarkMode={isDarkMode}
           />
         )}
 
@@ -323,13 +354,19 @@ export function HomePage() {
         aria-label="Hoofdnavigatie"
         className="fixed bottom-4 left-4 right-4 z-40 max-w-md mx-auto safe-area-bottom"
       >
-        <div className="bg-[#13172A]/90 backdrop-blur-xl border border-white/10 rounded-2xl p-1.5 flex items-center gap-1">
+        <div className={`backdrop-blur-xl border rounded-2xl p-1.5 flex items-center gap-1 transition-colors duration-200 ${
+          isDarkMode
+            ? 'bg-[#13172A]/90 border-white/10'
+            : 'bg-white/95 border-slate-200 shadow-lg'
+        }`}>
           <button
             onClick={() => setActiveTab('checker')}
             className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
               activeTab === 'checker'
                 ? 'bg-indigo-600 text-white font-semibold'
-                : 'text-slate-400 hover:text-slate-200 font-medium'
+                : isDarkMode
+                  ? 'text-slate-400 hover:text-slate-200 font-medium'
+                  : 'text-slate-500 hover:text-slate-800 font-medium'
             }`}
           >
             <Search className="w-4 h-4" />
@@ -341,7 +378,9 @@ export function HomePage() {
             className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
               activeTab === 'scanner'
                 ? 'bg-indigo-600 text-white font-semibold'
-                : 'text-slate-400 hover:text-slate-200 font-medium'
+                : isDarkMode
+                  ? 'text-slate-400 hover:text-slate-200 font-medium'
+                  : 'text-slate-500 hover:text-slate-800 font-medium'
             }`}
           >
             <Camera className="w-4 h-4" />
@@ -353,7 +392,9 @@ export function HomePage() {
             className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
               activeTab === 'fouten'
                 ? 'bg-indigo-600 text-white font-semibold'
-                : 'text-slate-400 hover:text-slate-200 font-medium'
+                : isDarkMode
+                  ? 'text-slate-400 hover:text-slate-200 font-medium'
+                  : 'text-slate-500 hover:text-slate-800 font-medium'
             }`}
           >
             <BookOpen className="w-4 h-4" />
