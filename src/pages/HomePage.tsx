@@ -2,15 +2,11 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { getPremiumStatus, isLocalPremium, onPremiumStatusChange } from '../lib/purchases';
 import { VerbChecker } from '../components/VerbChecker';
-import { WordVault } from '../components/WordVault';
 import { MijnFouten, type SavedWord } from '../components/MijnFouten';
 import { PaywallModal, BannerAdContainer } from '../components/PaywallModal';
 import { KofschipLogo } from '../components/KofschipLogo';
 import {
   Search,
-  BookOpen,
-  CheckCircle2,
-  BookMarked,
   Sun,
   Moon,
   Volume2,
@@ -31,12 +27,12 @@ const COMMON_EXAMPLE_VERBS = [
 ];
 
 export function HomePage() {
-  const [activeTab, setActiveTab] = useState<'checker' | 'vault' | 'fouten'>('checker');
   const [activeVerbForChecker, setActiveVerbForChecker] = useState<string>('leven');
   const [searchInputValue, setSearchInputValue] = useState<string>('leven');
   const [isPaywallOpen, setIsPaywallOpen] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(() => isLocalPremium());
   const [saveToast, setSaveToast] = useState<string | null>(null);
+  const [foutenVersion, setFoutenVersion] = useState<number>(0);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -104,9 +100,11 @@ export function HomePage() {
         }
       }
 
+      setFoutenVersion((v) => v + 1);
       setSaveToast(`'${targetVerb}' toegevoegd aan Mijn Fouten!`);
       setTimeout(() => setSaveToast(null), 3000);
     } catch {
+      setFoutenVersion((v) => v + 1);
       setSaveToast(`'${targetVerb}' lokaal opgeslagen!`);
       setTimeout(() => setSaveToast(null), 3000);
     }
@@ -117,7 +115,6 @@ export function HomePage() {
     if (!target) return;
     setActiveVerbForChecker(target);
     setSearchInputValue(target);
-    setActiveTab('checker');
     setSaveToast(null);
   };
 
@@ -136,28 +133,28 @@ export function HomePage() {
   const handleSelectVerbFromFouten = (verb: string) => {
     setActiveVerbForChecker(verb);
     setSearchInputValue(verb);
-    setActiveTab('checker');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className={`relative min-h-screen flex flex-col overflow-x-hidden selection:bg-indigo-500/30 selection:text-indigo-200 transition-colors duration-200 ${
+    <div className={`relative min-h-screen flex flex-col overflow-x-hidden selection:bg-blue-500/20 selection:text-blue-700 transition-colors duration-200 ${
       isDarkMode
-        ? 'bg-[#0B0F19] text-slate-100'
-        : 'bg-slate-50 text-slate-900'
+        ? 'bg-[#0B0F19] text-[#E2E8F0]'
+        : 'bg-[#F8FAFC] text-[#0F172A]'
     }`}>
 
-      {/* Header */}
+      {/* Header: Logo, Volume Toggle, Theme Toggle, Prominent PRO button */}
       <header className={`sticky top-0 z-40 backdrop-blur-2xl border-b safe-area-top transition-colors duration-200 ${
         isDarkMode
-          ? 'bg-[#0B0F19]/80 border-white/8'
-          : 'bg-white/95 border-slate-300 shadow-sm'
+          ? 'bg-[#0B0F19]/80 border-white/10'
+          : 'bg-white/90 border-slate-200 shadow-xs'
       }`}>
         <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
           <button
             onClick={() => {
-              setActiveTab('checker');
               setSearchInputValue('leven');
               setActiveVerbForChecker('leven');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             className="flex items-center text-left focus:outline-none"
             aria-label="Ga naar startpagina"
@@ -165,164 +162,161 @@ export function HomePage() {
             <KofschipLogo size="md" glow={false} showSubtitle={false} isDarkMode={isDarkMode} />
           </button>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
+            {/* Volume Toggle */}
             <button
               onClick={() => handlePronounce(activeVerbForChecker)}
               title={`Beluister '${activeVerbForChecker}'`}
               aria-label={`Beluister '${activeVerbForChecker}'`}
-              className={`p-2 rounded-lg border transition-colors ${
+              className={`p-2 rounded-xl border transition-all active:scale-95 ${
                 isDarkMode
-                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8 border-transparent'
-                  : 'text-slate-900 hover:text-slate-950 hover:bg-slate-100 border-slate-300 fill-slate-900 shadow-sm'
+                  ? 'text-[#E2E8F0] hover:bg-white/10 border-white/10 bg-[#151D2A]/80'
+                  : 'text-[#0F172A] hover:bg-slate-100 border-slate-200 bg-white shadow-xs'
               }`}
             >
               <Volume2 className="w-4 h-4" />
             </button>
 
+            {/* Theme Toggle */}
             <button
               onClick={() => setIsDarkMode((prev) => !prev)}
               title="Wissel thema"
               aria-label="Wissel thema"
-              className={`p-2 rounded-lg border transition-colors ${
+              className={`p-2 rounded-xl border transition-all active:scale-95 ${
                 isDarkMode
-                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8 border-transparent'
-                  : 'text-slate-900 hover:text-slate-950 hover:bg-slate-100 border-slate-300 fill-slate-900 shadow-sm'
+                  ? 'text-[#E2E8F0] hover:bg-white/10 border-white/10 bg-[#151D2A]/80'
+                  : 'text-[#0F172A] hover:bg-slate-100 border-slate-200 bg-white shadow-xs'
               }`}
             >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-900 fill-slate-900" />}
+              {isDarkMode ? (
+                <Sun className="w-4 h-4 text-[#F59E0B]" />
+              ) : (
+                <Moon className="w-4 h-4 text-[#0F172A]" />
+              )}
             </button>
 
-            {isPremium ? (
-              <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                isDarkMode
-                  ? 'text-emerald-300 bg-emerald-950/40 border border-emerald-500/30'
-                  : 'text-emerald-900 bg-emerald-100 border border-emerald-300 font-bold'
-              }`}>
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                PRO
-              </span>
-            ) : (
-              <button
-                onClick={() => setIsPaywallOpen(true)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm ${
-                  isDarkMode
-                    ? 'text-white bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/30'
-                    : 'text-white bg-indigo-600 hover:bg-indigo-700 border border-indigo-600'
-                }`}
-              >
-                <Sparkles className="w-3 h-3 text-amber-300" />
-                Pro
-              </button>
-            )}
+            {/* Prominent PRO button (opens PaywallModal) */}
+            <button
+              onClick={() => setIsPaywallOpen(true)}
+              aria-label="Open Pro upgrade modal"
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shadow-sm active:scale-95 ${
+                isPremium
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white shadow-emerald-500/20'
+                  : 'bg-gradient-to-r from-[#3B82F6] via-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-blue-500/25 ring-1 ring-white/20'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+              <span>{isPremium ? 'PRO ✓' : 'PRO'}</span>
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Main */}
-      <main className="relative z-10 flex-1 max-w-2xl mx-auto w-full px-4 pt-5 pb-28 space-y-4">
+      {/* Main Single-Page Content: Hero Search + Live Verb Results + Saved Words / History */}
+      <main className="relative z-10 flex-1 max-w-2xl mx-auto w-full px-4 pt-5 pb-12 space-y-6">
 
-        {/* Search Bar — shown on checker tab */}
-        {activeTab === 'checker' && (
-          <section className="space-y-3">
-            {/* Search input */}
-            <form
-              onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
-              className={`flex items-center gap-2 border rounded-2xl px-4 py-3 transition-all ${
+        {/* ── Section 1: Hero Search Bar ── */}
+        <section className="space-y-3">
+          <form
+            onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
+            className={`flex items-center gap-2 border rounded-2xl px-4 py-3 transition-all ${
+              isDarkMode
+                ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl focus-within:border-[#3B82F6]/60 focus-within:ring-2 focus-within:ring-blue-500/20'
+                : 'bg-white border-slate-200 focus-within:border-[#3B82F6] focus-within:ring-2 focus-within:ring-blue-500/20 shadow-xs'
+            }`}
+          >
+            <Search className={`w-4 h-4 shrink-0 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`} />
+            <input
+              type="text"
+              value={searchInputValue}
+              onChange={(e) => setSearchInputValue(e.target.value)}
+              placeholder="Zoek een infinitief… (bv. wonen, reizen, nemen)"
+              className={`flex-1 bg-transparent border-0 text-sm font-medium focus:outline-none ${
                 isDarkMode
-                  ? 'bg-white/6 border-white/10 focus-within:border-indigo-500/50 focus-within:bg-white/8'
-                  : 'bg-white border-slate-300 focus-within:border-indigo-500 focus-within:shadow-md shadow-sm'
+                  ? 'text-[#E2E8F0] placeholder:text-slate-500'
+                  : 'text-[#0F172A] placeholder:text-slate-400'
               }`}
-            >
-              <Search className={`w-4 h-4 shrink-0 ${isDarkMode ? 'text-slate-500' : 'text-slate-700'}`} />
-              <input
-                type="text"
-                value={searchInputValue}
-                onChange={(e) => setSearchInputValue(e.target.value)}
-                placeholder="Zoek een infinitief… (bv. wonen, reizen, nemen)"
-                className={`flex-1 bg-transparent border-0 text-sm font-medium focus:outline-none ${
-                  isDarkMode
-                    ? 'text-slate-100 placeholder:text-slate-500'
-                    : 'text-slate-900 placeholder:text-slate-500'
-                }`}
-                autoCapitalize="none"
-                autoCorrect="off"
-                spellCheck={false}
-              />
-              {searchInputValue && (
-                <button
-                  type="button"
-                  onClick={() => setSearchInputValue('')}
-                  aria-label="Wissen"
-                  className={`transition-colors ${isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-600 hover:text-slate-900'}`}
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
+            />
+            {searchInputValue && (
               <button
                 type="button"
-                onClick={() => handlePronounce(searchInputValue)}
-                aria-label="Beluister"
-                className={`transition-colors hidden sm:block ${isDarkMode ? 'text-slate-500 hover:text-indigo-300' : 'text-slate-700 hover:text-indigo-600'}`}
+                onClick={() => setSearchInputValue('')}
+                aria-label="Wissen"
+                className={`transition-colors p-1 ${isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-800'}`}
               >
-                <Volume2 className="w-4 h-4" />
+                <X className="w-4 h-4" />
               </button>
-              <button
-                type="submit"
-                className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors shrink-0 shadow-sm"
-              >
-                Zoek
-              </button>
-            </form>
-
-            {/* Quick example verb chips */}
-            <div className="flex gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
-              {COMMON_EXAMPLE_VERBS.map((item) => {
-                const isActive = activeVerbForChecker === item.verb;
-                return (
-                  <button
-                    key={item.verb}
-                    onClick={() => handleSearch(item.verb)}
-                    className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all shrink-0 active:scale-95 ${
-                      isActive
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                        : isDarkMode
-                          ? 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10 hover:text-slate-200'
-                          : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100 hover:text-slate-950 shadow-sm'
-                    }`}
-                  >
-                    {item.verb}
-                    <span className={`ml-1 text-[10px] ${isActive ? 'text-indigo-100' : isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>
-                      ({item.tag})
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Save toast */}
-            {saveToast && (
-              <div className={`p-3 border text-xs rounded-xl flex items-center justify-between ${
-                isDarkMode
-                  ? 'bg-emerald-950/40 border-emerald-500/25 text-emerald-200'
-                  : 'bg-emerald-50 border-emerald-200 text-emerald-800'
-              }`}>
-                <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span className="font-medium">{saveToast}</span>
-                </div>
-                <button
-                  onClick={() => setActiveTab('fouten')}
-                  className="text-emerald-300 hover:text-emerald-100 text-[11px] font-semibold underline"
-                >
-                  Bekijk →
-                </button>
-              </div>
             )}
-          </section>
-        )}
+            <button
+              type="button"
+              onClick={() => handlePronounce(searchInputValue)}
+              aria-label="Beluister"
+              className={`transition-colors p-1 hidden sm:block ${isDarkMode ? 'text-slate-400 hover:text-[#3B82F6]' : 'text-slate-500 hover:text-[#3B82F6]'}`}
+            >
+              <Volume2 className="w-4 h-4" />
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 rounded-xl bg-[#3B82F6] hover:bg-blue-600 text-white text-xs font-bold transition-all shrink-0 shadow-xs active:scale-95"
+            >
+              Zoek
+            </button>
+          </form>
 
-        {/* Tab content */}
-        {activeTab === 'checker' && (
+          {/* Quick example verb chips */}
+          <div className="flex gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
+            {COMMON_EXAMPLE_VERBS.map((item) => {
+              const isActive = activeVerbForChecker === item.verb;
+              return (
+                <button
+                  key={item.verb}
+                  onClick={() => handleSearch(item.verb)}
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all shrink-0 active:scale-95 ${
+                    isActive
+                      ? 'bg-[#3B82F6] text-white border-[#3B82F6] shadow-xs'
+                      : isDarkMode
+                        ? 'bg-[#151D2A]/80 text-[#E2E8F0] border-white/10 hover:bg-white/10'
+                        : 'bg-white text-[#0F172A] border-slate-200 hover:bg-slate-50 shadow-xs'
+                  }`}
+                >
+                  {item.verb}
+                  <span className={`ml-1 text-[10px] ${isActive ? 'text-blue-100' : 'text-slate-400'}`}>
+                    ({item.tag})
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Save notification toast */}
+          {saveToast && (
+            <div className={`p-3 border text-xs rounded-xl flex items-center justify-between ${
+              isDarkMode
+                ? 'bg-[#10B981]/15 border-[#10B981]/30 text-emerald-200'
+                : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+            }`}>
+              <div className="flex items-center gap-2">
+                <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                <span className="font-semibold">{saveToast}</span>
+              </div>
+              <button
+                onClick={() => {
+                  const elem = document.getElementById('saved-words-section');
+                  elem?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-[#10B981] hover:underline text-[11px] font-bold"
+              >
+                Bekijk ↓
+              </button>
+            </div>
+          )}
+        </section>
+
+        {/* ── Section 2: Live Verb Results ── */}
+        <section aria-label="Werkwoord Vervoegingen">
           <VerbChecker
             key={activeVerbForChecker}
             initialVerb={activeVerbForChecker}
@@ -331,88 +325,28 @@ export function HomePage() {
             hideSearch={true}
             isDarkMode={isDarkMode}
           />
-        )}
+        </section>
 
-        {activeTab === 'vault' && (
-          <WordVault
-            onSelectVerbForInspection={(verb) => {
-              setActiveVerbForChecker(verb);
-              setSearchInputValue(verb);
-              setActiveTab('checker');
-            }}
+        {/* ── Section 3: Saved Words / History section below ── */}
+        <section id="saved-words-section" aria-label="Opgeslagen Woorden en Geschiedenis" className="pt-2">
+          <MijnFouten
+            key={foutenVersion}
+            onSelectVerbForInspection={handleSelectVerbFromFouten}
             onOpenPaywall={() => setIsPaywallOpen(true)}
             isDarkMode={isDarkMode}
           />
-        )}
+        </section>
 
-        {activeTab === 'fouten' && (
-          <MijnFouten
-            onSelectVerbForInspection={handleSelectVerbFromFouten}
-            onOpenPaywall={() => setIsPaywallOpen(true)}
-          />
-        )}
-
+        {/* Banner Ad / Pro promotion */}
         <BannerAdContainer
           isPremium={isPremium}
           onOpenPaywall={() => setIsPaywallOpen(true)}
-          className="mt-4"
+          isDarkMode={isDarkMode}
+          className="mt-6"
         />
       </main>
 
-      {/* Bottom Nav */}
-      <nav
-        aria-label="Hoofdnavigatie"
-        className="fixed bottom-4 left-4 right-4 z-40 max-w-md mx-auto safe-area-bottom"
-      >
-        <div className={`backdrop-blur-xl border rounded-2xl p-1.5 flex items-center gap-1 transition-colors duration-200 ${
-          isDarkMode
-            ? 'bg-[#13172A]/90 border-white/10'
-            : 'bg-white/95 border-slate-300 shadow-lg'
-        }`}>
-          <button
-            onClick={() => setActiveTab('checker')}
-            className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
-              activeTab === 'checker'
-                ? 'bg-indigo-600 text-white font-semibold shadow-sm'
-                : isDarkMode
-                  ? 'text-slate-400 hover:text-slate-200 font-medium'
-                  : 'text-slate-800 hover:text-slate-950 font-semibold'
-            }`}
-          >
-            <Search className="w-4 h-4" />
-            <span>Checker</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('vault')}
-            className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
-              activeTab === 'vault'
-                ? 'bg-indigo-600 text-white font-semibold shadow-sm'
-                : isDarkMode
-                  ? 'text-slate-400 hover:text-slate-200 font-medium'
-                  : 'text-slate-800 hover:text-slate-950 font-semibold'
-            }`}
-          >
-            <BookMarked className="w-4 h-4" />
-            <span>Mijn Vault</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('fouten')}
-            className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
-              activeTab === 'fouten'
-                ? 'bg-indigo-600 text-white font-semibold shadow-sm'
-                : isDarkMode
-                  ? 'text-slate-400 hover:text-slate-200 font-medium'
-                  : 'text-slate-800 hover:text-slate-950 font-semibold'
-            }`}
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>Mijn Fouten</span>
-          </button>
-        </div>
-      </nav>
-
+      {/* Paywall Upgrade Modal */}
       <PaywallModal
         isOpen={isPaywallOpen}
         onClose={() => setIsPaywallOpen(false)}

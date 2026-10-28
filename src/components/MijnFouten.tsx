@@ -41,6 +41,7 @@ export interface SavedWord {
 export interface MijnFoutenProps {
   onSelectVerbForInspection?: (verb: string) => void;
   onOpenPaywall?: () => void;
+  isDarkMode?: boolean;
 }
 
 // Default initial dataset for offline/unauthenticated mode
@@ -128,6 +129,7 @@ const PRACTICE_PROMPTS: PracticeChallenge[] = [
 export function MijnFouten({
   onSelectVerbForInspection,
   onOpenPaywall,
+  isDarkMode = true,
 }: MijnFoutenProps) {
   const [words, setWords] = useState<SavedWord[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -135,6 +137,19 @@ export function MijnFouten({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [newVerbInput, setNewVerbInput] = useState<string>('');
   const [isAddingVerb, setIsAddingVerb] = useState<boolean>(false);
+
+  // Theme-aware styles aligned with Pedagogical Color Palette
+  const headingText = isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]';
+  const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-600';
+  const cardBg = isDarkMode
+    ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
+    : 'bg-white border-slate-200 shadow-xs';
+  const cardBgSubtle = isDarkMode
+    ? 'bg-white/5 border-white/10'
+    : 'bg-slate-50 border-slate-200';
+  const inputBg = isDarkMode
+    ? 'bg-[#151D2A]/80 border-white/10 text-[#E2E8F0] placeholder:text-slate-500'
+    : 'bg-white border-slate-200 text-[#0F172A] placeholder:text-slate-400';
 
   // Practice Mode State
   const [isPracticing, setIsPracticing] = useState<boolean>(false);
@@ -410,25 +425,25 @@ export function MijnFouten({
   };
 
   return (
-    <div className="w-full space-y-4 text-left text-slate-100">
+    <div className={`w-full space-y-4 text-left ${headingText}`}>
       {/* Header */}
       <header className="flex items-start justify-between gap-4">
         <div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-2xl bg-indigo-950/40 text-indigo-300 border border-indigo-500/30 mb-1.5 shadow-sm">
-            <BookOpen className="w-3.5 h-3.5 text-indigo-400" />
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#3B82F6]/10 text-[#3B82F6] border border-[#3B82F6]/20 mb-1.5 shadow-xs">
+            <BookOpen className="w-3.5 h-3.5 text-[#3B82F6]" />
             Spaced Repetition
           </span>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-100">
-            Mijn Fouten
-          </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h2 className={`text-xl sm:text-2xl font-extrabold tracking-tight ${headingText}`}>
+            Mijn Fouten &amp; Geschiedenis
+          </h2>
+          <p className={`text-xs mt-1 ${bodyText}`}>
             Persoonlijke valkuilen en fouten herhalen met het Leitner-systeem.
           </p>
         </div>
 
         <button
           onClick={() => setIsAddingVerb(!isAddingVerb)}
-          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95 shrink-0"
+          className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-[#3B82F6] hover:bg-blue-600 text-white shadow-xs transition-all active:scale-95 shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Voeg Toe</span>
@@ -438,17 +453,17 @@ export function MijnFouten({
       {onOpenPaywall && (
         <button
           onClick={onOpenPaywall}
-          className="w-full flex items-center justify-between p-3.5 rounded-2xl border border-indigo-500/20 backdrop-blur-2xl bg-indigo-950/20 hover:bg-indigo-950/30 shadow-2xl text-xs transition-all group active:scale-98"
+          className={`w-full flex items-center justify-between p-3.5 rounded-2xl border text-xs transition-all group active:scale-98 ${cardBg}`}
         >
           <div className="flex items-center gap-2.5">
-            <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
-            <span className="font-semibold text-slate-200">
-              Pro: Onbeperkte herhaallijsten & AI Coach
+            <Sparkles className="w-4 h-4 text-[#F59E0B] shrink-0" />
+            <span className={`font-semibold ${headingText}`}>
+              Pro: Onbeperkte herhaallijsten &amp; AI Coach
             </span>
           </div>
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-300 group-hover:text-indigo-200">
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#3B82F6]">
             <span>€14.99 Lifetime</span>
-            <Sparkles className="w-3 h-3 text-amber-300" />
+            <Sparkles className="w-3 h-3 text-[#F59E0B]" />
           </span>
         </button>
       )}
@@ -457,9 +472,9 @@ export function MijnFouten({
       {isAddingVerb && (
         <form
           onSubmit={handleAddNewWord}
-          className="p-4 rounded-2xl border border-indigo-500/25 backdrop-blur-2xl bg-indigo-950/30 shadow-2xl space-y-2.5 animate-fadeIn"
+          className={`p-4 rounded-2xl border space-y-2.5 animate-fadeIn ${cardBg}`}
         >
-          <label className="block text-xs font-semibold text-slate-300">
+          <label className={`block text-xs font-semibold ${headingText}`}>
             Nieuw werkwoord toevoegen aan je herhaallijst:
           </label>
           <div className="flex gap-2">
@@ -468,12 +483,12 @@ export function MijnFouten({
               value={newVerbInput}
               onChange={(e) => setNewVerbInput(e.target.value)}
               placeholder="bv. verbazen, antwoorden, meenemen..."
-              className="flex-1 px-3.5 py-2.5 text-xs backdrop-blur-xl bg-indigo-950/40 border border-indigo-500/25 text-slate-100 placeholder:text-slate-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 font-medium transition-all"
+              className={`flex-1 px-3.5 py-2.5 text-xs rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#3B82F6] font-medium transition-all ${inputBg}`}
               autoFocus
             />
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-600/30 border border-indigo-400/30 active:scale-95 transition-all shrink-0"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 bg-[#3B82F6] hover:bg-blue-600 text-white text-xs font-bold rounded-xl shadow-xs active:scale-95 transition-all shrink-0"
             >
               <CheckCircle className="w-3.5 h-3.5" />
               <span>Opslaan</span>
@@ -484,15 +499,15 @@ export function MijnFouten({
 
       {/* Interactive Practice Mode Overlay / Card: Frosted Leitner SRS Review Card */}
       {isPracticing ? (
-        <div className="rounded-2xl border border-indigo-500/25 backdrop-blur-2xl bg-indigo-950/20 shadow-2xl p-5 sm:p-6 space-y-5 transition-colors relative overflow-hidden">
-          <div className="flex items-center justify-between pb-3 border-b border-indigo-500/15">
-            <span className="text-xs font-bold text-indigo-300 uppercase tracking-wider flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-indigo-400" />
+        <div className={`rounded-2xl border p-5 sm:p-6 space-y-5 transition-colors relative overflow-hidden ${cardBg}`}>
+          <div className="flex items-center justify-between pb-3 border-b border-inherit">
+            <span className="text-xs font-bold text-[#3B82F6] uppercase tracking-wider flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#3B82F6]" />
               <span>Kaart {practiceIndex + 1} van {practiceQueue.length}</span>
             </span>
             <button
               onClick={() => setIsPracticing(false)}
-              className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-100 font-semibold px-2.5 py-1.5 rounded-xl hover:bg-indigo-900/40 transition-colors active:scale-95"
+              className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1.5 rounded-xl transition-colors active:scale-95 ${bodyText} hover:${headingText}`}
             >
               <X className="w-3.5 h-3.5" />
               <span>Sluiten</span>
@@ -502,19 +517,23 @@ export function MijnFouten({
           {/* Active Card Content */}
           {practiceQueue[practiceIndex] && (
             <div className="space-y-4">
-              <div className="text-center py-7 px-4 backdrop-blur-xl bg-indigo-950/40 rounded-2xl border border-indigo-500/20 relative shadow-xl overflow-hidden">
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">
+              <div className={`text-center py-7 px-4 rounded-2xl border relative overflow-hidden ${cardBgSubtle}`}>
+                <span className={`text-[10px] font-bold uppercase tracking-wider block ${bodyText}`}>
                   Infinitief
                 </span>
-                <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-100 mt-1 capitalize">
+                <h3 className={`text-3xl sm:text-4xl font-extrabold tracking-tight mt-1 capitalize ${headingText}`}>
                   {practiceQueue[practiceIndex].infinitive}
                 </h3>
                 {practiceQueue[practiceIndex].translation && (
-                  <p className="text-xs text-slate-400 mt-1 font-medium">
+                  <p className={`text-xs mt-1 font-medium ${bodyText}`}>
                     ({practiceQueue[practiceIndex].translation})
                   </p>
                 )}
-                <div className="mt-3.5 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full backdrop-blur-xl bg-indigo-950/60 border border-indigo-500/30 text-indigo-200 text-xs font-semibold shadow-sm">
+                <div className={`mt-3.5 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full border text-xs font-semibold shadow-xs ${
+                  isDarkMode
+                    ? 'bg-white/5 border-white/10 text-[#3B82F6]'
+                    : 'bg-blue-50 border-blue-200 text-[#3B82F6]'
+                }`}>
                   <span>{practiceChallenge.prompt}</span>
                 </div>
               </div>
@@ -523,7 +542,7 @@ export function MijnFouten({
               {!hasEvaluated ? (
                 <form onSubmit={handleEvaluatePractice} className="space-y-3">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                    <label className={`block text-xs font-semibold mb-1.5 ${headingText}`}>
                       Typ jouw antwoord:
                     </label>
                     <input
@@ -532,7 +551,7 @@ export function MijnFouten({
                       onChange={(e) => setPracticeAnswer(e.target.value)}
                       placeholder="Typ hier de juiste vorm..."
                       autoFocus
-                      className="w-full px-4 py-3 backdrop-blur-xl bg-indigo-950/40 border border-indigo-500/25 rounded-xl text-sm font-semibold text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 shadow-xl transition-all"
+                      className={`w-full px-4 py-3 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#3B82F6] transition-all ${inputBg}`}
                     />
                   </div>
 
@@ -540,7 +559,7 @@ export function MijnFouten({
                     <button
                       type="submit"
                       disabled={!practiceAnswer.trim()}
-                      className="inline-flex items-center justify-center gap-2 flex-1 py-2.5 px-4 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95"
+                      className="inline-flex items-center justify-center gap-2 flex-1 py-2.5 px-4 bg-[#3B82F6] hover:bg-blue-600 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-xs transition-all active:scale-95"
                     >
                       <CheckCircle className="w-4 h-4" />
                       <span>Controleer Vervoeging</span>
@@ -548,9 +567,13 @@ export function MijnFouten({
                     <button
                       type="button"
                       onClick={() => setHasEvaluated(true)}
-                      className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/40 text-slate-300 hover:text-slate-100 font-semibold text-xs rounded-xl border border-indigo-500/20 shadow-sm transition-all active:scale-95"
+                      className={`inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl font-semibold text-xs border shadow-xs transition-all active:scale-95 ${
+                        isDarkMode
+                          ? 'bg-white/5 border-white/10 text-slate-300 hover:text-white'
+                          : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+                      }`}
                     >
-                      <BookOpen className="w-3.5 h-3.5 text-indigo-300" />
+                      <BookOpen className="w-3.5 h-3.5 text-[#3B82F6]" />
                       <span>Toon Antwoord</span>
                     </button>
                   </div>
@@ -560,17 +583,21 @@ export function MijnFouten({
                 <div className="space-y-4">
                   {practiceDiagnostic ? (
                     <div
-                      className={`p-4 rounded-xl backdrop-blur-xl border text-xs shadow-xl ${
+                      className={`p-4 rounded-xl border text-xs shadow-xs ${
                         practiceDiagnostic.isCorrect
-                          ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-200 shadow-[0_0_20px_rgba(16,185,129,0.18)]'
-                          : 'bg-rose-950/40 border-rose-500/30 text-rose-200 shadow-[0_0_20px_rgba(244,63,94,0.18)]'
+                          ? isDarkMode
+                            ? 'bg-[#10B981]/15 border-[#10B981]/30 text-emerald-200'
+                            : 'bg-emerald-50 border-emerald-200 text-emerald-900'
+                          : isDarkMode
+                            ? 'bg-rose-950/40 border-rose-500/30 text-rose-200'
+                            : 'bg-rose-50 border-rose-200 text-rose-900'
                       }`}
                     >
                       <div className="flex items-start gap-2.5">
                         {practiceDiagnostic.isCorrect ? (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
                         ) : (
-                          <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                          <AlertCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                         )}
                         <div className="space-y-1">
                           <p className="font-bold text-xs">
@@ -580,15 +607,17 @@ export function MijnFouten({
                           </p>
                           <p className="leading-relaxed text-[11px] font-normal">{practiceDiagnostic.feedback}</p>
                           {!practiceDiagnostic.isCorrect && (
-                            <p className="mt-1 font-bold text-slate-100 text-xs">
+                            <p className="mt-1 font-bold text-xs">
                               Juiste antwoord:{' '}
-                              <span className="font-mono bg-indigo-950/80 px-2.5 py-0.5 rounded-lg border border-rose-500/40 text-xs font-bold text-slate-100">
+                              <span className={`font-mono px-2.5 py-0.5 rounded-lg border text-xs font-bold ${
+                                isDarkMode ? 'bg-[#0B0F19] border-rose-500/40 text-rose-200' : 'bg-white border-rose-300 text-rose-800'
+                              }`}>
                                 {practiceDiagnostic.expected.join(' of ')}
                               </span>
                             </p>
                           )}
                           {practiceDiagnostic.correctionTip && (
-                            <p className="mt-1 text-[11px] text-slate-300">
+                            <p className={`mt-1 text-[11px] ${bodyText}`}>
                               💡 Tip: {practiceDiagnostic.correctionTip}
                             </p>
                           )}
@@ -596,46 +625,62 @@ export function MijnFouten({
                       </div>
                     </div>
                   ) : (
-                    <div className="p-3.5 backdrop-blur-xl bg-indigo-950/30 border border-indigo-500/20 rounded-xl text-xs text-slate-300 text-center font-medium">
+                    <div className={`p-3.5 border rounded-xl text-xs text-center font-medium ${cardBgSubtle} ${bodyText}`}>
                       Bekijk de regel en beoordeel je herinnering hieronder:
                     </div>
                   )}
 
                   {/* Leitner Spaced Repetition Rating Buttons */}
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-400 mb-2 text-center uppercase tracking-wider">
+                    <label className={`block text-[11px] font-bold mb-2 text-center uppercase tracking-wider ${bodyText}`}>
                       Hoe ging dit woord? (Selecteer Leitner-interval):
                     </label>
                     <div className="grid grid-cols-4 gap-2 text-center">
                       <button
                         onClick={() => handleApplyRating('again')}
-                        className="py-2.5 px-1.5 backdrop-blur-xl bg-rose-950/40 hover:bg-rose-900/50 text-rose-300 border border-rose-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-sm"
+                        className={`py-2.5 px-1.5 border rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-xs ${
+                          isDarkMode
+                            ? 'bg-rose-950/30 text-rose-300 border-rose-500/30 hover:bg-rose-900/40'
+                            : 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'
+                        }`}
                       >
-                        <RotateCcw className="w-3.5 h-3.5 mb-1 text-rose-300" />
+                        <RotateCcw className="w-3.5 h-3.5 mb-1" />
                         <span>Opnieuw</span>
                         <span className="text-[10px] opacity-75 mt-0.5">Vandaag</span>
                       </button>
                       <button
                         onClick={() => handleApplyRating('hard')}
-                        className="py-2.5 px-1.5 backdrop-blur-xl bg-amber-950/40 hover:bg-amber-900/50 text-amber-300 border border-amber-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-sm"
+                        className={`py-2.5 px-1.5 border rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-xs ${
+                          isDarkMode
+                            ? 'bg-[#F59E0B]/15 text-[#F59E0B] border-[#F59E0B]/30 hover:bg-[#F59E0B]/25'
+                            : 'bg-amber-50 text-amber-800 border-amber-200 hover:bg-amber-100'
+                        }`}
                       >
-                        <RotateCcw className="w-3.5 h-3.5 mb-1 text-amber-300 opacity-80" />
+                        <RotateCcw className="w-3.5 h-3.5 mb-1 opacity-80" />
                         <span>Moeilijk</span>
                         <span className="text-[10px] opacity-75 mt-0.5">1-2 d</span>
                       </button>
                       <button
                         onClick={() => handleApplyRating('good')}
-                        className="py-2.5 px-1.5 backdrop-blur-xl bg-indigo-950/40 hover:bg-indigo-900/50 text-indigo-300 border border-indigo-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-sm"
+                        className={`py-2.5 px-1.5 border rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-xs ${
+                          isDarkMode
+                            ? 'bg-[#3B82F6]/15 text-[#3B82F6] border-[#3B82F6]/30 hover:bg-[#3B82F6]/25'
+                            : 'bg-blue-50 text-[#3B82F6] border-blue-200 hover:bg-blue-100'
+                        }`}
                       >
-                        <CheckCircle className="w-3.5 h-3.5 mb-1 text-indigo-300" />
+                        <CheckCircle className="w-3.5 h-3.5 mb-1" />
                         <span>Goed</span>
                         <span className="text-[10px] opacity-75 mt-0.5">4 d</span>
                       </button>
                       <button
                         onClick={() => handleApplyRating('easy')}
-                        className="py-2.5 px-1.5 backdrop-blur-xl bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 border border-emerald-500/30 rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                        className={`py-2.5 px-1.5 border rounded-xl font-bold text-xs flex flex-col items-center justify-center active:scale-95 transition-all shadow-xs ${
+                          isDarkMode
+                            ? 'bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30 hover:bg-[#10B981]/25'
+                            : 'bg-emerald-50 text-[#10B981] border-emerald-200 hover:bg-emerald-100'
+                        }`}
                       >
-                        <CheckCircle className="w-3.5 h-3.5 mb-1 text-emerald-400" />
+                        <CheckCircle className="w-3.5 h-3.5 mb-1" />
                         <span>Makkelijk</span>
                         <span className="text-[10px] opacity-75 mt-0.5">7+ d</span>
                       </button>
@@ -648,23 +693,23 @@ export function MijnFouten({
         </div>
       ) : (
         /* Summary Card & CTA */
-        <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl p-5 sm:p-6 transition-colors">
+        <div className={`rounded-2xl border p-5 sm:p-6 transition-colors ${cardBg}`}>
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2">
                 <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#10B981]"></span>
                 </span>
-                <span className="text-slate-400 text-xs font-bold uppercase tracking-wider block">
+                <span className={`text-xs font-bold uppercase tracking-wider block ${bodyText}`}>
                   Vandaag te herhalen
                 </span>
               </div>
               <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-3xl font-extrabold tracking-tight text-slate-100">
+                <span className={`text-3xl font-extrabold tracking-tight ${headingText}`}>
                   {stats.dueCount}
                 </span>
-                <span className="text-xs text-slate-400 font-medium">
+                <span className={`text-xs font-medium ${bodyText}`}>
                   woorden klaar voor drill
                 </span>
               </div>
@@ -673,36 +718,36 @@ export function MijnFouten({
             <button
               onClick={startPractice}
               disabled={practiceQueue.length === 0}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#3B82F6] hover:bg-blue-600 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-xs transition-all active:scale-95"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
               <span>Start Drill</span>
             </button>
           </div>
 
-          {/* Quick Progress Bar with Neon Highlights */}
-          <div className="mt-4 pt-3.5 border-t border-indigo-500/15 grid grid-cols-3 gap-2 text-xs">
+          {/* Quick Progress Bar */}
+          <div className={`mt-4 pt-3.5 border-t grid grid-cols-3 gap-2 text-xs ${isDarkMode ? 'border-white/10' : 'border-slate-200'}`}>
             <div>
-              <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
+              <span className={`block text-[10px] uppercase font-bold tracking-wider ${bodyText}`}>
                 Totaal opgeslagen:
               </span>
-              <span className="font-bold text-slate-100">
+              <span className={`font-bold ${headingText}`}>
                 {stats.totalCount} werkwoorden
               </span>
             </div>
             <div>
-              <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
+              <span className={`block text-[10px] uppercase font-bold tracking-wider ${bodyText}`}>
                 Beheerst (Niv 4-5):
               </span>
-              <span className="font-bold text-emerald-300">
+              <span className="font-bold text-[#10B981]">
                 {stats.masteredCount}
               </span>
             </div>
             <div>
-              <span className="text-slate-400 block text-[10px] uppercase font-bold tracking-wider">
+              <span className={`block text-[10px] uppercase font-bold tracking-wider ${bodyText}`}>
                 Nauwkeurigheid:
               </span>
-              <span className="font-bold text-indigo-300">
+              <span className="font-bold text-[#3B82F6]">
                 {stats.accuracy}%
               </span>
             </div>
@@ -714,20 +759,20 @@ export function MijnFouten({
       <div className="space-y-2">
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-indigo-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3B82F6]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Filter opgeslagen woorden..."
-            className="w-full pl-10 pr-9 py-2.5 backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 rounded-xl text-xs font-medium text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 shadow-xl transition-all"
+            className={`w-full pl-10 pr-9 py-2.5 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-[#3B82F6] shadow-xs transition-all ${inputBg}`}
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
               aria-label="Wissen"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-100 rounded-lg active:scale-95 transition-all"
+              className={`absolute right-2.5 top-1/2 -translate-y-1/2 p-1 rounded-lg active:scale-95 transition-all ${bodyText} hover:${headingText}`}
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -740,8 +785,10 @@ export function MijnFouten({
             onClick={() => setFilter('due')}
             className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
               filter === 'due'
-                ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white border-indigo-400/80 shadow-md shadow-indigo-600/30'
-                : 'backdrop-blur-2xl bg-indigo-950/20 text-slate-300 border-indigo-500/15 hover:bg-indigo-900/40 hover:text-slate-100'
+                ? 'bg-[#3B82F6] text-white border-[#3B82F6] shadow-xs'
+                : isDarkMode
+                  ? 'bg-[#151D2A]/80 text-slate-300 border-white/10 hover:bg-white/10'
+                  : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
             }`}
           >
             Te Herhalen ({stats.dueCount})
@@ -750,8 +797,10 @@ export function MijnFouten({
             onClick={() => setFilter('struggling')}
             className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
               filter === 'struggling'
-                ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white border-indigo-400/80 shadow-md shadow-indigo-600/30'
-                : 'backdrop-blur-2xl bg-indigo-950/20 text-slate-300 border-indigo-500/15 hover:bg-indigo-900/40 hover:text-slate-100'
+                ? 'bg-[#3B82F6] text-white border-[#3B82F6] shadow-xs'
+                : isDarkMode
+                  ? 'bg-[#151D2A]/80 text-slate-300 border-white/10 hover:bg-white/10'
+                  : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
             }`}
           >
             Moeilijk
@@ -760,8 +809,10 @@ export function MijnFouten({
             onClick={() => setFilter('mastered')}
             className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
               filter === 'mastered'
-                ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white border-indigo-400/80 shadow-md shadow-indigo-600/30'
-                : 'backdrop-blur-2xl bg-indigo-950/20 text-slate-300 border-indigo-500/15 hover:bg-indigo-900/40 hover:text-slate-100'
+                ? 'bg-[#3B82F6] text-white border-[#3B82F6] shadow-xs'
+                : isDarkMode
+                  ? 'bg-[#151D2A]/80 text-slate-300 border-white/10 hover:bg-white/10'
+                  : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
             }`}
           >
             Beheerst
@@ -770,8 +821,10 @@ export function MijnFouten({
             onClick={() => setFilter('all')}
             className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
               filter === 'all'
-                ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white border-indigo-400/80 shadow-md shadow-indigo-600/30'
-                : 'backdrop-blur-2xl bg-indigo-950/20 text-slate-300 border-indigo-500/15 hover:bg-indigo-900/40 hover:text-slate-100'
+                ? 'bg-[#3B82F6] text-white border-[#3B82F6] shadow-xs'
+                : isDarkMode
+                  ? 'bg-[#151D2A]/80 text-slate-300 border-white/10 hover:bg-white/10'
+                  : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'
             }`}
           >
             Alles ({words.length})
@@ -779,15 +832,15 @@ export function MijnFouten({
         </div>
       </div>
 
-      {/* Word Cards List with Frosted Leitner SRS review cards and neon due indicators */}
+      {/* Word Cards List */}
       {isLoading ? (
-        <div className="p-8 text-center text-xs text-slate-400">
-          Woorden laden uit Supabase...
+        <div className={`p-8 text-center text-xs ${bodyText}`}>
+          Woorden laden...
         </div>
       ) : filteredWords.length === 0 ? (
-        <div className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl p-8 text-center text-slate-400 text-xs">
-          <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
-          <p className="font-bold text-slate-100 text-sm">
+        <div className={`rounded-2xl border p-8 text-center text-xs ${cardBg} ${bodyText}`}>
+          <CheckCircle2 className="w-8 h-8 text-[#10B981] mx-auto mb-2" />
+          <p className={`font-bold text-sm ${headingText}`}>
             Geen woorden in deze categorie
           </p>
           <p className="mt-1 leading-relaxed">
@@ -804,26 +857,26 @@ export function MijnFouten({
               <div
                 key={word.id}
                 onClick={() => onSelectVerbForInspection && onSelectVerbForInspection(word.infinitive)}
-                className="rounded-2xl backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 hover:border-indigo-500/30 hover:bg-indigo-950/30 shadow-2xl p-4 transition-all cursor-pointer group active:scale-98"
+                className={`rounded-2xl border p-4 transition-all cursor-pointer group active:scale-98 hover:border-[#3B82F6]/50 ${cardBg}`}
               >
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-slate-100 text-base capitalize group-hover:text-indigo-300 transition-colors">
+                      <h4 className={`font-bold text-base capitalize group-hover:text-[#3B82F6] transition-colors ${headingText}`}>
                         {word.infinitive}
                       </h4>
                       {isDueNow && (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold backdrop-blur-xl bg-emerald-950/40 text-emerald-300 border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30">
                           <span className="relative flex h-1.5 w-1.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#10B981]"></span>
                           </span>
                           <span>Vandaag!</span>
                         </span>
                       )}
                     </div>
                     {word.notes && (
-                      <p className="text-xs text-slate-400 mt-0.5 line-clamp-1 font-normal">
+                      <p className={`text-xs mt-0.5 line-clamp-1 font-normal ${bodyText}`}>
                         {word.notes}
                       </p>
                     )}
@@ -834,19 +887,19 @@ export function MijnFouten({
                     <button
                       onClick={(e) => handleDeleteWord(word.id, e)}
                       title="Verwijder uit Mijn Fouten"
-                      className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 transition-colors rounded-lg"
+                      className="p-1.5 text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 transition-colors rounded-lg"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
-                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-300 transition-transform group-hover:translate-x-0.5" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#3B82F6] transition-transform group-hover:translate-x-0.5" />
                   </div>
                 </div>
 
                 {/* Footer with Mastery & Stats */}
-                <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-indigo-500/15 text-[10px] text-slate-400">
-                  {/* Mastery 5-Dot Meter with Neon Highlights */}
+                <div className={`flex items-center justify-between mt-3 pt-2.5 border-t text-[10px] ${isDarkMode ? 'border-white/10' : 'border-slate-100'} ${bodyText}`}>
+                  {/* Mastery 5-Dot Meter */}
                   <div className="flex items-center gap-1.5">
-                    <span className="text-slate-400 font-medium">Niveau:</span>
+                    <span className="font-medium">Niveau:</span>
                     <div className="flex items-center gap-1">
                       {[1, 2, 3, 4, 5].map((lvl) => (
                         <span
@@ -854,9 +907,11 @@ export function MijnFouten({
                           className={`w-2.5 h-2.5 rounded-full transition-all ${
                             lvl <= word.mastery_level
                               ? lvl >= 4
-                                ? 'bg-emerald-400 shadow-[0_0_8px_#10B981]'
-                                : 'bg-indigo-400 shadow-[0_0_8px_#6366F1]'
-                              : 'bg-indigo-950/80 border border-indigo-500/25'
+                                ? 'bg-[#10B981]'
+                                : 'bg-[#3B82F6]'
+                              : isDarkMode
+                                ? 'bg-white/10'
+                                : 'bg-slate-200'
                           }`}
                         />
                       ))}
@@ -868,8 +923,8 @@ export function MijnFouten({
                     <span>
                       {word.times_correct} / {word.times_practiced} correct
                     </span>
-                    <span className="text-slate-500">•</span>
-                    <span className={isDueNow ? 'text-emerald-300 font-semibold' : ''}>
+                    <span>•</span>
+                    <span className={isDueNow ? 'text-[#10B981] font-semibold' : ''}>
                       {isDueNow ? 'Nu herhalen' : `Volgende: ${new Date(word.next_review_at).toLocaleDateString()}`}
                     </span>
                   </div>

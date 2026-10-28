@@ -258,12 +258,14 @@ export interface BannerAdContainerProps {
   isPremium?: boolean;
   onOpenPaywall: () => void;
   className?: string;
+  isDarkMode?: boolean;
 }
 
 export function BannerAdContainer({
   isPremium = false,
   onOpenPaywall,
   className = '',
+  isDarkMode = true,
 }: BannerAdContainerProps) {
   // If user is already Pro, do not display ad
   if (isPremium) {
@@ -275,14 +277,18 @@ export function BannerAdContainer({
       aria-label="Advertentie en Pro promotie"
       className={`w-full max-w-xl mx-auto ${className}`}
     >
-      <div className="rounded-2xl border border-indigo-500/20 backdrop-blur-2xl bg-indigo-950/20 shadow-2xl p-3.5 px-4 flex items-center justify-between transition-colors">
+      <div className={`rounded-2xl border p-3.5 px-4 flex items-center justify-between transition-colors ${
+        isDarkMode
+          ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
+          : 'bg-white border-slate-200 shadow-xs'
+      }`}>
         {/* Ad Marker & Copy */}
         <div className="flex items-center gap-2.5 text-left">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-950/50 border border-emerald-500/30 px-2 py-0.5 rounded-md shadow-[0_0_10px_rgba(16,185,129,0.15)]">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#10B981] bg-[#10B981]/15 border border-[#10B981]/30 px-2 py-0.5 rounded-md">
             Ad
           </span>
           <div className="text-xs">
-            <p className="font-bold text-slate-100 line-clamp-1">
+            <p className={`font-bold line-clamp-1 ${isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]'}`}>
               🚫 100% Advertentievrij &amp; 🧠 AI NT2 Inversie Zinsbouwer
             </p>
             <p className="text-[11px] text-slate-400 line-clamp-1">
@@ -295,9 +301,9 @@ export function BannerAdContainer({
         <button
           onClick={onOpenPaywall}
           aria-label="Verwijder advertenties met Pro"
-          className="shrink-0 inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-lg shadow-indigo-600/30 border border-indigo-400/30 transition-all ml-2"
+          className="shrink-0 inline-flex items-center justify-center gap-1.5 bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-xs transition-all ml-2"
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+          <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
           <span>Ga Pro</span>
         </button>
       </div>

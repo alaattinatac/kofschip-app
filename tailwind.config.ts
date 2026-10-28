@@ -8,7 +8,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Dutch-inspired & Duolingo/Apple modern color palette
+        // Pedagogical Grammar Accents & Design System
+        pedagogical: {
+          stem: '#3B82F6',       // Focus Blue (Kök)
+          kofschip: '#10B981',   // Emerald Green ('t Kofschip regel)
+          irregular: '#F59E0B',  // Alert Amber (Onregelmatig)
+        },
+        // Dutch-inspired & modern color palette
         kofschip: {
           50: '#eef4ff',
           100: '#d9e6ff',

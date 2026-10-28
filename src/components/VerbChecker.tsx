@@ -79,14 +79,18 @@ export function VerbChecker({
     ? KOFSCHIP_CONSONANTS.has(stem.originalEndConsonant)
     : false;
 
-  // Theme-aware style helpers
-  const labelText = isDarkMode ? 'text-slate-500' : 'text-slate-600 font-semibold';
-  const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-700';
-  const headingText = isDarkMode ? 'text-slate-100' : 'text-slate-900';
-  const cardBg = isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-300';
-  const cardBgWhite = isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white border-slate-300';
-  const rowHover = isDarkMode ? 'border-white/5 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50';
-  const dividerColor = isDarkMode ? 'border-white/10' : 'border-slate-300';
+  // Theme-aware style helpers aligned with Pedagogical Color Palette
+  const labelText = isDarkMode ? 'text-slate-400' : 'text-slate-500 font-semibold';
+  const bodyText = isDarkMode ? 'text-slate-300' : 'text-slate-600';
+  const headingText = isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]';
+  const cardBg = isDarkMode
+    ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
+    : 'bg-white border-slate-200 shadow-xs';
+  const cardBgWhite = isDarkMode
+    ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
+    : 'bg-white border-slate-200 shadow-xs';
+  const rowHover = isDarkMode ? 'border-white/5 hover:bg-white/5' : 'border-slate-100 hover:bg-slate-50/80';
+  const dividerColor = isDarkMode ? 'border-white/10' : 'border-slate-200';
 
   return (
     <div className={`w-full space-y-4 ${headingText}`}>
@@ -186,9 +190,13 @@ export function VerbChecker({
 
       {/* Result card */}
       {conjugation ? (
-        <div className={`rounded-2xl border-l-4 border-l-indigo-500 p-5 space-y-5 ${
-          isDarkMode ? 'bg-white/5 border border-white/10' : 'bg-white border border-slate-300 shadow-sm'
-        }`}>
+        <div className={`rounded-2xl border-l-4 p-5 space-y-5 transition-all ${
+          conjugation.isIrregular
+            ? 'border-l-[#F59E0B]'
+            : isKofschipConsonant
+              ? 'border-l-[#10B981]'
+              : 'border-l-[#3B82F6]'
+        } ${cardBgWhite}`}>
 
           {/* ── Section 1: Stem & Werkwoord Type / 't Kofschip ── */}
           <div>
@@ -197,8 +205,8 @@ export function VerbChecker({
                 {conjugation.isIrregular ? 'Werkwoord Status & Stam' : "Stam & 't Kofschip"}
               </p>
               {conjugation.isIrregular && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-[#F59E0B]/15 text-[#F59E0B] border border-[#F59E0B]/30 shadow-xs">
+                  <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
                   Onregelmatig Werkwoord (Düzensiz Fiil)
                 </span>
               )}
@@ -214,8 +222,8 @@ export function VerbChecker({
                 aria-label="Beluister uitspraak"
                 className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
                   isDarkMode
-                    ? 'text-indigo-400 border-indigo-500/20 hover:text-indigo-200 bg-indigo-950/40 hover:bg-indigo-900/40'
-                    : 'text-indigo-700 border-slate-300 hover:text-indigo-900 bg-slate-100 hover:bg-slate-200'
+                    ? 'text-[#3B82F6] border-white/10 hover:text-blue-300 bg-white/5'
+                    : 'text-[#3B82F6] border-slate-200 hover:text-blue-700 bg-slate-50'
                 }`}
               >
                 <Volume2 className="w-4 h-4" />
@@ -226,8 +234,8 @@ export function VerbChecker({
                 aria-label="Opslaan in Mijn Fouten"
                 className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
                   isDarkMode
-                    ? 'text-slate-400 border-indigo-500/20 hover:text-emerald-300 bg-indigo-950/40 hover:bg-emerald-950/40'
-                    : 'text-slate-700 border-slate-300 hover:text-emerald-700 bg-slate-100 hover:bg-emerald-50'
+                    ? 'text-slate-400 border-white/10 hover:text-[#10B981] bg-white/5'
+                    : 'text-slate-600 border-slate-200 hover:text-[#10B981] bg-slate-50'
                 }`}
               >
                 <Bookmark className="w-4 h-4" />
@@ -238,11 +246,11 @@ export function VerbChecker({
               <div className="space-y-1.5">
                 {stem && (
                   <p className={`text-sm ${bodyText}`}>
-                    Stam: <span className="font-bold text-indigo-600 dark:text-indigo-400">{stem.cleanStem}</span>
+                    Stam (Kök): <span className="font-bold text-[#3B82F6]">{stem.cleanStem}</span>
                   </p>
                 )}
                 <div className={`p-2.5 rounded-xl border text-xs font-medium ${
-                  isDarkMode ? 'bg-amber-950/20 border-amber-500/25 text-amber-300' : 'bg-amber-50 border-amber-200 text-amber-900'
+                  isDarkMode ? 'bg-[#F59E0B]/10 border-[#F59E0B]/25 text-[#F59E0B]' : 'bg-amber-50 border-amber-200 text-amber-900'
                 }`}>
                   📌 <strong>Let op:</strong> 't Kofschip (-te / -de) geldt <em>alleen</em> voor regelmatige werkwoorden. Voor dit onregelmatige werkwoord gelden vaste onregelmatige vormen.
                 </div>
@@ -251,16 +259,16 @@ export function VerbChecker({
               <>
                 {stem && (
                   <p className={`text-sm ${bodyText}`}>
-                    Stam:{' '}
-                    <span className="font-bold text-indigo-600 dark:text-indigo-400">{stem.cleanStem}</span>
+                    Stam (Kök):{' '}
+                    <span className="font-bold text-[#3B82F6]">{stem.cleanStem}</span>
                     {' · '}
-                    <span className={`font-semibold text-sm ${isKofschipConsonant ? 'text-emerald-600 dark:text-emerald-400' : 'text-indigo-600 dark:text-indigo-400'}`}>
+                    <span className={`font-semibold text-sm ${isKofschipConsonant ? 'text-[#10B981]' : 'text-[#3B82F6]'}`}>
                       {isKofschipConsonant ? "in 't kofschip (-te)" : 'niet in kofschip (-de)'}
                     </span>
                   </p>
                 )}
                 {stem?.voicedShift && (
-                  <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400 font-medium">
+                  <p className="mt-1.5 text-xs text-[#F59E0B] font-semibold">
                     ⚠️ v→f / z→s valkuil: altijd -de
                   </p>
                 )}
@@ -275,7 +283,7 @@ export function VerbChecker({
                 Voltooid Deelwoord (V.T.T.)
               </p>
               {conjugation.isIrregular && (
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F59E0B]/15 text-[#F59E0B] border border-[#F59E0B]/25">
                   Exacte onregelmatige vorm
                 </span>
               )}
@@ -283,7 +291,7 @@ export function VerbChecker({
             <div className={`rounded-xl border p-3.5 flex items-center justify-between ${cardBg}`}>
               <span className={`text-sm ${bodyText}`}>
                 Deelwoord:{' '}
-                <span className="font-bold text-indigo-600 dark:text-indigo-400 text-base">
+                <span className="font-bold text-[#3B82F6] text-base">
                   {conjugation.pastParticiple}
                 </span>
               </span>
@@ -300,7 +308,7 @@ export function VerbChecker({
                 Verleden Tijd (O.V.T.)
               </p>
               {conjugation.isIrregular && (
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F59E0B]/15 text-[#F59E0B] border border-[#F59E0B]/25">
                   Onregelmatig (Klankverandering)
                 </span>
               )}
@@ -310,7 +318,7 @@ export function VerbChecker({
                 <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
                   Enkelvoud
                 </span>
-                <span className="text-sm sm:text-base font-bold text-indigo-600 dark:text-indigo-400">
+                <span className="text-sm sm:text-base font-bold text-[#3B82F6]">
                   {conjugation.past.singular}
                 </span>
               </div>
@@ -318,7 +326,7 @@ export function VerbChecker({
                 <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
                   Meervoud
                 </span>
-                <span className="text-sm sm:text-base font-bold text-indigo-600 dark:text-indigo-400">
+                <span className="text-sm sm:text-base font-bold text-[#3B82F6]">
                   {conjugation.past.plural}
                 </span>
               </div>
@@ -339,15 +347,15 @@ export function VerbChecker({
               {/* ik */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>ik</span>
-                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['1s']}</span>
+                <span className="text-sm font-bold text-[#3B82F6]">{conjugation.present['1s']}</span>
               </div>
               {/* jij/u */}
               <div className={`grid grid-cols-2 items-start px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>jij / u</span>
                 <div>
-                  <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400 block">{conjugation.present['2s']}</span>
+                  <span className="text-sm font-bold text-[#3B82F6] block">{conjugation.present['2s']}</span>
                   {conjugation.presentInverted['2s'] && conjugation.presentInverted['2s'] !== conjugation.present['2s'] && (
-                    <span className="text-[11px] text-amber-600 dark:text-amber-400 font-medium mt-0.5 block">
+                    <span className="text-[11px] text-[#F59E0B] font-medium mt-0.5 block">
                       ↩ inversie: {conjugation.presentInverted['2s']}?
                     </span>
                   )}
@@ -356,29 +364,29 @@ export function VerbChecker({
               {/* hij/zij/het */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>hij / zij / het</span>
-                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['3s']}</span>
+                <span className="text-sm font-bold text-[#3B82F6]">{conjugation.present['3s']}</span>
               </div>
               {/* wij */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>wij</span>
-                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['1p']}</span>
+                <span className="text-sm font-bold text-[#3B82F6]">{conjugation.present['1p']}</span>
               </div>
               {/* jullie */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>jullie</span>
-                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['2p']}</span>
+                <span className="text-sm font-bold text-[#3B82F6]">{conjugation.present['2p']}</span>
               </div>
               {/* zij (meervoud) */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 transition-colors ${isDarkMode ? 'hover:bg-white/5' : 'hover:bg-slate-50'}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>zij</span>
-                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['3p']}</span>
+                <span className="text-sm font-bold text-[#3B82F6]">{conjugation.present['3p']}</span>
               </div>
             </div>
           </div>
         </div>
       ) : (
         <div className={`rounded-2xl border p-8 text-center ${cardBgWhite}`}>
-          <Info className="w-8 h-8 text-indigo-400 mx-auto mb-2" />
+          <Info className="w-8 h-8 text-[#3B82F6] mx-auto mb-2" />
           <h3 className={`font-semibold text-sm ${headingText}`}>
             Geen werkwoord gevonden
           </h3>
