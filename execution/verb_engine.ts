@@ -1522,6 +1522,33 @@ export function checkConjugation(params: {
   const stem = deriveStem(infinitive);
   const sep = splitSeparableVerb(infinitive);
   const isPlural = person === '1p' || person === '2p' || person === '3p';
+  const isIrreg = isIrregular(infinitive);
+
+  // Irregular verbs: 't kofschip rule (-te / -de) MUST ONLY apply to regular (zwak) verbs.
+  // For irregular verbs, directly explain the irregular forms without 't kofschip calculations.
+  if (isIrreg) {
+    if (tense === 'past') {
+      return {
+        isCorrect: false,
+        userAnswer,
+        expected: expectedAnswers,
+        ruleId: 'irregular_verb_past',
+        feedback: `'${infinitive}' is een onregelmatig werkwoord (sterk werkwoord). De 't kofschip-regel (-te / -de) geldt NIET voor onregelmatige werkwoorden! De juiste verleden tijd (O.V.T.) is: '${expectedAnswers.join("' of '")}'.`,
+        correctionTip: `'${infinitive}' is onregelmatig: ${expectedAnswers.join(', ')}.`,
+      };
+    }
+
+    if (tense === 'pastParticiple') {
+      return {
+        isCorrect: false,
+        userAnswer,
+        expected: expectedAnswers,
+        ruleId: 'irregular_verb_participle',
+        feedback: `'${infinitive}' is een onregelmatig werkwoord. Het voltooid deelwoord (V.T.T.) volgt niet de regel van 't kofschip (-t/-d). De juiste vorm is: '${expectedAnswers.join("' of '")}'.`,
+        correctionTip: `'${infinitive}' is onregelmatig: ${expectedAnswers.join(', ')}.`,
+      };
+    }
+  }
 
   // 1. Pitfall: v->f or z->s kofschip trap in past tense
   if (tense === 'past' && stem.voicedShift) {

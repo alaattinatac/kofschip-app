@@ -25,6 +25,7 @@ const COMMON_EXAMPLE_VERBS = [
   { verb: 'reizen', tag: 'z→s' },
   { verb: 'opbellen', tag: 'scheidbaar' },
   { verb: 'lopen', tag: 'zijn' },
+  { verb: 'nemen', tag: 'onreg.' },
   { verb: 'zijn', tag: 'onreg.' },
   { verb: 'antwoorden', tag: '-d' },
 ];
@@ -149,7 +150,7 @@ export function HomePage() {
       <header className={`sticky top-0 z-40 backdrop-blur-2xl border-b safe-area-top transition-colors duration-200 ${
         isDarkMode
           ? 'bg-[#0B0F19]/80 border-white/8'
-          : 'bg-slate-50/90 border-slate-200'
+          : 'bg-white/95 border-slate-300 shadow-sm'
       }`}>
         <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
           <button
@@ -161,7 +162,7 @@ export function HomePage() {
             className="flex items-center text-left focus:outline-none"
             aria-label="Ga naar startpagina"
           >
-            <KofschipLogo size="md" glow={false} showSubtitle={false} />
+            <KofschipLogo size="md" glow={false} showSubtitle={false} isDarkMode={isDarkMode} />
           </button>
 
           <div className="flex items-center gap-1.5">
@@ -169,10 +170,10 @@ export function HomePage() {
               onClick={() => handlePronounce(activeVerbForChecker)}
               title={`Beluister '${activeVerbForChecker}'`}
               aria-label={`Beluister '${activeVerbForChecker}'`}
-              className={`p-2 rounded-lg transition-colors ${
+              className={`p-2 rounded-lg border transition-colors ${
                 isDarkMode
-                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8'
-                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8 border-transparent'
+                  : 'text-slate-900 hover:text-slate-950 hover:bg-slate-100 border-slate-300 fill-slate-900 shadow-sm'
               }`}
             >
               <Volume2 className="w-4 h-4" />
@@ -182,24 +183,32 @@ export function HomePage() {
               onClick={() => setIsDarkMode((prev) => !prev)}
               title="Wissel thema"
               aria-label="Wissel thema"
-              className={`p-2 rounded-lg transition-colors ${
+              className={`p-2 rounded-lg border transition-colors ${
                 isDarkMode
-                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8'
-                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+                  ? 'text-slate-400 hover:text-slate-100 hover:bg-white/8 border-transparent'
+                  : 'text-slate-900 hover:text-slate-950 hover:bg-slate-100 border-slate-300 fill-slate-900 shadow-sm'
               }`}
             >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
+              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-900 fill-slate-900" />}
             </button>
 
             {isPremium ? (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-emerald-300 bg-emerald-950/40 border border-emerald-500/30">
+              <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold ${
+                isDarkMode
+                  ? 'text-emerald-300 bg-emerald-950/40 border border-emerald-500/30'
+                  : 'text-emerald-900 bg-emerald-100 border border-emerald-300 font-bold'
+              }`}>
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 PRO
               </span>
             ) : (
               <button
                 onClick={() => setIsPaywallOpen(true)}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm ${
+                  isDarkMode
+                    ? 'text-white bg-indigo-600 hover:bg-indigo-500 border border-indigo-400/30'
+                    : 'text-white bg-indigo-600 hover:bg-indigo-700 border border-indigo-600'
+                }`}
               >
                 <Sparkles className="w-3 h-3 text-amber-300" />
                 Pro
@@ -221,19 +230,19 @@ export function HomePage() {
               className={`flex items-center gap-2 border rounded-2xl px-4 py-3 transition-all ${
                 isDarkMode
                   ? 'bg-white/6 border-white/10 focus-within:border-indigo-500/50 focus-within:bg-white/8'
-                  : 'bg-white border-slate-200 focus-within:border-indigo-400 focus-within:shadow-md shadow-sm'
+                  : 'bg-white border-slate-300 focus-within:border-indigo-500 focus-within:shadow-md shadow-sm'
               }`}
             >
-              <Search className={`w-4 h-4 shrink-0 ${isDarkMode ? 'text-slate-500' : 'text-slate-400'}`} />
+              <Search className={`w-4 h-4 shrink-0 ${isDarkMode ? 'text-slate-500' : 'text-slate-700'}`} />
               <input
                 type="text"
                 value={searchInputValue}
                 onChange={(e) => setSearchInputValue(e.target.value)}
-                placeholder="Zoek een infinitief… (bv. wonen, reizen)"
+                placeholder="Zoek een infinitief… (bv. wonen, reizen, nemen)"
                 className={`flex-1 bg-transparent border-0 text-sm font-medium focus:outline-none ${
                   isDarkMode
                     ? 'text-slate-100 placeholder:text-slate-500'
-                    : 'text-slate-900 placeholder:text-slate-400'
+                    : 'text-slate-900 placeholder:text-slate-500'
                 }`}
                 autoCapitalize="none"
                 autoCorrect="off"
@@ -244,7 +253,7 @@ export function HomePage() {
                   type="button"
                   onClick={() => setSearchInputValue('')}
                   aria-label="Wissen"
-                  className={`transition-colors ${isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
+                  className={`transition-colors ${isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-600 hover:text-slate-900'}`}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -253,13 +262,13 @@ export function HomePage() {
                 type="button"
                 onClick={() => handlePronounce(searchInputValue)}
                 aria-label="Beluister"
-                className={`transition-colors hidden sm:block ${isDarkMode ? 'text-slate-500 hover:text-indigo-300' : 'text-slate-400 hover:text-indigo-500'}`}
+                className={`transition-colors hidden sm:block ${isDarkMode ? 'text-slate-500 hover:text-indigo-300' : 'text-slate-700 hover:text-indigo-600'}`}
               >
                 <Volume2 className="w-4 h-4" />
               </button>
               <button
                 type="submit"
-                className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-colors shrink-0"
+                className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-colors shrink-0 shadow-sm"
               >
                 Zoek
               </button>
@@ -273,16 +282,18 @@ export function HomePage() {
                   <button
                     key={item.verb}
                     onClick={() => handleSearch(item.verb)}
-                    className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-medium border transition-all shrink-0 active:scale-95 ${
+                    className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all shrink-0 active:scale-95 ${
                       isActive
-                        ? 'bg-indigo-600 text-white border-indigo-500'
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
                         : isDarkMode
                           ? 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10 hover:text-slate-200'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100 hover:text-slate-800 shadow-sm'
+                          : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100 hover:text-slate-950 shadow-sm'
                     }`}
                   >
                     {item.verb}
-                    <span className="ml-1 opacity-50 text-[10px]">({item.tag})</span>
+                    <span className={`ml-1 text-[10px] ${isActive ? 'text-indigo-100' : isDarkMode ? 'text-slate-500' : 'text-slate-500'}`}>
+                      ({item.tag})
+                    </span>
                   </button>
                 );
               })}
@@ -356,16 +367,16 @@ export function HomePage() {
         <div className={`backdrop-blur-xl border rounded-2xl p-1.5 flex items-center gap-1 transition-colors duration-200 ${
           isDarkMode
             ? 'bg-[#13172A]/90 border-white/10'
-            : 'bg-white/95 border-slate-200 shadow-lg'
+            : 'bg-white/95 border-slate-300 shadow-lg'
         }`}>
           <button
             onClick={() => setActiveTab('checker')}
             className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
               activeTab === 'checker'
-                ? 'bg-indigo-600 text-white font-semibold'
+                ? 'bg-indigo-600 text-white font-semibold shadow-sm'
                 : isDarkMode
                   ? 'text-slate-400 hover:text-slate-200 font-medium'
-                  : 'text-slate-500 hover:text-slate-800 font-medium'
+                  : 'text-slate-800 hover:text-slate-950 font-semibold'
             }`}
           >
             <Search className="w-4 h-4" />
@@ -376,10 +387,10 @@ export function HomePage() {
             onClick={() => setActiveTab('vault')}
             className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
               activeTab === 'vault'
-                ? 'bg-indigo-600 text-white font-semibold'
+                ? 'bg-indigo-600 text-white font-semibold shadow-sm'
                 : isDarkMode
                   ? 'text-slate-400 hover:text-slate-200 font-medium'
-                  : 'text-slate-500 hover:text-slate-800 font-medium'
+                  : 'text-slate-800 hover:text-slate-950 font-semibold'
             }`}
           >
             <BookMarked className="w-4 h-4" />
@@ -390,10 +401,10 @@ export function HomePage() {
             onClick={() => setActiveTab('fouten')}
             className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
               activeTab === 'fouten'
-                ? 'bg-indigo-600 text-white font-semibold'
+                ? 'bg-indigo-600 text-white font-semibold shadow-sm'
                 : isDarkMode
                   ? 'text-slate-400 hover:text-slate-200 font-medium'
-                  : 'text-slate-500 hover:text-slate-800 font-medium'
+                  : 'text-slate-800 hover:text-slate-950 font-semibold'
             }`}
           >
             <BookOpen className="w-4 h-4" />

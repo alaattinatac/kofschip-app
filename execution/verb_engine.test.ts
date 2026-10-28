@@ -340,6 +340,31 @@ const rWillen2 = checkConjugation({
 });
 assertEquals(rWillen2.isCorrect, true, 'willen past sing accepts "wilde"');
 
+console.log('\n--- 9. IRREGULAR VERB KOFSCHIP EXCLUSION ---');
+const cNemen = conjugate('nemen');
+assertEquals(cNemen.isIrregular, true, 'nemen is irregular');
+assertEquals(cNemen.past.singular, 'nam', 'nemen past sing -> nam');
+assertEquals(cNemen.past.plural, 'namen', 'nemen past plur -> namen');
+assertEquals(cNemen.pastParticiple, 'genomen', 'nemen participle -> genomen');
+
+const rNemenWrongPast = checkConjugation({
+  infinitive: 'nemen',
+  tense: 'past',
+  person: '1s',
+  userAnswer: 'neemde',
+});
+assertEquals(rNemenWrongPast.isCorrect, false, 'nemen "neemde" is flagged incorrect');
+assertEquals(rNemenWrongPast.ruleId, 'irregular_verb_past', 'nemen "neemde" gets irregular_verb_past ruleId');
+
+const rNemenWrongPart = checkConjugation({
+  infinitive: 'nemen',
+  tense: 'pastParticiple',
+  person: '1s',
+  userAnswer: 'geneemd',
+});
+assertEquals(rNemenWrongPart.isCorrect, false, 'nemen "geneemd" is flagged incorrect');
+assertEquals(rNemenWrongPart.ruleId, 'irregular_verb_participle', 'nemen "geneemd" gets irregular_verb_participle ruleId');
+
 // Summary
 console.log(`\n========================================`);
 console.log(`TEST RESULTS: ${passed} passed, ${failed} failed`);

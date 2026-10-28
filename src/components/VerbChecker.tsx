@@ -20,6 +20,7 @@ const COMMON_EXAMPLE_VERBS = [
   { verb: 'verhuizen', tag: 'z → s trap (-de)' },
   { verb: 'opbellen',  tag: 'Scheidbaar' },
   { verb: 'lopen',     tag: 'Hebben / Zijn' },
+  { verb: 'nemen',     tag: 'Onregelmatig' },
   { verb: 'zijn',      tag: 'Onregelmatig' },
   { verb: 'antwoorden',tag: 'Stam op -d' },
 ];
@@ -79,13 +80,13 @@ export function VerbChecker({
     : false;
 
   // Theme-aware style helpers
-  const labelText = isDarkMode ? 'text-slate-500' : 'text-slate-400';
-  const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-500';
+  const labelText = isDarkMode ? 'text-slate-500' : 'text-slate-600 font-semibold';
+  const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-700';
   const headingText = isDarkMode ? 'text-slate-100' : 'text-slate-900';
-  const cardBg = isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-200';
-  const cardBgWhite = isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200';
-  const rowHover = isDarkMode ? 'border-white/5 hover:bg-white/5' : 'border-slate-100 hover:bg-white';
-  const dividerColor = isDarkMode ? 'border-white/10' : 'border-slate-200';
+  const cardBg = isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-50 border-slate-300';
+  const cardBgWhite = isDarkMode ? 'bg-white/5 border-white/10' : 'bg-white border-slate-300';
+  const rowHover = isDarkMode ? 'border-white/5 hover:bg-white/5' : 'border-slate-200 hover:bg-slate-50';
+  const dividerColor = isDarkMode ? 'border-white/10' : 'border-slate-300';
 
   return (
     <div className={`w-full space-y-4 ${headingText}`}>
@@ -104,9 +105,13 @@ export function VerbChecker({
             <button
               onClick={handleSaveWord}
               aria-label="Opslaan in Mijn Fouten"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-indigo-500/20 backdrop-blur-xl bg-indigo-950/30 hover:bg-indigo-900/40 text-slate-200 transition-all active:scale-95 shrink-0"
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 shrink-0 ${
+                isDarkMode
+                  ? 'border-indigo-500/20 backdrop-blur-xl bg-indigo-950/30 hover:bg-indigo-900/40 text-slate-200'
+                  : 'border-slate-300 bg-white hover:bg-slate-100 text-slate-900 shadow-sm'
+              }`}
             >
-              <Bookmark className="w-3.5 h-3.5 text-indigo-400" />
+              <Bookmark className="w-3.5 h-3.5 text-indigo-500" />
               Opslaan
             </button>
           </div>
@@ -119,10 +124,10 @@ export function VerbChecker({
               className={`relative flex items-center border rounded-xl p-1 transition-all focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-500/20 ${
                 isDarkMode
                   ? 'backdrop-blur-xl bg-indigo-950/20 border-indigo-500/15'
-                  : 'bg-white border-slate-200 shadow-sm'
+                  : 'bg-white border-slate-300 shadow-sm'
               }`}
             >
-              <Search className="ml-3 w-4 h-4 text-indigo-400 shrink-0" />
+              <Search className="ml-3 w-4 h-4 text-indigo-500 shrink-0" />
               <input
                 type="text"
                 value={searchTerm}
@@ -150,12 +155,12 @@ export function VerbChecker({
                 <button
                   key={item.verb}
                   onClick={() => handleSearch(item.verb)}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-medium border transition-all active:scale-95 ${
+                  className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
                     isActive
-                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white border-indigo-400/80 font-semibold'
+                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white border-indigo-400/80 shadow-sm'
                       : isDarkMode
                         ? 'backdrop-blur-xl bg-indigo-950/20 text-slate-300 border-indigo-500/15 hover:bg-indigo-900/40 hover:text-slate-100'
-                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-slate-800 shadow-sm'
+                        : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100 hover:text-slate-950 shadow-sm'
                   }`}
                 >
                   {item.verb}
@@ -172,9 +177,9 @@ export function VerbChecker({
         <div className={`p-3.5 border text-xs rounded-2xl flex items-center gap-2 ${
           isDarkMode
             ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-200'
-            : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+            : 'bg-emerald-50 border-emerald-300 text-emerald-900'
         }`}>
-          <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+          <Check className="w-4 h-4 text-emerald-500 shrink-0" />
           <span className="font-semibold">{savedNotification}</span>
         </div>
       )}
@@ -182,14 +187,23 @@ export function VerbChecker({
       {/* Result card */}
       {conjugation ? (
         <div className={`rounded-2xl border-l-4 border-l-indigo-500 p-5 space-y-5 ${
-          isDarkMode ? 'bg-white/5 border border-white/10' : 'bg-white border border-slate-200 shadow-sm'
+          isDarkMode ? 'bg-white/5 border border-white/10' : 'bg-white border border-slate-300 shadow-sm'
         }`}>
 
-          {/* ── Section 1: Stem & 't Kofschip ── */}
+          {/* ── Section 1: Stem & Werkwoord Type / 't Kofschip ── */}
           <div>
-            <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
-              Stam &amp; 't Kofschip
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <p className={`text-[11px] uppercase tracking-wider font-semibold ${labelText}`}>
+                {conjugation.isIrregular ? 'Werkwoord Status & Stam' : "Stam & 't Kofschip"}
+              </p>
+              {conjugation.isIrregular && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                  Onregelmatig Werkwoord (Düzensiz Fiil)
+                </span>
+              )}
+            </div>
+
             <div className="flex items-center gap-3 mb-2">
               <h2 className={`text-3xl font-extrabold tracking-tight ${headingText}`}>
                 {conjugation.infinitive}
@@ -198,10 +212,10 @@ export function VerbChecker({
                 onClick={() => handlePronounce(conjugation.infinitive)}
                 title="Beluister uitspraak"
                 aria-label="Beluister uitspraak"
-                className={`p-1.5 rounded-lg text-indigo-400 border border-indigo-500/20 transition-all active:scale-95 ${
+                className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
                   isDarkMode
-                    ? 'hover:text-indigo-200 bg-indigo-950/40 hover:bg-indigo-900/40'
-                    : 'hover:text-indigo-600 bg-indigo-50 hover:bg-indigo-100'
+                    ? 'text-indigo-400 border-indigo-500/20 hover:text-indigo-200 bg-indigo-950/40 hover:bg-indigo-900/40'
+                    : 'text-indigo-700 border-slate-300 hover:text-indigo-900 bg-slate-100 hover:bg-slate-200'
                 }`}
               >
                 <Volume2 className="w-4 h-4" />
@@ -210,45 +224,70 @@ export function VerbChecker({
                 onClick={handleSaveWord}
                 title="Opslaan in Mijn Fouten"
                 aria-label="Opslaan in Mijn Fouten"
-                className={`p-1.5 rounded-lg border border-indigo-500/20 hover:border-emerald-500/30 transition-all active:scale-95 ${
+                className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
                   isDarkMode
-                    ? 'text-slate-400 hover:text-emerald-300 bg-indigo-950/40 hover:bg-emerald-950/40'
-                    : 'text-slate-500 hover:text-emerald-600 bg-slate-50 hover:bg-emerald-50'
+                    ? 'text-slate-400 border-indigo-500/20 hover:text-emerald-300 bg-indigo-950/40 hover:bg-emerald-950/40'
+                    : 'text-slate-700 border-slate-300 hover:text-emerald-700 bg-slate-100 hover:bg-emerald-50'
                 }`}
               >
                 <Bookmark className="w-4 h-4" />
               </button>
             </div>
-            {stem && (
-              <p className={`text-sm ${bodyText}`}>
-                Stam:{' '}
-                <span className="font-bold text-indigo-500">{stem.cleanStem}</span>
-                {' · '}
-                <span className={`font-semibold text-sm ${isKofschipConsonant ? 'text-emerald-500' : 'text-indigo-500'}`}>
-                  {isKofschipConsonant ? "in 't kofschip (-te)" : 'niet in kofschip (-de)'}
-                </span>
-              </p>
-            )}
-            {stem?.voicedShift && (
-              <p className="mt-1.5 text-xs text-amber-500 font-medium">
-                ⚠️ v→f / z→s valkuil: altijd -de
-              </p>
+
+            {conjugation.isIrregular ? (
+              <div className="space-y-1.5">
+                {stem && (
+                  <p className={`text-sm ${bodyText}`}>
+                    Stam: <span className="font-bold text-indigo-600 dark:text-indigo-400">{stem.cleanStem}</span>
+                  </p>
+                )}
+                <div className={`p-2.5 rounded-xl border text-xs font-medium ${
+                  isDarkMode ? 'bg-amber-950/20 border-amber-500/25 text-amber-300' : 'bg-amber-50 border-amber-200 text-amber-900'
+                }`}>
+                  📌 <strong>Let op:</strong> 't Kofschip (-te / -de) geldt <em>alleen</em> voor regelmatige werkwoorden. Voor dit onregelmatige werkwoord gelden vaste onregelmatige vormen.
+                </div>
+              </div>
+            ) : (
+              <>
+                {stem && (
+                  <p className={`text-sm ${bodyText}`}>
+                    Stam:{' '}
+                    <span className="font-bold text-indigo-600 dark:text-indigo-400">{stem.cleanStem}</span>
+                    {' · '}
+                    <span className={`font-semibold text-sm ${isKofschipConsonant ? 'text-emerald-600 dark:text-emerald-400' : 'text-indigo-600 dark:text-indigo-400'}`}>
+                      {isKofschipConsonant ? "in 't kofschip (-te)" : 'niet in kofschip (-de)'}
+                    </span>
+                  </p>
+                )}
+                {stem?.voicedShift && (
+                  <p className="mt-1.5 text-xs text-amber-600 dark:text-amber-400 font-medium">
+                    ⚠️ v→f / z→s valkuil: altijd -de
+                  </p>
+                )}
+              </>
             )}
           </div>
 
           {/* ── Section 2: Voltooid Deelwoord ── */}
           <div>
-            <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
-              Voltooid Deelwoord (V.T.T.)
-            </p>
+            <div className="flex items-center justify-between mb-2">
+              <p className={`text-[11px] uppercase tracking-wider font-semibold ${labelText}`}>
+                Voltooid Deelwoord (V.T.T.)
+              </p>
+              {conjugation.isIrregular && (
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
+                  Exacte onregelmatige vorm
+                </span>
+              )}
+            </div>
             <div className={`rounded-xl border p-3.5 flex items-center justify-between ${cardBg}`}>
               <span className={`text-sm ${bodyText}`}>
                 Deelwoord:{' '}
-                <span className="font-bold text-indigo-500">
+                <span className="font-bold text-indigo-600 dark:text-indigo-400 text-base">
                   {conjugation.pastParticiple}
                 </span>
               </span>
-              <span className={`text-xs font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+              <span className={`text-xs font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                 ik {conjugation.perfect['1s']}
               </span>
             </div>
@@ -256,15 +295,22 @@ export function VerbChecker({
 
           {/* ── Section 3: Verleden Tijd (O.V.T.) ── */}
           <div>
-            <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
-              Verleden Tijd (O.V.T.)
-            </p>
+            <div className="flex items-center justify-between mb-2">
+              <p className={`text-[11px] uppercase tracking-wider font-semibold ${labelText}`}>
+                Verleden Tijd (O.V.T.)
+              </p>
+              {conjugation.isIrregular && (
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/25">
+                  Onregelmatig (Klankverandering)
+                </span>
+              )}
+            </div>
             <div className="grid grid-cols-2 gap-2">
               <div className={`rounded-xl border p-3.5 ${cardBg}`}>
                 <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
                   Enkelvoud
                 </span>
-                <span className="text-sm font-bold text-indigo-500">
+                <span className="text-sm sm:text-base font-bold text-indigo-600 dark:text-indigo-400">
                   {conjugation.past.singular}
                 </span>
               </div>
@@ -272,7 +318,7 @@ export function VerbChecker({
                 <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
                   Meervoud
                 </span>
-                <span className="text-sm font-bold text-indigo-500">
+                <span className="text-sm sm:text-base font-bold text-indigo-600 dark:text-indigo-400">
                   {conjugation.past.plural}
                 </span>
               </div>
@@ -293,15 +339,15 @@ export function VerbChecker({
               {/* ik */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>ik</span>
-                <span className="text-sm font-bold text-indigo-500">{conjugation.present['1s']}</span>
+                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['1s']}</span>
               </div>
               {/* jij/u */}
               <div className={`grid grid-cols-2 items-start px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>jij / u</span>
                 <div>
-                  <span className="text-sm font-bold text-indigo-500 block">{conjugation.present['2s']}</span>
+                  <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400 block">{conjugation.present['2s']}</span>
                   {conjugation.presentInverted['2s'] && conjugation.presentInverted['2s'] !== conjugation.present['2s'] && (
-                    <span className="text-[11px] text-amber-500 font-medium mt-0.5 block">
+                    <span className="text-[11px] text-amber-600 dark:text-amber-400 font-medium mt-0.5 block">
                       ↩ inversie: {conjugation.presentInverted['2s']}?
                     </span>
                   )}
@@ -310,22 +356,22 @@ export function VerbChecker({
               {/* hij/zij/het */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>hij / zij / het</span>
-                <span className="text-sm font-bold text-indigo-500">{conjugation.present['3s']}</span>
+                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['3s']}</span>
               </div>
               {/* wij */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>wij</span>
-                <span className="text-sm font-bold text-indigo-500">{conjugation.present['1p']}</span>
+                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['1p']}</span>
               </div>
               {/* jullie */}
               <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 border-b transition-colors ${rowHover}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>jullie</span>
-                <span className="text-sm font-bold text-indigo-500">{conjugation.present['2p']}</span>
+                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['2p']}</span>
               </div>
               {/* zij (meervoud) */}
-              <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 transition-colors ${isDarkMode ? 'hover:bg-white/5' : 'hover:bg-white'}`}>
+              <div className={`grid grid-cols-2 items-center px-3.5 py-2.5 transition-colors ${isDarkMode ? 'hover:bg-white/5' : 'hover:bg-slate-50'}`}>
                 <span className={`text-xs font-medium ${bodyText}`}>zij</span>
-                <span className="text-sm font-bold text-indigo-500">{conjugation.present['3p']}</span>
+                <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{conjugation.present['3p']}</span>
               </div>
             </div>
           </div>

@@ -122,4 +122,36 @@ describe('VerbChecker engine integration', () => {
     expect(result.isCorrect).toBe(true);
     expect(result.ruleId).toBe('correct');
   });
+
+  it('correctly handles irregular verb nemen without applying kofschip rule', () => {
+    const conj = conjugate('nemen');
+    expect(conj.isIrregular).toBe(true);
+    expect(conj.past.singular).toBe('nam');
+    expect(conj.past.plural).toBe('namen');
+    expect(conj.pastParticiple).toBe('genomen');
+
+    const resultPast = checkConjugation({
+      infinitive: 'nemen',
+      tense: 'past',
+      person: '1s',
+      userAnswer: 'neemde',
+    });
+
+    expect(resultPast.isCorrect).toBe(false);
+    expect(resultPast.ruleId).toBe('irregular_verb_past');
+    expect(resultPast.feedback).toContain('onregelmatig');
+    expect(resultPast.feedback).toContain('nam');
+
+    const resultPart = checkConjugation({
+      infinitive: 'nemen',
+      tense: 'pastParticiple',
+      person: '1s',
+      userAnswer: 'geneemd',
+    });
+
+    expect(resultPart.isCorrect).toBe(false);
+    expect(resultPart.ruleId).toBe('irregular_verb_participle');
+    expect(resultPart.feedback).toContain('onregelmatig');
+    expect(resultPart.feedback).toContain('genomen');
+  });
 });

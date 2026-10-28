@@ -9,6 +9,8 @@ export interface KofschipLogoProps {
   className?: string;
   /** Pulse or glow effect */
   glow?: boolean;
+  /** Dark mode toggle (default: true) */
+  isDarkMode?: boolean;
 }
 
 /**
@@ -22,10 +24,12 @@ export function KofschipEmblem({
   size = 40,
   glow = false,
   className = '',
+  isDarkMode = true,
 }: {
   size?: number;
   glow?: boolean;
   className?: string;
+  isDarkMode?: boolean;
 }) {
   return (
     <div
@@ -93,9 +97,18 @@ export function KofschipEmblem({
           </filter>
         </defs>
 
-        {/* 1. Squircle Shield Container with Subtle Glass Rim */}
+        {/* 1. Squircle Shield Container with Crisp Rim */}
         <rect x="4" y="4" width="112" height="112" rx="28" fill="url(#kofschipBg)" />
-        <rect x="4" y="4" width="112" height="112" rx="28" fill="none" stroke="url(#rimGrad)" strokeWidth="1.5" />
+        <rect
+          x="4"
+          y="4"
+          width="112"
+          height="112"
+          rx="28"
+          fill="none"
+          stroke={isDarkMode ? 'url(#rimGrad)' : '#CBD5E1'}
+          strokeWidth={isDarkMode ? '1.5' : '2.5'}
+        />
 
         {/* 2. Historic Kofschip Sail & Calligraphy Wave swoosh */}
         <path
@@ -160,6 +173,7 @@ export function KofschipLogo({
   showSubtitle = true,
   className = '',
   glow = false,
+  isDarkMode = true,
 }: KofschipLogoProps) {
   const pixelSize =
     typeof size === 'number'
@@ -176,21 +190,29 @@ export function KofschipLogo({
 
   return (
     <div className={`inline-flex items-center gap-2.5 select-none ${className}`}>
-      <KofschipEmblem size={pixelSize} glow={glow} />
+      <KofschipEmblem size={pixelSize} glow={glow} isDarkMode={isDarkMode} />
 
       {showText && (
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-1.5 leading-none">
-            <span className="font-extrabold text-slate-100 tracking-tight text-base sm:text-lg">
-              <span className="text-indigo-400 font-bold mr-0.5">'t</span>
+            <span className={`font-extrabold tracking-tight text-base sm:text-lg ${
+              isDarkMode ? 'text-slate-100' : 'text-slate-900'
+            }`}>
+              <span className={`font-bold mr-0.5 ${isDarkMode ? 'text-indigo-400' : 'text-indigo-600'}`}>'t</span>
               Kofschip
             </span>
-            <span className="px-1.5 py-0.5 rounded-md backdrop-blur-xl bg-indigo-950/60 text-indigo-300 text-[10px] font-extrabold uppercase tracking-wider border border-indigo-500/30 shadow-sm">
+            <span className={`px-1.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider border shadow-sm ${
+              isDarkMode
+                ? 'backdrop-blur-xl bg-indigo-950/60 text-indigo-300 border-indigo-500/30'
+                : 'bg-indigo-50 text-indigo-900 border-slate-300'
+            }`}>
               NT2
             </span>
           </div>
           {showSubtitle && (
-            <span className="text-[11px] text-slate-400 font-medium tracking-normal mt-0.5 block leading-tight">
+            <span className={`text-[11px] font-semibold tracking-normal mt-0.5 block leading-tight ${
+              isDarkMode ? 'text-slate-400' : 'text-slate-700'
+            }`}>
               Dutch NT2 Verb Master
             </span>
           )}
@@ -203,31 +225,45 @@ export function KofschipLogo({
 /**
  * Hero Section Emblem with subtle glowing pedestal & 't Kofschip grammar badge
  */
-export function KofschipHeroBadge({ className = '' }: { className?: string }) {
+export function KofschipHeroBadge({
+  className = '',
+  isDarkMode = true,
+}: {
+  className?: string;
+  isDarkMode?: boolean;
+}) {
   return (
     <div
-      className={`relative inline-flex items-center gap-3 p-2 pr-4 rounded-2xl backdrop-blur-2xl bg-indigo-950/30 border border-indigo-500/20 shadow-xl shadow-indigo-950/50 hover:border-indigo-400/40 transition-all group ${className}`}
+      className={`relative inline-flex items-center gap-3 p-2 pr-4 rounded-2xl border transition-all group ${
+        isDarkMode
+          ? 'backdrop-blur-2xl bg-indigo-950/30 border-indigo-500/20 shadow-xl shadow-indigo-950/50 hover:border-indigo-400/40'
+          : 'bg-white border-slate-300 shadow-md hover:border-slate-400'
+      } ${className}`}
     >
       {/* Radiant glow under the emblem */}
       <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-indigo-500/20 via-emerald-500/15 to-purple-500/20 blur-md opacity-70 group-hover:opacity-100 transition duration-300 pointer-events-none" />
 
-      <KofschipEmblem size={44} glow={true} />
+      <KofschipEmblem size={44} glow={true} isDarkMode={isDarkMode} />
 
       <div className="relative z-10 text-left">
         <div className="flex items-center gap-2">
-          <span className="text-xs font-extrabold tracking-tight text-slate-100">
+          <span className={`text-xs font-extrabold tracking-tight ${isDarkMode ? 'text-slate-100' : 'text-slate-900'}`}>
             't Kofschip Engine
           </span>
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-950/50 text-emerald-300 border border-emerald-500/30">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold ${
+            isDarkMode
+              ? 'bg-emerald-950/50 text-emerald-300 border border-emerald-500/30'
+              : 'bg-emerald-50 text-emerald-800 border border-emerald-300'
+          }`}>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Vervoeging A1–B2
           </span>
         </div>
-        <p className="text-[11px] text-slate-400 mt-0.5 font-normal leading-tight">
+        <p className={`text-[11px] mt-0.5 font-normal leading-tight ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
           Stamregel • Klankvalkuilen{' '}
-          <span className="text-slate-300 font-semibold">v/f</span>{' '}
+          <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-900'}`}>v/f</span>{' '}
           &amp;{' '}
-          <span className="text-slate-300 font-semibold">z/s</span>
+          <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-900'}`}>z/s</span>
         </p>
       </div>
     </div>
