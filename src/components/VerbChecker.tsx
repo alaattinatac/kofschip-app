@@ -236,7 +236,50 @@ export function VerbChecker({
             )}
           </div>
 
-          {/* ── Section 2: Present Tense (O.T.T.) ── */}
+          {/* ── Section 2: Voltooid Deelwoord ── */}
+          <div>
+            <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
+              Voltooid Deelwoord (V.T.T.)
+            </p>
+            <div className={`rounded-xl border p-3.5 flex items-center justify-between ${cardBg}`}>
+              <span className={`text-sm ${bodyText}`}>
+                Deelwoord:{' '}
+                <span className="font-bold text-indigo-500">
+                  {conjugation.pastParticiple}
+                </span>
+              </span>
+              <span className={`text-xs font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                ik {conjugation.perfect['1s']}
+              </span>
+            </div>
+          </div>
+
+          {/* ── Section 3: Verleden Tijd (O.V.T.) ── */}
+          <div>
+            <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
+              Verleden Tijd (O.V.T.)
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              <div className={`rounded-xl border p-3.5 ${cardBg}`}>
+                <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
+                  Enkelvoud
+                </span>
+                <span className="text-sm font-bold text-indigo-500">
+                  {conjugation.past.singular}
+                </span>
+              </div>
+              <div className={`rounded-xl border p-3.5 ${cardBg}`}>
+                <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
+                  Meervoud
+                </span>
+                <span className="text-sm font-bold text-indigo-500">
+                  {conjugation.past.plural}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Section 4: Onvoltooid Tegenwoordige Tijd (O.T.T.) ── */}
           <div>
             <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
               Onvoltooid Tegenwoordige Tijd (O.T.T.)
@@ -284,49 +327,6 @@ export function VerbChecker({
                 <span className={`text-xs font-medium ${bodyText}`}>zij</span>
                 <span className="text-sm font-bold text-indigo-500">{conjugation.present['3p']}</span>
               </div>
-            </div>
-          </div>
-
-          {/* ── Section 3: Past Tense (O.V.T.) ── */}
-          <div>
-            <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
-              Verleden Tijd (O.V.T.)
-            </p>
-            <div className="grid grid-cols-2 gap-2">
-              <div className={`rounded-xl border p-3.5 ${cardBg}`}>
-                <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
-                  Enkelvoud
-                </span>
-                <span className="text-sm font-bold text-indigo-500">
-                  {conjugation.past.singular}
-                </span>
-              </div>
-              <div className={`rounded-xl border p-3.5 ${cardBg}`}>
-                <span className={`text-[11px] font-semibold block mb-1 ${bodyText}`}>
-                  Meervoud
-                </span>
-                <span className="text-sm font-bold text-indigo-500">
-                  {conjugation.past.plural}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* ── Section 4: Past Participle (Voltooid Deelwoord) ── */}
-          <div>
-            <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
-              Voltooid Deelwoord
-            </p>
-            <div className={`rounded-xl border p-3.5 flex items-center justify-between ${cardBg}`}>
-              <span className={`text-sm ${bodyText}`}>
-                Deelwoord:{' '}
-                <span className="font-bold text-indigo-500">
-                  {conjugation.pastParticiple}
-                </span>
-              </span>
-              <span className={`text-xs font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
-                ik {conjugation.perfect['1s']}
-              </span>
             </div>
           </div>
         </div>

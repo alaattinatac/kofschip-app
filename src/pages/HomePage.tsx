@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { getPremiumStatus, isLocalPremium, onPremiumStatusChange } from '../lib/purchases';
 import { VerbChecker } from '../components/VerbChecker';
-import { VerbScanner } from '../components/VerbScanner';
+import { WordVault } from '../components/WordVault';
 import { MijnFouten, type SavedWord } from '../components/MijnFouten';
 import { PaywallModal, BannerAdContainer } from '../components/PaywallModal';
 import { KofschipLogo } from '../components/KofschipLogo';
@@ -10,7 +10,7 @@ import {
   Search,
   BookOpen,
   CheckCircle2,
-  Camera,
+  BookMarked,
   Sun,
   Moon,
   Volume2,
@@ -30,7 +30,7 @@ const COMMON_EXAMPLE_VERBS = [
 ];
 
 export function HomePage() {
-  const [activeTab, setActiveTab] = useState<'checker' | 'scanner' | 'fouten'>('checker');
+  const [activeTab, setActiveTab] = useState<'checker' | 'vault' | 'fouten'>('checker');
   const [activeVerbForChecker, setActiveVerbForChecker] = useState<string>('leven');
   const [searchInputValue, setSearchInputValue] = useState<string>('leven');
   const [isPaywallOpen, setIsPaywallOpen] = useState<boolean>(false);
@@ -322,16 +322,15 @@ export function HomePage() {
           />
         )}
 
-        {activeTab === 'scanner' && (
-          <VerbScanner
-            isPremium={isPremium}
-            onOpenPaywall={() => setIsPaywallOpen(true)}
-            onSaveToMijnFouten={handleSaveToMijnFouten}
-            onInspectVerb={(verb) => {
+        {activeTab === 'vault' && (
+          <WordVault
+            onSelectVerbForInspection={(verb) => {
               setActiveVerbForChecker(verb);
               setSearchInputValue(verb);
               setActiveTab('checker');
             }}
+            onOpenPaywall={() => setIsPaywallOpen(true)}
+            isDarkMode={isDarkMode}
           />
         )}
 
@@ -374,17 +373,17 @@ export function HomePage() {
           </button>
 
           <button
-            onClick={() => setActiveTab('scanner')}
+            onClick={() => setActiveTab('vault')}
             className={`flex items-center justify-center gap-1.5 flex-1 py-2.5 px-3 rounded-xl text-xs transition-all active:scale-95 ${
-              activeTab === 'scanner'
+              activeTab === 'vault'
                 ? 'bg-indigo-600 text-white font-semibold'
                 : isDarkMode
                   ? 'text-slate-400 hover:text-slate-200 font-medium'
                   : 'text-slate-500 hover:text-slate-800 font-medium'
             }`}
           >
-            <Camera className="w-4 h-4" />
-            <span>Scanner</span>
+            <BookMarked className="w-4 h-4" />
+            <span>Mijn Vault</span>
           </button>
 
           <button
