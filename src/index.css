@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* iOS Safe Area Support */
+@supports (padding: env(safe-area-inset-top)) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-area-x {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Custom scrollbar for mobile/desktop smoothness */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.5);
+}
+
+/* Hide scrollbars for clean chip carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Prevent pull-to-refresh on mobile */
+html {
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Selection color */
+::selection {
+  background-color: #c7d2fe;
+  color: #1e1b4b;
+}
+.dark ::selection {
+  background-color: #3730a3;
+  color: #e0e7ff;
+}
+
+/* Glassmorphism & Micro-Interactions */
+@layer utilities {
+  .neo-glass {
+    @apply backdrop-blur-2xl bg-indigo-950/20 border border-indigo-500/15 shadow-2xl;
+  }
+  .neo-glass-subtle {
+    @apply backdrop-blur-xl bg-indigo-950/30 border border-indigo-500/15;
+  }
+  .neo-glass-card {
+    @apply backdrop-blur-2xl bg-indigo-950/25 border border-indigo-500/20 shadow-2xl shadow-indigo-950/50;
+  }
+  .glass-panel {
+    @apply backdrop-blur-xl bg-white/80 dark:bg-slate-900/80 border border-white/70 dark:border-slate-800/80 shadow-glass;
+  }
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/85 dark:bg-slate-900/85 border border-slate-100/80 dark:border-slate-800/80 shadow-xl shadow-slate-200/50 dark:shadow-indigo-950/20;
+  }
+  .glass-pill {
+    @apply backdrop-blur-md bg-white/70 dark:bg-slate-800/70 border border-white/60 dark:border-slate-700/60 shadow-xs;
+  }
+  .spring-press {
+    @apply active:scale-95 transition-all duration-200 ease-out;
+  }
+  .verb-correct {
+    @apply bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/60 rounded-xl px-2 py-0.5;
+    animation: flash-correct 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .verb-incorrect {
+    @apply bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-700/60 rounded-xl px-2 py-0.5;
+    animation: flash-incorrect 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+@keyframes flash-correct {
+  0% { background-color: #a7f3d0; transform: scale(1.04); }
+  100% { background-color: #d1fae5; transform: scale(1); }
+}
+
+@keyframes flash-incorrect {
+  0% { background-color: #fecdd3; transform: scale(1.04); }
+  100% { background-color: #ffe4e6; transform: scale(1); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.98); }
+}
+
+@keyframes scan-beam {
+  0% {
+    top: 0%;
+    opacity: 0.7;
+  }
+  50% {
+    top: 96%;
+    opacity: 1;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.7;
+  }
+}
+
+.animate-scan-beam {
+  animation: scan-beam 2.4s ease-in-out infinite;
+}

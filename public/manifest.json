@@ -1,0 +1,84 @@
+{
+  "id": "/",
+  "name": "Kofschip — Dutch NT2 Verb Master",
+  "short_name": "Kofschip",
+  "description": "Master Dutch verb conjugation — 't Kofschip rule engine, AI camera scan, and spaced repetition for NT2 students and Inburgering candidates.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#1d4ed8",
+  "lang": "nl",
+  "dir": "ltr",
+  "categories": ["education", "language", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/kofschip-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "'t Kofschip Checker",
+      "short_name": "Checker",
+      "description": "Controleer werkwoordvervoegingen direct",
+      "url": "/#checker",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "AI Camera Scanner",
+      "short_name": "Scanner",
+      "description": "Scan Nederlandse tekst met AI camera",
+      "url": "/#scanner",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Mijn Fouten",
+      "short_name": "Fouten",
+      "description": "Oefen je persoonlijke werkwoordfouten",
+      "url": "/#fouten",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}
