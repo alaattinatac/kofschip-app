@@ -15,7 +15,7 @@ export interface VerbCheckerProps {
 }
 
 const COMMON_EXAMPLE_VERBS = [
-  { verb: 'werken',    tag: "'t Kofschip (-te)" },
+  { verb: 'werken',    tag: "Regelmatig (-te)" },
   { verb: 'leven',     tag: 'v → f trap (-de)' },
   { verb: 'verhuizen', tag: 'z → s trap (-de)' },
   { verb: 'opbellen',  tag: 'Scheidbaar' },
@@ -67,7 +67,7 @@ export function VerbChecker({
     if (!activeVerb) return;
     if (onSaveToMijnFouten) {
       await onSaveToMijnFouten(activeVerb);
-      setSavedNotification(`'${activeVerb}' opgeslagen in Mijn Fouten!`);
+      setSavedNotification(`'${activeVerb}' opgeslagen in Opgeslagen Woorden!`);
     } else {
       setSavedNotification(`'${activeVerb}' gemarkeerd voor herhaling!`);
     }
@@ -80,15 +80,15 @@ export function VerbChecker({
     : false;
 
   // Theme-aware style helpers aligned with Pedagogical Color Palette
-  const labelText = isDarkMode ? 'text-slate-400' : 'text-slate-500 font-semibold';
-  const bodyText = isDarkMode ? 'text-slate-300' : 'text-slate-600';
+  const labelText = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-semibold';
+  const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-600';
   const headingText = isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]';
   const cardBg = isDarkMode
     ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
-    : 'bg-white border-slate-200 shadow-xs';
+    : 'bg-white border-slate-200 shadow-sm';
   const cardBgWhite = isDarkMode
     ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
-    : 'bg-white border-slate-200 shadow-xs';
+    : 'bg-white border-slate-200 shadow-sm';
   const rowHover = isDarkMode ? 'border-white/5 hover:bg-white/5' : 'border-slate-100 hover:bg-slate-50/80';
   const dividerColor = isDarkMode ? 'border-white/10' : 'border-slate-200';
 
@@ -108,7 +108,7 @@ export function VerbChecker({
             </div>
             <button
               onClick={handleSaveWord}
-              aria-label="Opslaan in Mijn Fouten"
+              aria-label="Opslaan in Opgeslagen Woorden"
               className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 shrink-0 ${
                 isDarkMode
                   ? 'border-indigo-500/20 backdrop-blur-xl bg-indigo-950/30 hover:bg-indigo-900/40 text-slate-200'
@@ -136,7 +136,7 @@ export function VerbChecker({
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Typ een infinitief (bv. wonen, reizen, opbellen)..."
+                placeholder="Typ een werkwoord, bijv. lopen, nemen..."
                 className={`w-full pl-3 pr-20 py-2 bg-transparent border-0 text-sm font-medium focus:outline-none ${
                   isDarkMode ? 'text-slate-100 placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
                 }`}
@@ -146,7 +146,7 @@ export function VerbChecker({
                 className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 active:scale-95 text-white font-bold text-xs rounded-xl border border-indigo-400/30 transition-all shrink-0"
               >
                 <Search className="w-3.5 h-3.5" />
-                Zoek
+                Zoeken
               </button>
             </form>
           </div>
@@ -204,10 +204,15 @@ export function VerbChecker({
               <p className={`text-[11px] uppercase tracking-wider font-semibold ${labelText}`}>
                 {conjugation.isIrregular ? 'Werkwoord Status & Stam' : "Stam & 't Kofschip"}
               </p>
-              {conjugation.isIrregular && (
+              {conjugation.isIrregular ? (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-[#F59E0B]/15 text-[#F59E0B] border border-[#F59E0B]/30 shadow-xs">
                   <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
-                  Onregelmatig Werkwoord (Düzensiz Fiil)
+                  Onregelmatig Werkwoord
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 shadow-xs">
+                  <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+                  Regelmatig (Zwak) Werkwoord
                 </span>
               )}
             </div>
@@ -230,8 +235,8 @@ export function VerbChecker({
               </button>
               <button
                 onClick={handleSaveWord}
-                title="Opslaan in Mijn Fouten"
-                aria-label="Opslaan in Mijn Fouten"
+                title="Opslaan in Opgeslagen Woorden"
+                aria-label="Opslaan in Opgeslagen Woorden"
                 className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
                   isDarkMode
                     ? 'text-slate-400 border-white/10 hover:text-[#10B981] bg-white/5'
@@ -246,7 +251,7 @@ export function VerbChecker({
               <div className="space-y-1.5">
                 {stem && (
                   <p className={`text-sm ${bodyText}`}>
-                    Stam (Kök): <span className="font-bold text-[#3B82F6]">{stem.cleanStem}</span>
+                    Stam: <span className="font-bold text-[#3B82F6]">{stem.cleanStem}</span>
                   </p>
                 )}
                 <div className={`p-2.5 rounded-xl border text-xs font-medium ${
@@ -259,7 +264,7 @@ export function VerbChecker({
               <>
                 {stem && (
                   <p className={`text-sm ${bodyText}`}>
-                    Stam (Kök):{' '}
+                    Stam:{' '}
                     <span className="font-bold text-[#3B82F6]">{stem.cleanStem}</span>
                     {' · '}
                     <span className={`font-semibold text-sm ${isKofschipConsonant ? 'text-[#10B981]' : 'text-[#3B82F6]'}`}>

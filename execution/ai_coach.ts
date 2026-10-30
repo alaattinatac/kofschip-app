@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Kofschip AI Coach & Camera OCR Scan Integration
  *
  * File: /execution/ai_coach.ts
@@ -156,6 +156,50 @@ const LOCALIZED_COACHING: Record<
     }
   >
 > = {
+  nl: {
+    v_z_shift: {
+      title: "v → f / z → s Klankverschuiving Valkuil",
+      advice: (v, inf, c) =>
+        `Let op: Bij '${inf}' ondergaat de stam een klankverschuiving (v→f of z→s). De 't kofschip-regel wordt echter beoordeeld op de ORIGINELE medeklinker van het hele werkwoord (v of z). Omdat 'v' en 'z' NIET in 't kofschip zitten, krijgt de verleden tijd '-de', nooit '-te': '${c}' (niet '${v}')!`,
+      tip: "Kijk altijd naar de medeklinker van het infinitief: 'v' en 'z' zijn stemhebbend en krijgen altijd -de / -den.",
+    },
+    kofschip: {
+      title: "'t Kofschip Regel",
+      advice: (_v, inf, c) =>
+        `De ruwe stam van '${inf}' eindigt op een van de medeklinkers van 't kofschip (t, k, f, s, ch, p). Daarom krijgt de verleden tijd '-te / -ten' en eindigt het voltooid deelwoord op '-t': '${c}'.`,
+      tip: "Medeklinker in 't kofschip betekent: -te en -t.",
+    },
+    separable: {
+      title: "Scheidbaar Werkwoord",
+      advice: (_v, inf, c) =>
+        `'${inf}' is een scheidbaar werkwoord. In het voltooid deelwoord komt 'ge-' tussen het voorvoegsel en de stam te staan: '${c}'.`,
+      tip: "'ge-' staat altijd tussen het voorvoegsel en de stam (bijv. opgebeld, niet geopbeld).",
+    },
+    auxiliary: {
+      title: "Hulpwerkwoord: Hebben vs. Zijn",
+      advice: (_v, inf, c) =>
+        `'${inf}' geeft een beweging met richting of een verandering van toestand aan en gebruikt daarom het hulpwerkwoord 'zijn': '${c}'.`,
+      tip: "Verandering van toestand of gerichte beweging gebruikt 'zijn'.",
+    },
+    irregular: {
+      title: "Onregelmatig Werkwoord",
+      advice: (_v, inf, c) =>
+        `'${inf}' is een onregelmatig (sterk) werkwoord met een klinkerverandering. De juiste vorm is: '${c}'.`,
+      tip: "Onregelmatige werkwoorden veranderen van klank en moeten uit het hoofd geleerd worden.",
+    },
+    spelling: {
+      title: "Spelling- en Stamregels",
+      advice: (_v, inf, c) =>
+        `Bij het vormen van de stam van '${inf}' moet een open lettergreep verdubbeld worden om de lange klinker te behouden: '${c}'.`,
+      tip: "Behoud de lange klinker door deze te verdubbelen in gesloten lettergrepen (bijv. maken -> maak).",
+    },
+    correct: {
+      title: "Uitstekend! Juiste Vervoeging",
+      advice: (v, inf) =>
+        `De vorm '${v}' voor het werkwoord '${inf}' is helemaal correct volgens de Nederlandse grammaticaregels.`,
+      tip: "Goed gedaan! Blijf zo doorgaan.",
+    },
+  },
   tr: {
     v_z_shift: {
       title: "v → f / z → s Klankverschuiving Valkuil",
@@ -298,10 +342,10 @@ export function getLocalizedCoaching(
   verb: string,
   infinitive: string,
   correctForm: string,
-  langCode: string = 'en'
+  langCode: string = 'nl'
 ): { title: string; advice: string; tip: string } {
   const norm = langCode.toLowerCase().slice(0, 2);
-  const langDict = LOCALIZED_COACHING[norm] || LOCALIZED_COACHING.en;
+  const langDict = LOCALIZED_COACHING[norm] || LOCALIZED_COACHING.nl || LOCALIZED_COACHING.en;
   const rule = langDict[category] || langDict.kofschip;
   return {
     title: rule.title,

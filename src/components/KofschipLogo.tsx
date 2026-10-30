@@ -196,7 +196,7 @@ export function KofschipLogo({
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-1.5 leading-none">
             <span className={`font-extrabold tracking-tight text-base sm:text-lg ${
-              isDarkMode ? 'text-slate-100' : 'text-slate-900'
+              isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]'
             }`}>
               <span className={`font-bold mr-0.5 ${isDarkMode ? 'text-indigo-400' : 'text-indigo-600'}`}>'t</span>
               Kofschip
@@ -211,9 +211,9 @@ export function KofschipLogo({
           </div>
           {showSubtitle && (
             <span className={`text-[11px] font-semibold tracking-normal mt-0.5 block leading-tight ${
-              isDarkMode ? 'text-slate-400' : 'text-slate-700'
+              isDarkMode ? 'text-slate-400' : 'text-slate-600'
             }`}>
-              Dutch NT2 Verb Master
+              Nederlandse Werkwoorden NT2
             </span>
           )}
         </div>
@@ -247,23 +247,23 @@ export function KofschipHeroBadge({
 
       <div className="relative z-10 text-left">
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-extrabold tracking-tight ${isDarkMode ? 'text-slate-100' : 'text-slate-900'}`}>
-            't Kofschip Engine
+          <span className={`text-xs font-extrabold tracking-tight ${isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]'}`}>
+            't Kofschip Vervoeging
           </span>
           <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold ${
             isDarkMode
               ? 'bg-emerald-950/50 text-emerald-300 border border-emerald-500/30'
               : 'bg-emerald-50 text-emerald-800 border border-emerald-300'
           }`}>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
             Vervoeging A1–B2
           </span>
         </div>
         <p className={`text-[11px] mt-0.5 font-normal leading-tight ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
           Stamregel • Klankvalkuilen{' '}
-          <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-900'}`}>v/f</span>{' '}
+          <span className={`font-semibold ${isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]'}`}>v/f</span>{' '}
           &amp;{' '}
-          <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-900'}`}>z/s</span>
+          <span className={`font-semibold ${isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]'}`}>z/s</span>
         </p>
       </div>
     </div>

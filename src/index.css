@@ -6,6 +6,7 @@
   :root {
     --bg-main: #F8FAFC;
     --text-primary: #0F172A;
+    --text-secondary: #475569;
     --card-bg: #FFFFFF;
     --card-border: #E2E8F0;
     --stem-blue: #3B82F6;
@@ -16,6 +17,7 @@
   .dark {
     --bg-main: #0B0F19;
     --text-primary: #E2E8F0;
+    --text-secondary: #94A3B8;
     --card-bg: rgba(21, 29, 42, 0.8);
     --card-border: rgba(255, 255, 255, 0.1);
     --stem-blue: #3B82F6;
@@ -95,7 +97,7 @@ html {
 @layer utilities {
   /* Pedagogical Card Styles */
   .pedagogical-card {
-    @apply bg-white border border-slate-200 shadow-xs dark:bg-[#151D2A]/80 dark:border-white/10 dark:backdrop-blur-xl dark:shadow-none;
+    @apply bg-white border border-slate-200 shadow-sm dark:bg-[#151D2A]/80 dark:border-white/10 dark:backdrop-blur-xl dark:shadow-none;
   }
   .pedagogical-card-subtle {
     @apply bg-slate-50 border border-slate-200/80 dark:bg-[#151D2A]/50 dark:border-white/5;

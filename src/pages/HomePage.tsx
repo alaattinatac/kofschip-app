@@ -20,10 +20,10 @@ const COMMON_EXAMPLE_VERBS = [
   { verb: 'leven', tag: 'v→f' },
   { verb: 'reizen', tag: 'z→s' },
   { verb: 'opbellen', tag: 'scheidbaar' },
-  { verb: 'lopen', tag: 'zijn' },
-  { verb: 'nemen', tag: 'onreg.' },
-  { verb: 'zijn', tag: 'onreg.' },
-  { verb: 'antwoorden', tag: '-d' },
+  { verb: 'lopen', tag: 'hebben/zijn' },
+  { verb: 'nemen', tag: 'onregelmatig' },
+  { verb: 'zijn', tag: 'onregelmatig' },
+  { verb: 'antwoorden', tag: '-de' },
 ];
 
 export function HomePage() {
@@ -230,7 +230,7 @@ export function HomePage() {
               type="text"
               value={searchInputValue}
               onChange={(e) => setSearchInputValue(e.target.value)}
-              placeholder="Zoek een infinitief… (bv. wonen, reizen, nemen)"
+              placeholder="Typ een werkwoord, bijv. lopen, nemen..."
               className={`flex-1 bg-transparent border-0 text-sm font-medium focus:outline-none ${
                 isDarkMode
                   ? 'text-[#E2E8F0] placeholder:text-slate-500'

@@ -6,7 +6,7 @@ export const APP_CONFIG = {
   name: 'Kofschip',
 
   /** App tagline */
-  tagline: 'Master Dutch Verbs',
+  tagline: 'Meester in Nederlandse Werkwoorden',
 
   /** Free tier daily scan limit */
   freeDailyScanLimit: Number(import.meta.env.VITE_FREE_DAILY_SCAN_LIMIT) || 3,

@@ -42,14 +42,14 @@ export function WordVault({
   const [checkingSession, setCheckingSession] = useState(true);
 
   // Theme helpers
-  const headingText = isDarkMode ? 'text-slate-100' : 'text-slate-900';
-  const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-500';
+  const headingText = isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]';
+  const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-600';
   const cardBg = isDarkMode
-    ? 'bg-white/5 border-white/10'
+    ? 'bg-[#151D2A]/80 border-white/10'
     : 'bg-white border-slate-200 shadow-sm';
   const inputBg = isDarkMode
-    ? 'bg-indigo-950/40 border-indigo-500/25 text-slate-100 placeholder:text-slate-500'
-    : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400';
+    ? 'bg-indigo-950/40 border-indigo-500/25 text-[#E2E8F0] placeholder:text-slate-500'
+    : 'bg-white border-slate-300 text-[#0F172A] placeholder:text-slate-400';
 
   const loadUser = useCallback(async () => {
     setCheckingSession(true);
@@ -144,10 +144,10 @@ export function WordVault({
               }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
-              Kelime Defterim &amp; Profil
+              Mijn Woorden / Opgeslagen Woorden
             </span>
             <h1 className={`text-xl sm:text-2xl font-extrabold tracking-tight ${headingText}`}>
-              Mijn Woordenschat
+              Opgeslagen Woorden
             </h1>
             <p className={`text-xs mt-0.5 ${bodyText}`}>
               Opgeslagen werkwoorden met Leitner SRS-herhaling.
@@ -194,7 +194,7 @@ export function WordVault({
             <div className="flex items-center gap-2.5">
               <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
               <span className={`font-semibold ${isDarkMode ? 'text-slate-200' : 'text-slate-700'}`}>
-                Pro: Sınırsız Kelime Kaydetme &amp; AI Cümle Üretici
+                Pro: Onbeperkt Woorden Opslaan &amp; AI-Zinnengenerator
               </span>
             </div>
             <span
@@ -202,7 +202,7 @@ export function WordVault({
                 isDarkMode ? 'text-indigo-300' : 'text-indigo-600'
               }`}
             >
-              <span>€14.99 Lifetime</span>
+              <span>Eenmalige Betaling · €14.99 Lifetime Pro</span>
               <Sparkles className="w-3 h-3 text-amber-300" />
             </span>
           </button>
@@ -212,6 +212,7 @@ export function WordVault({
         <MijnFouten
           onSelectVerbForInspection={onSelectVerbForInspection}
           onOpenPaywall={onOpenPaywall}
+          isDarkMode={isDarkMode}
         />
       </div>
     );
@@ -232,13 +233,13 @@ export function WordVault({
           }`}
         >
           <BookOpen className="w-3.5 h-3.5" />
-          Kelime Defterim &amp; Profil
+          Mijn Woorden / Opgeslagen Woorden
         </span>
         <h1 className={`text-xl sm:text-2xl font-extrabold tracking-tight ${headingText}`}>
-          Persoonlijk Woordenboek
+          Opgeslagen Woorden
         </h1>
         <p className={`text-xs mt-0.5 ${bodyText}`}>
-          Log in om je opgeslagen werkwoorden te synchroniseren via al je apparaten.
+          Inloggen / Registreren om je opgeslagen werkwoorden te synchroniseren via al je apparaten.
         </p>
       </div>
 

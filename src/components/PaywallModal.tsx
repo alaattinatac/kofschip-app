@@ -76,13 +76,13 @@ export function PaywallModal({
   const PRO_FEATURES = [
     {
       icon: EyeOff,
-      title: '🚫 100% Advertentievrij (Sıfır Reklam)',
-      desc: 'Seamless, distraction-free study.',
+      title: '🚫 100% Advertentievrij',
+      desc: 'Rustig studeren zonder storende advertenties.',
     },
     {
       icon: Brain,
-      title: '🧠 AI NT2 Inversie & Zinsbouwer (Akıllı Cümle & Inversie Koçu)',
-      desc: 'Generates real-world NT2 (A2/B1) exam sentences, Inversion rules (Devrik Cümle), and Bijzin (Omdat/Dat) structures for any verb.',
+      title: '🧠 AI NT2 Inversie & Zinsbouwer',
+      desc: 'Voorbeeldzinnen & Inversie: genereert authentieke NT2 (A2/B1) examenzinnen, inversieregels en bijzinconstructies (omdat/dat) voor elk werkwoord.',
     },
   ];
 
@@ -241,7 +241,7 @@ export function PaywallModal({
               >
                 Aankopen herstellen
               </button>
-              <span className="font-medium text-slate-500">iDEAL • Apple Pay • Card</span>
+              <span className="font-medium text-slate-500">iDEAL • Apple Pay • Creditcard</span>
             </div>
           </div>
         )}
@@ -280,7 +280,7 @@ export function BannerAdContainer({
       <div className={`rounded-2xl border p-3.5 px-4 flex items-center justify-between transition-colors ${
         isDarkMode
           ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
-          : 'bg-white border-slate-200 shadow-xs'
+          : 'bg-white border-slate-200 shadow-sm'
       }`}>
         {/* Ad Marker & Copy */}
         <div className="flex items-center gap-2.5 text-left">
@@ -291,7 +291,7 @@ export function BannerAdContainer({
             <p className={`font-bold line-clamp-1 ${isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]'}`}>
               🚫 100% Advertentievrij &amp; 🧠 AI NT2 Inversie Zinsbouwer
             </p>
-            <p className="text-[11px] text-slate-400 line-clamp-1">
+            <p className={`text-[11px] line-clamp-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
               Eenmalige Betaling · €14.99 Lifetime Pro • Geen abonnement
             </p>
           </div>
@@ -304,7 +304,7 @@ export function BannerAdContainer({
           className="shrink-0 inline-flex items-center justify-center gap-1.5 bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-xs transition-all ml-2"
         >
           <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
-          <span>Ga Pro</span>
+          <span>PRO</span>
         </button>
       </div>
     </aside>

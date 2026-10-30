@@ -61,7 +61,7 @@ export function VerbScanner({
 
   // Native language preference
   const [nativeLanguage, setNativeLanguage] = useState<string>(() => {
-    return localStorage.getItem(STORAGE_NATIVE_LANG_KEY) || 'tr';
+    return localStorage.getItem(STORAGE_NATIVE_LANG_KEY) || 'en';
   });
 
   // Daily scan limit tracking

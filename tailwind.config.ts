@@ -10,9 +10,9 @@ export default {
       colors: {
         // Pedagogical Grammar Accents & Design System
         pedagogical: {
-          stem: '#3B82F6',       // Focus Blue (Kök)
+          stem: '#3B82F6',       // Focus Blue (Stam)
           kofschip: '#10B981',   // Emerald Green ('t Kofschip regel)
-          irregular: '#F59E0B',  // Alert Amber (Onregelmatig)
+          irregular: '#F59E0B',  // Alert Amber (Onregelmatig Werkwoord)
         },
         // Dutch-inspired & modern color palette
         kofschip: {
