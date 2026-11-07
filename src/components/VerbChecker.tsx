@@ -4,36 +4,32 @@ import {
   KOFSCHIP_CONSONANTS,
   type FullConjugation,
 } from '@execution/verb_engine';
-import { Search, Bookmark, Volume2, Info, Check } from 'lucide-react';
+import { Search, Volume2, Info } from 'lucide-react';
 
 export interface VerbCheckerProps {
   initialVerb?: string;
-  onSaveToMijnFouten?: (infinitive: string) => Promise<boolean | void> | boolean | void;
-  onOpenPaywall?: () => void;
   hideSearch?: boolean;
   isDarkMode?: boolean;
 }
 
 const COMMON_EXAMPLE_VERBS = [
-  { verb: 'werken',    tag: "Regelmatig (-te)" },
-  { verb: 'leven',     tag: 'v → f trap (-de)' },
-  { verb: 'verhuizen', tag: 'z → s trap (-de)' },
-  { verb: 'opbellen',  tag: 'Scheidbaar' },
-  { verb: 'lopen',     tag: 'Hebben / Zijn' },
-  { verb: 'nemen',     tag: 'Onregelmatig' },
-  { verb: 'zijn',      tag: 'Onregelmatig' },
-  { verb: 'antwoorden',tag: 'Stam op -d' },
+  { verb: 'werken',     tag: "Regelmatig (-te)" },
+  { verb: 'leven',      tag: 'v → f trap (-de)' },
+  { verb: 'verhuizen',  tag: 'z → s trap (-de)' },
+  { verb: 'opbellen',   tag: 'Scheidbaar' },
+  { verb: 'lopen',      tag: 'Hebben / Zijn' },
+  { verb: 'nemen',      tag: 'Onregelmatig' },
+  { verb: 'zijn',       tag: 'Onregelmatig' },
+  { verb: 'antwoorden', tag: 'Stam op -d' },
 ];
 
 export function VerbChecker({
   initialVerb = 'leven',
-  onSaveToMijnFouten,
   hideSearch = false,
   isDarkMode = true,
 }: VerbCheckerProps) {
   const [searchTerm, setSearchTerm] = useState<string>(initialVerb);
   const [activeVerb, setActiveVerb] = useState<string>(initialVerb);
-  const [savedNotification, setSavedNotification] = useState<string | null>(null);
 
   const conjugation: FullConjugation | null = useMemo(() => {
     const trimmed = activeVerb.trim().toLowerCase();
@@ -50,7 +46,6 @@ export function VerbChecker({
     if (!target) return;
     setActiveVerb(target);
     setSearchTerm(target);
-    setSavedNotification(null);
   };
 
   const handlePronounce = (text: string) => {
@@ -63,30 +58,16 @@ export function VerbChecker({
     }
   };
 
-  const handleSaveWord = async () => {
-    if (!activeVerb) return;
-    if (onSaveToMijnFouten) {
-      await onSaveToMijnFouten(activeVerb);
-      setSavedNotification(`'${activeVerb}' opgeslagen in Opgeslagen Woorden!`);
-    } else {
-      setSavedNotification(`'${activeVerb}' gemarkeerd voor herhaling!`);
-    }
-    setTimeout(() => setSavedNotification(null), 3000);
-  };
-
   const stem = conjugation?.stem;
   const isKofschipConsonant = stem
     ? KOFSCHIP_CONSONANTS.has(stem.originalEndConsonant)
     : false;
 
-  // Theme-aware style helpers aligned with Pedagogical Color Palette
+  // Theme-aware style helpers aligned with CLAUDE.md Color System
   const labelText = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-semibold';
   const bodyText = isDarkMode ? 'text-slate-400' : 'text-slate-600';
   const headingText = isDarkMode ? 'text-[#E2E8F0]' : 'text-[#0F172A]';
   const cardBg = isDarkMode
-    ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
-    : 'bg-white border-slate-200 shadow-sm';
-  const cardBgWhite = isDarkMode
     ? 'bg-[#151D2A]/80 border-white/10 backdrop-blur-xl'
     : 'bg-white border-slate-200 shadow-sm';
   const rowHover = isDarkMode ? 'border-white/5 hover:bg-white/5' : 'border-slate-100 hover:bg-slate-50/80';
@@ -94,62 +75,44 @@ export function VerbChecker({
 
   return (
     <div className={`w-full space-y-4 ${headingText}`}>
-      {/* Search + chips */}
+      {/* Search + chips (alleen zichtbaar als hideSearch=false) */}
       {!hideSearch && (
         <>
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <h1 className={`text-xl sm:text-2xl font-extrabold tracking-tight ${headingText}`}>
-                Werkwoord Checker
-              </h1>
-              <p className={`text-xs mt-0.5 ${bodyText}`}>
-                Directe vervoegingen &amp; 't kofschip stamregels.
-              </p>
-            </div>
-            <button
-              onClick={handleSaveWord}
-              aria-label="Opslaan in Opgeslagen Woorden"
-              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 shrink-0 ${
-                isDarkMode
-                  ? 'border-indigo-500/20 backdrop-blur-xl bg-indigo-950/30 hover:bg-indigo-900/40 text-slate-200'
-                  : 'border-slate-300 bg-white hover:bg-slate-100 text-slate-900 shadow-sm'
-              }`}
-            >
-              <Bookmark className="w-3.5 h-3.5 text-indigo-500" />
-              Opslaan
-            </button>
+          <div>
+            <h1 className={`text-xl sm:text-2xl font-extrabold tracking-tight ${headingText}`}>
+              Werkwoord Checker
+            </h1>
+            <p className={`text-xs mt-0.5 ${bodyText}`}>
+              Directe vervoegingen &amp; 't kofschip stamregels.
+            </p>
           </div>
 
           {/* Search bar */}
-          <div className="relative group">
-            <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-indigo-500/30 via-indigo-400/20 to-emerald-500/20 blur-sm opacity-50 group-focus-within:opacity-100 transition duration-300 pointer-events-none" />
-            <form
-              onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
-              className={`relative flex items-center border rounded-xl p-1 transition-all focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-500/20 ${
-                isDarkMode
-                  ? 'backdrop-blur-xl bg-indigo-950/20 border-indigo-500/15'
-                  : 'bg-white border-slate-300 shadow-sm'
+          <form
+            onSubmit={(e) => { e.preventDefault(); handleSearch(); }}
+            className={`flex items-center border rounded-xl p-1 transition-all focus-within:border-[#3B82F6] focus-within:ring-2 focus-within:ring-blue-500/20 ${
+              isDarkMode
+                ? 'bg-[#151D2A]/80 border-white/10'
+                : 'bg-white border-slate-300 shadow-sm'
+            }`}
+          >
+            <Search className="ml-3 w-4 h-4 text-[#3B82F6] shrink-0" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Typ een werkwoord, bijv. lopen, nemen..."
+              className={`w-full pl-3 pr-4 py-2 bg-transparent border-0 text-sm font-medium focus:outline-none ${
+                isDarkMode ? 'text-slate-100 placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
               }`}
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-xs rounded-xl transition-all shrink-0"
             >
-              <Search className="ml-3 w-4 h-4 text-indigo-500 shrink-0" />
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Typ een werkwoord, bijv. lopen, nemen..."
-                className={`w-full pl-3 pr-20 py-2 bg-transparent border-0 text-sm font-medium focus:outline-none ${
-                  isDarkMode ? 'text-slate-100 placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
-                }`}
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 hover:from-indigo-500 hover:to-indigo-400 active:scale-95 text-white font-bold text-xs rounded-xl border border-indigo-400/30 transition-all shrink-0"
-              >
-                <Search className="w-3.5 h-3.5" />
-                Zoeken
-              </button>
-            </form>
-          </div>
+              Zoeken
+            </button>
+          </form>
 
           {/* Verb chips */}
           <div className="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar">
@@ -161,10 +124,10 @@ export function VerbChecker({
                   onClick={() => handleSearch(item.verb)}
                   className={`whitespace-nowrap px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all active:scale-95 ${
                     isActive
-                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-500 text-white border-indigo-400/80 shadow-sm'
+                      ? 'bg-[#3B82F6] text-white border-[#3B82F6] shadow-xs'
                       : isDarkMode
-                        ? 'backdrop-blur-xl bg-indigo-950/20 text-slate-300 border-indigo-500/15 hover:bg-indigo-900/40 hover:text-slate-100'
-                        : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100 hover:text-slate-950 shadow-sm'
+                        ? 'bg-[#151D2A]/80 text-slate-300 border-white/10 hover:bg-white/10'
+                        : 'bg-white text-slate-800 border-slate-300 hover:bg-slate-100 shadow-sm'
                   }`}
                 >
                   {item.verb}
@@ -176,40 +139,30 @@ export function VerbChecker({
         </>
       )}
 
-      {/* Saved toast */}
-      {savedNotification && (
-        <div className={`p-3.5 border text-xs rounded-2xl flex items-center gap-2 ${
-          isDarkMode
-            ? 'bg-emerald-950/40 border-emerald-500/30 text-emerald-200'
-            : 'bg-emerald-50 border-emerald-300 text-emerald-900'
-        }`}>
-          <Check className="w-4 h-4 text-emerald-500 shrink-0" />
-          <span className="font-semibold">{savedNotification}</span>
-        </div>
-      )}
-
       {/* Result card */}
       {conjugation ? (
         <div className={`rounded-2xl border-l-4 p-5 space-y-5 transition-all ${
           conjugation.isIrregular
-            ? 'border-l-[#F59E0B]'
+            ? 'border-l-[#F59E0B]'    // Amber — Onregelmatig Werkwoord
             : isKofschipConsonant
-              ? 'border-l-[#10B981]'
-              : 'border-l-[#3B82F6]'
-        } ${cardBgWhite}`}>
+              ? 'border-l-[#10B981]'  // Green — Regelmatig (Zwak), kofschip -te
+              : 'border-l-[#3B82F6]'  // Blue  — Regelmatig (Zwak), geen kofschip -de
+        } ${cardBg}`}>
 
-          {/* ── Section 1: Stem & Werkwoord Type / 't Kofschip ── */}
+          {/* ── Sectie 1: Stam & 't Kofschip ── */}
           <div>
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
               <p className={`text-[11px] uppercase tracking-wider font-semibold ${labelText}`}>
                 {conjugation.isIrregular ? 'Werkwoord Status & Stam' : "Stam & 't Kofschip"}
               </p>
               {conjugation.isIrregular ? (
+                // Amber badge — Onregelmatig Werkwoord (CLAUDE.md §4)
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-[#F59E0B]/15 text-[#F59E0B] border border-[#F59E0B]/30 shadow-xs">
                   <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
                   Onregelmatig Werkwoord
                 </span>
               ) : (
+                // Green badge — Regelmatig (Zwak) Werkwoord (CLAUDE.md §4)
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-[#10B981]/15 text-[#10B981] border border-[#10B981]/30 shadow-xs">
                   <span className="w-2 h-2 rounded-full bg-[#10B981]" />
                   Regelmatig (Zwak) Werkwoord
@@ -233,21 +186,10 @@ export function VerbChecker({
               >
                 <Volume2 className="w-4 h-4" />
               </button>
-              <button
-                onClick={handleSaveWord}
-                title="Opslaan in Opgeslagen Woorden"
-                aria-label="Opslaan in Opgeslagen Woorden"
-                className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
-                  isDarkMode
-                    ? 'text-slate-400 border-white/10 hover:text-[#10B981] bg-white/5'
-                    : 'text-slate-600 border-slate-200 hover:text-[#10B981] bg-slate-50'
-                }`}
-              >
-                <Bookmark className="w-4 h-4" />
-              </button>
             </div>
 
             {conjugation.isIrregular ? (
+              // Onregelmatig: toon stam + amber waarschuwing (CLAUDE.md §2)
               <div className="space-y-1.5">
                 {stem && (
                   <p className={`text-sm ${bodyText}`}>
@@ -261,6 +203,7 @@ export function VerbChecker({
                 </div>
               </div>
             ) : (
+              // Regelmatig: toon stam + kofschip-status (CLAUDE.md §2 & §4)
               <>
                 {stem && (
                   <p className={`text-sm ${bodyText}`}>
@@ -281,7 +224,7 @@ export function VerbChecker({
             )}
           </div>
 
-          {/* ── Section 2: Voltooid Deelwoord ── */}
+          {/* ── Sectie 2: Voltooid Deelwoord (V.T.T.) ── (CLAUDE.md §3) */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <p className={`text-[11px] uppercase tracking-wider font-semibold ${labelText}`}>
@@ -306,7 +249,7 @@ export function VerbChecker({
             </div>
           </div>
 
-          {/* ── Section 3: Verleden Tijd (O.V.T.) ── */}
+          {/* ── Sectie 3: Verleden Tijd (O.V.T.) ── (CLAUDE.md §3) */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <p className={`text-[11px] uppercase tracking-wider font-semibold ${labelText}`}>
@@ -338,7 +281,7 @@ export function VerbChecker({
             </div>
           </div>
 
-          {/* ── Section 4: Onvoltooid Tegenwoordige Tijd (O.T.T.) ── */}
+          {/* ── Sectie 4: Onvoltooid Tegenwoordige Tijd (O.T.T.) ── (CLAUDE.md §3) */}
           <div>
             <p className={`text-[11px] uppercase tracking-wider font-semibold mb-2 ${labelText}`}>
               Onvoltooid Tegenwoordige Tijd (O.T.T.)
@@ -390,7 +333,7 @@ export function VerbChecker({
           </div>
         </div>
       ) : (
-        <div className={`rounded-2xl border p-8 text-center ${cardBgWhite}`}>
+        <div className={`rounded-2xl border p-8 text-center ${cardBg}`}>
           <Info className="w-8 h-8 text-[#3B82F6] mx-auto mb-2" />
           <h3 className={`font-semibold text-sm ${headingText}`}>
             Geen werkwoord gevonden
