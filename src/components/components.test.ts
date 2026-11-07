@@ -3,7 +3,7 @@ import { VerbChecker } from './VerbChecker';
 import { VerbScanner } from './VerbScanner';
 import { MijnFouten } from './MijnFouten';
 import { PaywallModal, BannerAdContainer } from './PaywallModal';
-import { conjugate, checkConjugation, deriveStem } from '@execution/verb_engine';
+import { conjugate, checkConjugation, deriveStem, isValidDutchVerb } from '@execution/verb_engine';
 import {
   analyzeDutchTextDeterministically,
   getNativeLanguageLabel,
@@ -153,5 +153,28 @@ describe('VerbChecker engine integration', () => {
     expect(resultPart.ruleId).toBe('irregular_verb_participle');
     expect(resultPart.feedback).toContain('onregelmatig');
     expect(resultPart.feedback).toContain('genomen');
+  });
+
+  it('strictly validates Dutch verbs and rejects non-verbs', () => {
+    // Non-verbs must be rejected
+    expect(isValidDutchVerb('hello')).toBe(false);
+    expect(isValidDutchVerb('araba')).toBe(false);
+    expect(isValidDutchVerb('apple')).toBe(false);
+    expect(isValidDutchVerb('car')).toBe(false);
+    expect(isValidDutchVerb('computer')).toBe(false);
+    expect(isValidDutchVerb('blurfen')).toBe(false);
+
+    // Valid Dutch verbs must be accepted
+    expect(isValidDutchVerb('werken')).toBe(true);
+    expect(isValidDutchVerb('leven')).toBe(true);
+    expect(isValidDutchVerb('zijn')).toBe(true);
+    expect(isValidDutchVerb('hebben')).toBe(true);
+    expect(isValidDutchVerb('opbellen')).toBe(true);
+    expect(isValidDutchVerb('verhuizen')).toBe(true);
+
+    // Conjugation algorithm MUST NEVER run on invalid words and throw error
+    expect(() => conjugate('hello')).toThrowError(/INVALID_DUTCH_VERB/);
+    expect(() => conjugate('araba')).toThrowError(/INVALID_DUTCH_VERB/);
+    expect(() => conjugate('apple')).toThrowError(/INVALID_DUTCH_VERB/);
   });
 });

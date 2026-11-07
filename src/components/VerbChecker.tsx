@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react';
 import {
   conjugate,
+  isValidDutchVerb,
   KOFSCHIP_CONSONANTS,
   type FullConjugation,
 } from '@execution/verb_engine';
-import { Search, Volume2, Info } from 'lucide-react';
+import { Search, Volume2 } from 'lucide-react';
 
 export interface VerbCheckerProps {
   initialVerb?: string;
@@ -31,21 +32,27 @@ export function VerbChecker({
   const [searchTerm, setSearchTerm] = useState<string>(initialVerb);
   const [activeVerb, setActiveVerb] = useState<string>(initialVerb);
 
+  const normalizedVerb = activeVerb.trim().toLowerCase();
+  const isValid = useMemo(() => {
+    if (!normalizedVerb) return false;
+    return isValidDutchVerb(normalizedVerb);
+  }, [normalizedVerb]);
+
+  // Strict check: never run conjugation or 't kofschip algorithm on invalid words
   const conjugation: FullConjugation | null = useMemo(() => {
-    const trimmed = activeVerb.trim().toLowerCase();
-    if (!trimmed) return null;
+    if (!isValid || !normalizedVerb) return null;
     try {
-      return conjugate(trimmed);
+      return conjugate(normalizedVerb);
     } catch {
       return null;
     }
-  }, [activeVerb]);
+  }, [isValid, normalizedVerb]);
 
   const handleSearch = (verbToSearch?: string) => {
     const target = (verbToSearch ?? searchTerm).trim().toLowerCase();
     if (!target) return;
-    setActiveVerb(target);
     setSearchTerm(target);
+    setActiveVerb(target);
   };
 
   const handlePronounce = (text: string) => {
@@ -140,7 +147,17 @@ export function VerbChecker({
       )}
 
       {/* Result card */}
-      {conjugation ? (
+      {!isValid ? (
+        /* ── Geçersiz fiil uyarısı ── */
+        <div className={`rounded-2xl border p-8 text-center ${cardBg}`}>
+          <div className="w-10 h-10 rounded-full bg-red-500/15 border border-red-500/30 flex items-center justify-center mx-auto mb-3">
+            <span className="text-red-500 text-lg font-black">✕</span>
+          </div>
+          <h3 className={`font-extrabold text-sm ${isDarkMode ? 'text-red-400' : 'text-red-600'}`}>
+            Dit is geen geldig Nederlands werkwoord.
+          </h3>
+        </div>
+      ) : conjugation ? (
         <div className={`rounded-2xl border-l-4 p-5 space-y-5 transition-all ${
           conjugation.isIrregular
             ? 'border-l-[#F59E0B]'    // Amber — Onregelmatig Werkwoord
@@ -334,13 +351,12 @@ export function VerbChecker({
         </div>
       ) : (
         <div className={`rounded-2xl border p-8 text-center ${cardBg}`}>
-          <Info className="w-8 h-8 text-[#3B82F6] mx-auto mb-2" />
-          <h3 className={`font-semibold text-sm ${headingText}`}>
-            Geen werkwoord gevonden
+          <div className="w-10 h-10 rounded-full bg-red-500/15 border border-red-500/30 flex items-center justify-center mx-auto mb-3">
+            <span className="text-red-500 text-lg font-black">✕</span>
+          </div>
+          <h3 className={`font-extrabold text-sm ${isDarkMode ? 'text-red-400' : 'text-red-600'}`}>
+            Dit is geen geldig Nederlands werkwoord.
           </h3>
-          <p className={`text-xs mt-1 max-w-sm mx-auto ${bodyText}`}>
-            Controleer de spelling van &quot;{searchTerm}&quot; of kies een van de voorbeelden hierboven.
-          </p>
         </div>
       )}
     </div>
