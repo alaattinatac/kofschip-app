@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react';
 import {
-  conjugate,
-  isValidDutchVerb,
-  resolveInfinitive,
+  lookupVerb,
   KOFSCHIP_CONSONANTS,
   type FullConjugation,
 } from '@execution/verb_engine';
@@ -34,24 +32,16 @@ export function VerbChecker({
   const [activeVerb, setActiveVerb] = useState<string>(initialVerb);
 
   const normalizedVerb = activeVerb.trim().toLowerCase();
-  const isValid = useMemo(() => {
-    if (!normalizedVerb) return false;
-    return isValidDutchVerb(normalizedVerb);
+  
+  // 3-Tier Search Engine (3 Kademeli Arama Motoru)
+  const searchResult = useMemo(() => {
+    return lookupVerb(normalizedVerb);
   }, [normalizedVerb]);
 
-  // Strict check: never run conjugation or 't kofschip algorithm on invalid words
-  const conjugation: FullConjugation | null = useMemo(() => {
-    if (!isValid || !normalizedVerb) return null;
-    try {
-      return conjugate(normalizedVerb);
-    } catch {
-      return null;
-    }
-  }, [isValid, normalizedVerb]);
-
-  // Lemmatization: detect when user typed a conjugated form rather than the infinitive
-  const resolvedInfinitive = conjugation?.infinitive ?? resolveInfinitive(normalizedVerb) ?? normalizedVerb;
-  const wasLemmatized = isValid && resolvedInfinitive !== normalizedVerb;
+  const isValid = searchResult.isValid;
+  const conjugation: FullConjugation | null = searchResult.conjugation;
+  const resolvedInfinitive = searchResult.infinitive ?? normalizedVerb;
+  const wasLemmatized = searchResult.isConjugatedForm;
 
   const handleSearch = (verbToSearch?: string) => {
     const target = (verbToSearch ?? searchTerm).trim().toLowerCase();

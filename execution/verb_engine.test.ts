@@ -21,6 +21,9 @@ import {
   checkConjugation,
   isIrregular,
   KOFSCHIP_CONSONANTS,
+  resolveInfinitive,
+  lookupVerb,
+  IRREGULAR_LEMMA_MAP,
 } from './verb_engine.ts';
 
 let passed = 0;
@@ -364,6 +367,89 @@ const rNemenWrongPart = checkConjugation({
 });
 assertEquals(rNemenWrongPart.isCorrect, false, 'nemen "geneemd" is flagged incorrect');
 assertEquals(rNemenWrongPart.ruleId, 'irregular_verb_participle', 'nemen "geneemd" gets irregular_verb_participle ruleId');
+
+console.log('\n--- 10. IRREGULAR LEMMATIZATION LOOKUP MAP ---');
+// zijn: ("ben", "bent", "is", "was", "waren", "geweest") -> "zijn"
+assertEquals(IRREGULAR_LEMMA_MAP.get('ben'), 'zijn', 'IRREGULAR_LEMMA_MAP: ben -> zijn');
+assertEquals(IRREGULAR_LEMMA_MAP.get('bent'), 'zijn', 'IRREGULAR_LEMMA_MAP: bent -> zijn');
+assertEquals(IRREGULAR_LEMMA_MAP.get('is'), 'zijn', 'IRREGULAR_LEMMA_MAP: is -> zijn');
+assertEquals(IRREGULAR_LEMMA_MAP.get('was'), 'zijn', 'IRREGULAR_LEMMA_MAP: was -> zijn');
+assertEquals(IRREGULAR_LEMMA_MAP.get('waren'), 'zijn', 'IRREGULAR_LEMMA_MAP: waren -> zijn');
+assertEquals(IRREGULAR_LEMMA_MAP.get('geweest'), 'zijn', 'IRREGULAR_LEMMA_MAP: geweest -> zijn');
+
+// hebben: ("heeft", "had", "hadden", "gehad") -> "hebben"
+assertEquals(IRREGULAR_LEMMA_MAP.get('heeft'), 'hebben', 'IRREGULAR_LEMMA_MAP: heeft -> hebben');
+assertEquals(IRREGULAR_LEMMA_MAP.get('had'), 'hebben', 'IRREGULAR_LEMMA_MAP: had -> hebben');
+assertEquals(IRREGULAR_LEMMA_MAP.get('hadden'), 'hebben', 'IRREGULAR_LEMMA_MAP: hadden -> hebben');
+assertEquals(IRREGULAR_LEMMA_MAP.get('gehad'), 'hebben', 'IRREGULAR_LEMMA_MAP: gehad -> hebben');
+
+// gaan: ("gaat", "ging", "gingen", "gegaan") -> "gaan"
+assertEquals(IRREGULAR_LEMMA_MAP.get('gaat'), 'gaan', 'IRREGULAR_LEMMA_MAP: gaat -> gaan');
+assertEquals(IRREGULAR_LEMMA_MAP.get('ging'), 'gaan', 'IRREGULAR_LEMMA_MAP: ging -> gaan');
+assertEquals(IRREGULAR_LEMMA_MAP.get('gingen'), 'gaan', 'IRREGULAR_LEMMA_MAP: gingen -> gaan');
+assertEquals(IRREGULAR_LEMMA_MAP.get('gegaan'), 'gaan', 'IRREGULAR_LEMMA_MAP: gegaan -> gaan');
+
+// zien, doen, komen, kunnen
+assertEquals(IRREGULAR_LEMMA_MAP.get('ziet'), 'zien', 'IRREGULAR_LEMMA_MAP: ziet -> zien');
+assertEquals(IRREGULAR_LEMMA_MAP.get('zag'), 'zien', 'IRREGULAR_LEMMA_MAP: zag -> zien');
+assertEquals(IRREGULAR_LEMMA_MAP.get('gezien'), 'zien', 'IRREGULAR_LEMMA_MAP: gezien -> zien');
+assertEquals(IRREGULAR_LEMMA_MAP.get('deed'), 'doen', 'IRREGULAR_LEMMA_MAP: deed -> doen');
+assertEquals(IRREGULAR_LEMMA_MAP.get('gedaan'), 'doen', 'IRREGULAR_LEMMA_MAP: gedaan -> doen');
+assertEquals(IRREGULAR_LEMMA_MAP.get('kwam'), 'komen', 'IRREGULAR_LEMMA_MAP: kwam -> komen');
+assertEquals(IRREGULAR_LEMMA_MAP.get('gekomen'), 'komen', 'IRREGULAR_LEMMA_MAP: gekomen -> komen');
+assertEquals(IRREGULAR_LEMMA_MAP.get('kon'), 'kunnen', 'IRREGULAR_LEMMA_MAP: kon -> kunnen');
+assertEquals(IRREGULAR_LEMMA_MAP.get('gekund'), 'kunnen', 'IRREGULAR_LEMMA_MAP: gekund -> kunnen');
+
+console.log('\n--- 11. 3-TIER SEARCH ENGINE (LOOKUPVERB) ---');
+// 1. Kademe: Girilen kelime çekimli bir form mu? -> Doğrudan bağlı olduğu mastarın (infinitief) kartını bas
+const t1_ben = lookupVerb('ben');
+assertEquals(t1_ben.tier, 1, 'lookupVerb("ben") -> Tier 1');
+assertEquals(t1_ben.tierType, 'tier1_conjugated', 'lookupVerb("ben") -> tier1_conjugated');
+assertEquals(t1_ben.infinitive, 'zijn', 'lookupVerb("ben") -> resolved infinitive zijn');
+assertEquals(t1_ben.isConjugatedForm, true, 'lookupVerb("ben") -> isConjugatedForm true');
+assertEquals(t1_ben.conjugation?.infinitive, 'zijn', 'lookupVerb("ben") -> conjugation card is for zijn');
+
+const t1_werkte = lookupVerb('werkte');
+assertEquals(t1_werkte.tier, 1, 'lookupVerb("werkte") -> Tier 1');
+assertEquals(t1_werkte.infinitive, 'werken', 'lookupVerb("werkte") -> resolved infinitive werken');
+assertEquals(t1_werkte.isConjugatedForm, true, 'lookupVerb("werkte") -> isConjugatedForm true');
+assertEquals(t1_werkte.conjugation?.infinitive, 'werken', 'lookupVerb("werkte") -> conjugation card is for werken');
+
+const t1_gehad = lookupVerb('gehad');
+assertEquals(t1_gehad.tier, 1, 'lookupVerb("gehad") -> Tier 1');
+assertEquals(t1_gehad.infinitive, 'hebben', 'lookupVerb("gehad") -> resolved infinitive hebben');
+
+const t1_gingen = lookupVerb('gingen');
+assertEquals(t1_gingen.tier, 1, 'lookupVerb("gingen") -> Tier 1');
+assertEquals(t1_gingen.infinitive, 'gaan', 'lookupVerb("gingen") -> resolved infinitive gaan');
+
+// 2. Kademe: Girilen kelime düzenli fiil mi? -> 't Kofschip kuralını uygula
+const t2_werken = lookupVerb('werken');
+assertEquals(t2_werken.tier, 2, 'lookupVerb("werken") -> Tier 2');
+assertEquals(t2_werken.tierType, 'tier2_regular', 'lookupVerb("werken") -> tier2_regular');
+assertEquals(t2_werken.kofschipApplies, true, 'lookupVerb("werken") -> kofschipApplies true');
+assertEquals(t2_werken.conjugation?.stem.isKofschip, true, 'lookupVerb("werken") -> stem is kofschip');
+
+const t2_leven = lookupVerb('leven');
+assertEquals(t2_leven.tier, 2, 'lookupVerb("leven") -> Tier 2');
+assertEquals(t2_leven.tierType, 'tier2_regular', 'lookupVerb("leven") -> tier2_regular');
+assertEquals(t2_leven.kofschipApplies, true, 'lookupVerb("leven") -> kofschipApplies true');
+assertEquals(t2_leven.conjugation?.stem.isKofschip, false, 'lookupVerb("leven") -> stem is NOT kofschip (v)');
+
+// 3. Kademe: Geçersiz/Bilinmeyen kelime ise -> "Dit is geen geldig Nederlands werkwoord."
+const t3_invalid1 = lookupVerb('hello');
+assertEquals(t3_invalid1.tier, 3, 'lookupVerb("hello") -> Tier 3');
+assertEquals(t3_invalid1.tierType, 'tier3_invalid', 'lookupVerb("hello") -> tier3_invalid');
+assertEquals(t3_invalid1.isValid, false, 'lookupVerb("hello") -> isValid false');
+assertEquals(t3_invalid1.feedback, 'Dit is geen geldig Nederlands werkwoord.', 'lookupVerb("hello") -> shows exact error message');
+
+const t3_invalid2 = lookupVerb('araba');
+assertEquals(t3_invalid2.tier, 3, 'lookupVerb("araba") -> Tier 3');
+assertEquals(t3_invalid2.feedback, 'Dit is geen geldig Nederlands werkwoord.', 'lookupVerb("araba") -> shows exact error message');
+
+const t3_invalid3 = lookupVerb('blurfen');
+assertEquals(t3_invalid3.tier, 3, 'lookupVerb("blurfen") -> Tier 3');
+assertEquals(t3_invalid3.feedback, 'Dit is geen geldig Nederlands werkwoord.', 'lookupVerb("blurfen") -> shows exact error message');
 
 // Summary
 console.log(`\n========================================`);

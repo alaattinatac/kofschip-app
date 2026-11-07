@@ -2472,6 +2472,936 @@ export function getPastParticiple(infinitive: string): string {
  * @throws {Error} If the input is not a valid Dutch verb infinitive.
  */
 // ============================================================================
+// Tier-1: Central Explicit Irregular-Form → Infinitive Lookup Map
+// (Tersine Arama / Lemmatizasyon — Kademe 1)
+// ============================================================================
+
+/**
+ * IRREGULAR_LEMMA_MAP  –  the single-source-of-truth reverse lookup for every
+ * inflected form of every common Dutch irregular verb.
+ *
+ * Layout per entry:
+ *   "<form>" => "<infinitief>"
+ *
+ * Covers OTT (tegenwoordige tijd), OVT (onvoltooid verleden tijd) and
+ * VD (voltooid deelwoord / past participle) for all verbs in IRREGULAR_VERBS.
+ *
+ * Rules:
+ *  - The infinitief itself maps to itself.
+ *  - Every OTT personal form (ik/jij/hij/wij/jullie/zij + inversion) is listed.
+ *  - Every OVT singular and plural form is listed.
+ *  - Every VD (past participle) is listed.
+ *  - Alternative / archaic forms are included where applicable.
+ *
+ * This map is intentionally hand-authored for the most common irregular verbs
+ * so that the lookup is O(1) and 100 % reliable even before the auto-generated
+ * VERB_LEMMATIZATION_MAP is populated.
+ */
+export const IRREGULAR_LEMMA_MAP = new Map<string, string>([
+  // ── zijn ──────────────────────────────────────────────────────────────────
+  ['zijn',    'zijn'],
+  // OTT
+  ['ben',     'zijn'],
+  ['bent',    'zijn'],
+  ['is',      'zijn'],
+  // OVT
+  ['was',     'zijn'],
+  ['waren',   'zijn'],
+  // VD
+  ['geweest', 'zijn'],
+
+  // ── hebben ────────────────────────────────────────────────────────────────
+  ['hebben',  'hebben'],
+  // OTT
+  ['heb',     'hebben'],
+  ['hebt',    'hebben'],
+  ['heeft',   'hebben'],
+  // OVT
+  ['had',     'hebben'],
+  ['hadden',  'hebben'],
+  // VD
+  ['gehad',   'hebben'],
+
+  // ── worden ────────────────────────────────────────────────────────────────
+  ['worden',  'worden'],
+  // OTT
+  ['word',    'worden'],
+  ['wordt',   'worden'],
+  // OVT
+  ['werd',    'worden'],
+  ['werden',  'worden'],
+  // VD
+  ['geworden','worden'],
+
+  // ── gaan ──────────────────────────────────────────────────────────────────
+  ['gaan',    'gaan'],
+  // OTT
+  ['ga',      'gaan'],
+  ['gaat',    'gaan'],
+  // OVT
+  ['ging',    'gaan'],
+  ['gingen',  'gaan'],
+  // VD
+  ['gegaan',  'gaan'],
+
+  // ── komen ─────────────────────────────────────────────────────────────────
+  ['komen',   'komen'],
+  // OTT  (regular present: kom / komt)
+  ['kom',     'komen'],
+  ['komt',    'komen'],
+  // OVT
+  ['kwam',    'komen'],
+  ['kwamen',  'komen'],
+  // VD
+  ['gekomen', 'komen'],
+
+  // ── kunnen ────────────────────────────────────────────────────────────────
+  ['kunnen',  'kunnen'],
+  // OTT
+  ['kan',     'kunnen'],
+  ['kunt',    'kunnen'],
+  ['kun',     'kunnen'],
+  // OVT
+  ['kon',     'kunnen'],
+  ['konden',  'kunnen'],
+  // VD
+  ['gekund',  'kunnen'],
+
+  // ── zullen ────────────────────────────────────────────────────────────────
+  ['zullen',  'zullen'],
+  // OTT
+  ['zal',     'zullen'],
+  ['zult',    'zullen'],
+  ['zul',     'zullen'],
+  // OVT
+  ['zou',     'zullen'],
+  ['zouden',  'zullen'],
+
+  // ── moeten ────────────────────────────────────────────────────────────────
+  ['moeten',  'moeten'],
+  // OTT
+  ['moet',    'moeten'],
+  // OVT
+  ['moest',   'moeten'],
+  ['moesten', 'moeten'],
+  // VD
+  ['gemoeten','moeten'],
+
+  // ── mogen ─────────────────────────────────────────────────────────────────
+  ['mogen',   'mogen'],
+  // OTT
+  ['mag',     'mogen'],
+  ['moogt',   'mogen'],
+  // OVT
+  ['mocht',   'mogen'],
+  ['mochten', 'mogen'],
+  // VD
+  ['gemogen', 'mogen'],
+
+  // ── willen ────────────────────────────────────────────────────────────────
+  ['willen',  'willen'],
+  // OTT
+  ['wil',     'willen'],
+  ['wilt',    'willen'],
+  // OVT
+  ['wilde',   'willen'],
+  ['wilden',  'willen'],
+  ['wou',     'willen'],
+  ['wouden',  'willen'],
+  // VD
+  ['gewild',  'willen'],
+
+  // ── doen ──────────────────────────────────────────────────────────────────
+  ['doen',    'doen'],
+  // OTT
+  ['doe',     'doen'],
+  ['doet',    'doen'],
+  // OVT
+  ['deed',    'doen'],
+  ['deden',   'doen'],
+  // VD
+  ['gedaan',  'doen'],
+
+  // ── zien ──────────────────────────────────────────────────────────────────
+  ['zien',    'zien'],
+  // OTT
+  ['zie',     'zien'],
+  ['ziet',    'zien'],
+  // OVT
+  ['zag',     'zien'],
+  ['zagen',   'zien'],
+  // VD
+  ['gezien',  'zien'],
+
+  // ── staan ─────────────────────────────────────────────────────────────────
+  ['staan',   'staan'],
+  // OTT
+  ['sta',     'staan'],
+  ['staat',   'staan'],
+  // OVT
+  ['stond',   'staan'],
+  ['stonden', 'staan'],
+  // VD
+  ['gestaan', 'staan'],
+
+  // ── slaan ─────────────────────────────────────────────────────────────────
+  ['slaan',   'slaan'],
+  // OTT
+  ['sla',     'slaan'],
+  ['slaat',   'slaan'],
+  // OVT
+  ['sloeg',   'slaan'],
+  ['sloegen', 'slaan'],
+  // VD
+  ['geslagen','slaan'],
+
+  // ── zeggen ────────────────────────────────────────────────────────────────
+  ['zeggen',  'zeggen'],
+  // OTT  (regular: zeg / zegt)
+  ['zeg',     'zeggen'],
+  ['zegt',    'zeggen'],
+  // OVT
+  ['zei',     'zeggen'],
+  ['zeiden',  'zeggen'],
+  // VD
+  ['gezegd',  'zeggen'],
+
+  // ── denken ────────────────────────────────────────────────────────────────
+  ['denken',  'denken'],
+  ['denk',    'denken'],
+  ['denkt',   'denken'],
+  ['dacht',   'denken'],
+  ['dachten', 'denken'],
+  ['gedacht', 'denken'],
+
+  // ── geven ─────────────────────────────────────────────────────────────────
+  ['geven',   'geven'],
+  ['geef',    'geven'],
+  ['geeft',   'geven'],
+  ['gaf',     'geven'],
+  ['gaven',   'geven'],
+  ['gegeven', 'geven'],
+
+  // ── nemen ─────────────────────────────────────────────────────────────────
+  ['nemen',   'nemen'],
+  ['neem',    'nemen'],
+  ['neemt',   'nemen'],
+  ['nam',     'nemen'],
+  ['namen',   'nemen'],
+  ['genomen', 'nemen'],
+
+  // ── vinden ────────────────────────────────────────────────────────────────
+  ['vinden',  'vinden'],
+  ['vind',    'vinden'],
+  ['vindt',   'vinden'],
+  ['vond',    'vinden'],
+  ['vonden',  'vinden'],
+  ['gevonden','vinden'],
+
+  // ── weten ─────────────────────────────────────────────────────────────────
+  ['weten',   'weten'],
+  ['weet',    'weten'],
+  ['wist',    'weten'],
+  ['wisten',  'weten'],
+  ['geweten', 'weten'],
+
+  // ── krijgen ───────────────────────────────────────────────────────────────
+  ['krijgen', 'krijgen'],
+  ['krijg',   'krijgen'],
+  ['krijgt',  'krijgen'],
+  ['kreeg',   'krijgen'],
+  ['kregen',  'krijgen'],
+  ['gekregen','krijgen'],
+
+  // ── brengen ───────────────────────────────────────────────────────────────
+  ['brengen', 'brengen'],
+  ['breng',   'brengen'],
+  ['brengt',  'brengen'],
+  ['bracht',  'brengen'],
+  ['brachten','brengen'],
+  ['gebracht','brengen'],
+
+  // ── kopen ─────────────────────────────────────────────────────────────────
+  ['kopen',   'kopen'],
+  ['koop',    'kopen'],
+  ['koopt',   'kopen'],
+  ['kocht',   'kopen'],
+  ['kochten', 'kopen'],
+  ['gekocht', 'kopen'],
+
+  // ── zoeken ────────────────────────────────────────────────────────────────
+  ['zoeken',  'zoeken'],
+  ['zoek',    'zoeken'],
+  ['zoekt',   'zoeken'],
+  ['zocht',   'zoeken'],
+  ['zochten', 'zoeken'],
+  ['gezocht', 'zoeken'],
+
+  // ── helpen ────────────────────────────────────────────────────────────────
+  ['helpen',  'helpen'],
+  ['help',    'helpen'],
+  ['helpt',   'helpen'],
+  ['hielp',   'helpen'],
+  ['hielpen', 'helpen'],
+  ['geholpen','helpen'],
+
+  // ── trekken ───────────────────────────────────────────────────────────────
+  ['trekken', 'trekken'],
+  ['trek',    'trekken'],
+  ['trekt',   'trekken'],
+  ['trok',    'trekken'],
+  ['trokken', 'trekken'],
+  ['getrokken','trekken'],
+
+  // ── zitten ────────────────────────────────────────────────────────────────
+  ['zitten',  'zitten'],
+  ['zit',     'zitten'],
+  ['zat',     'zitten'],
+  ['zaten',   'zitten'],
+  ['gezeten', 'zitten'],
+
+  // ── liggen ────────────────────────────────────────────────────────────────
+  ['liggen',  'liggen'],
+  ['lig',     'liggen'],
+  ['ligt',    'liggen'],
+  ['lag',     'liggen'],
+  ['lagen',   'liggen'],
+  ['gelegen', 'liggen'],
+
+  // ── hangen ────────────────────────────────────────────────────────────────
+  ['hangen',  'hangen'],
+  ['hang',    'hangen'],
+  ['hangt',   'hangen'],
+  ['hing',    'hangen'],
+  ['hingen',  'hangen'],
+  ['gehangen','hangen'],
+
+  // ── blijven ───────────────────────────────────────────────────────────────
+  ['blijven', 'blijven'],
+  ['blijf',   'blijven'],
+  ['blijft',  'blijven'],
+  ['bleef',   'blijven'],
+  ['bleven',  'blijven'],
+  ['gebleven','blijven'],
+
+  // ── schrijven ─────────────────────────────────────────────────────────────
+  ['schrijven',  'schrijven'],
+  ['schrijf',    'schrijven'],
+  ['schrijft',   'schrijven'],
+  ['schreef',    'schrijven'],
+  ['schreven',   'schrijven'],
+  ['geschreven', 'schrijven'],
+
+  // ── kijken ────────────────────────────────────────────────────────────────
+  ['kijken',  'kijken'],
+  ['kijk',    'kijken'],
+  ['kijkt',   'kijken'],
+  ['keek',    'kijken'],
+  ['keken',   'kijken'],
+  ['gekeken', 'kijken'],
+
+  // ── rijden ────────────────────────────────────────────────────────────────
+  ['rijden',  'rijden'],
+  ['rijd',    'rijden'],
+  ['rijdt',   'rijden'],
+  ['reed',    'rijden'],
+  ['reden',   'rijden'],
+  ['gereden', 'rijden'],
+
+  // ── lopen ─────────────────────────────────────────────────────────────────
+  ['lopen',   'lopen'],
+  ['loop',    'lopen'],
+  ['loopt',   'lopen'],
+  ['liep',    'lopen'],
+  ['liepen',  'lopen'],
+  ['gelopen', 'lopen'],
+
+  // ── vliegen ───────────────────────────────────────────────────────────────
+  ['vliegen', 'vliegen'],
+  ['vlieg',   'vliegen'],
+  ['vliegt',  'vliegen'],
+  ['vloog',   'vliegen'],
+  ['vlogen',  'vliegen'],
+  ['gevlogen','vliegen'],
+
+  // ── zwemmen ───────────────────────────────────────────────────────────────
+  ['zwemmen',   'zwemmen'],
+  ['zwem',      'zwemmen'],
+  ['zwemt',     'zwemmen'],
+  ['zwom',      'zwemmen'],
+  ['zwommen',   'zwemmen'],
+  ['gezwommen', 'zwemmen'],
+
+  // ── slapen ────────────────────────────────────────────────────────────────
+  ['slapen',  'slapen'],
+  ['slaap',   'slapen'],
+  ['slaapt',  'slapen'],
+  ['sliep',   'slapen'],
+  ['sliepen', 'slapen'],
+  ['geslapen','slapen'],
+
+  // ── laten ─────────────────────────────────────────────────────────────────
+  ['laten',   'laten'],
+  ['laat',    'laten'],
+  ['liet',    'laten'],
+  ['lieten',  'laten'],
+  ['gelaten', 'laten'],
+
+  // ── vallen ────────────────────────────────────────────────────────────────
+  ['vallen',  'vallen'],
+  ['val',     'vallen'],
+  ['valt',    'vallen'],
+  ['viel',    'vallen'],
+  ['vielen',  'vallen'],
+  ['gevallen','vallen'],
+
+  // ── houden ────────────────────────────────────────────────────────────────
+  ['houden',  'houden'],
+  ['houd',    'houden'],
+  ['houdt',   'houden'],
+  ['hield',   'houden'],
+  ['hielden', 'houden'],
+  ['gehouden','houden'],
+
+  // ── roepen ────────────────────────────────────────────────────────────────
+  ['roepen',  'roepen'],
+  ['roep',    'roepen'],
+  ['roept',   'roepen'],
+  ['riep',    'roepen'],
+  ['riepen',  'roepen'],
+  ['geroepen','roepen'],
+
+  // ── vertrekken ────────────────────────────────────────────────────────────
+  ['vertrekken',  'vertrekken'],
+  ['vertrek',     'vertrekken'],
+  ['vertrekt',    'vertrekken'],
+  ['vertrok',     'vertrekken'],
+  ['vertrokken',  'vertrekken'],
+
+  // ── beginnen ──────────────────────────────────────────────────────────────
+  ['beginnen', 'beginnen'],
+  ['begin',    'beginnen'],
+  ['begint',   'beginnen'],
+  ['begon',    'beginnen'],
+  ['begonnen', 'beginnen'],
+
+  // ── spreken ───────────────────────────────────────────────────────────────
+  ['spreken',  'spreken'],
+  ['spreek',   'spreken'],
+  ['spreekt',  'spreken'],
+  ['sprak',    'spreken'],
+  ['spraken',  'spreken'],
+  ['gesproken','spreken'],
+
+  // ── lezen ─────────────────────────────────────────────────────────────────
+  ['lezen',   'lezen'],
+  ['lees',    'lezen'],
+  ['leest',   'lezen'],
+  ['las',     'lezen'],
+  ['lazen',   'lezen'],
+  ['gelezen', 'lezen'],
+
+  // ── eten ──────────────────────────────────────────────────────────────────
+  ['eten',    'eten'],
+  ['eet',     'eten'],
+  ['at',      'eten'],
+  ['aten',    'eten'],
+  ['gegeten', 'eten'],
+
+  // ── stelen ────────────────────────────────────────────────────────────────
+  ['stelen',  'stelen'],
+  ['steel',   'stelen'],
+  ['steelt',  'stelen'],
+  ['stal',    'stelen'],
+  ['stalen',  'stelen'],
+  ['gestolen','stelen'],
+
+  // ── breken ────────────────────────────────────────────────────────────────
+  ['breken',  'breken'],
+  ['breek',   'breken'],
+  ['breekt',  'breken'],
+  ['brak',    'breken'],
+  ['braken',  'breken'],
+  ['gebroken','breken'],
+
+  // ── drinken ───────────────────────────────────────────────────────────────
+  ['drinken',  'drinken'],
+  ['drink',    'drinken'],
+  ['drinkt',   'drinken'],
+  ['dronk',    'drinken'],
+  ['dronken',  'drinken'],
+  ['gedronken','drinken'],
+
+  // ── winnen ────────────────────────────────────────────────────────────────
+  ['winnen',  'winnen'],
+  ['win',     'winnen'],
+  ['wint',    'winnen'],
+  ['won',     'winnen'],
+  ['wonnen',  'winnen'],
+  ['gewonnen','winnen'],
+
+  // ── zingen ────────────────────────────────────────────────────────────────
+  ['zingen',  'zingen'],
+  ['zing',    'zingen'],
+  ['zingt',   'zingen'],
+  ['zong',    'zingen'],
+  ['zongen',  'zingen'],
+  ['gezongen','zingen'],
+
+  // ── klimmen ───────────────────────────────────────────────────────────────
+  ['klimmen',   'klimmen'],
+  ['klim',      'klimmen'],
+  ['klimt',     'klimmen'],
+  ['klom',      'klimmen'],
+  ['klommen',   'klimmen'],
+  ['geklommen', 'klimmen'],
+
+  // ── kruipen ───────────────────────────────────────────────────────────────
+  ['kruipen',  'kruipen'],
+  ['kruip',    'kruipen'],
+  ['kruipt',   'kruipen'],
+  ['kroop',    'kruipen'],
+  ['kropen',   'kruipen'],
+  ['gekropen', 'kruipen'],
+
+  // ── springen ──────────────────────────────────────────────────────────────
+  ['springen',   'springen'],
+  ['spring',     'springen'],
+  ['springt',    'springen'],
+  ['sprong',     'springen'],
+  ['sprongen',   'springen'],
+  ['gesprongen', 'springen'],
+
+  // ── sterven ───────────────────────────────────────────────────────────────
+  ['sterven',   'sterven'],
+  ['sterf',     'sterven'],
+  ['sterft',    'sterven'],
+  ['stierf',    'sterven'],
+  ['stierven',  'sterven'],
+  ['gestorven', 'sterven'],
+
+  // ── vergeten ──────────────────────────────────────────────────────────────
+  ['vergeten',  'vergeten'],
+  ['vergeet',   'vergeten'],
+  ['vergat',    'vergeten'],
+  ['vergaten',  'vergeten'],
+
+  // ── sluiten ───────────────────────────────────────────────────────────────
+  ['sluiten',  'sluiten'],
+  ['sluit',    'sluiten'],
+  ['sloot',    'sluiten'],
+  ['sloten',   'sluiten'],
+  ['gesloten', 'sluiten'],
+
+  // ── kiezen ────────────────────────────────────────────────────────────────
+  ['kiezen',  'kiezen'],
+  ['kies',    'kiezen'],
+  ['kiest',   'kiezen'],
+  ['koos',    'kiezen'],
+  ['kozen',   'kiezen'],
+  ['gekozen', 'kiezen'],
+
+  // ── snijden ───────────────────────────────────────────────────────────────
+  ['snijden',  'snijden'],
+  ['snijd',    'snijden'],
+  ['snijdt',   'snijden'],
+  ['sneed',    'snijden'],
+  ['sneden',   'snijden'],
+  ['gesneden', 'snijden'],
+
+  // ── dragen ────────────────────────────────────────────────────────────────
+  ['dragen',   'dragen'],
+  ['draag',    'dragen'],
+  ['draagt',   'dragen'],
+  ['droeg',    'dragen'],
+  ['droegen',  'dragen'],
+  ['gedragen', 'dragen'],
+
+  // ── stijgen ───────────────────────────────────────────────────────────────
+  ['stijgen',  'stijgen'],
+  ['stijg',    'stijgen'],
+  ['stijgt',   'stijgen'],
+  ['steeg',    'stijgen'],
+  ['stegen',   'stijgen'],
+  ['gestegen', 'stijgen'],
+
+  // ── verdwijnen ────────────────────────────────────────────────────────────
+  ['verdwijnen',  'verdwijnen'],
+  ['verdwijn',    'verdwijnen'],
+  ['verdwijnt',   'verdwijnen'],
+  ['verdween',    'verdwijnen'],
+  ['verdwenen',   'verdwijnen'],
+
+  // ── verschijnen ───────────────────────────────────────────────────────────
+  ['verschijnen',  'verschijnen'],
+  ['verschijn',    'verschijnen'],
+  ['verschijnt',   'verschijnen'],
+  ['verscheen',    'verschijnen'],
+  ['verschenen',   'verschijnen'],
+
+  // ── schijnen ──────────────────────────────────────────────────────────────
+  ['schijnen',  'schijnen'],
+  ['schijn',    'schijnen'],
+  ['schijnt',   'schijnen'],
+  ['scheen',    'schijnen'],
+  ['schenen',   'schijnen'],
+  ['geschenen', 'schijnen'],
+
+  // ── overlijden ────────────────────────────────────────────────────────────
+  ['overlijden', 'overlijden'],
+  ['overlijd',   'overlijden'],
+  ['overlijdt',  'overlijden'],
+  ['overleed',   'overlijden'],
+  ['overleden',  'overlijden'],
+
+  // ── blijken ───────────────────────────────────────────────────────────────
+  ['blijken',  'blijken'],
+  ['blijkt',   'blijken'],
+  ['bleek',    'blijken'],
+  ['bleken',   'blijken'],
+  ['gebleken', 'blijken'],
+
+  // ── graven ────────────────────────────────────────────────────────────────
+  ['graven',   'graven'],
+  ['graaf',    'graven'],
+  ['graaft',   'graven'],
+  ['groef',    'graven'],
+  ['groeven',  'graven'],
+  ['gegraven', 'graven'],
+
+  // ── grijpen ───────────────────────────────────────────────────────────────
+  ['grijpen',  'grijpen'],
+  ['grijp',    'grijpen'],
+  ['grijpt',   'grijpen'],
+  ['greep',    'grijpen'],
+  ['grepen',   'grijpen'],
+  ['gegrepen', 'grijpen'],
+
+  // ── lijden ────────────────────────────────────────────────────────────────
+  ['lijden',  'lijden'],
+  ['lijd',    'lijden'],
+  ['lijdt',   'lijden'],
+  ['leed',    'lijden'],
+  ['leden',   'lijden'],
+  ['geleden', 'lijden'],
+
+  // ── bijten ────────────────────────────────────────────────────────────────
+  ['bijten',  'bijten'],
+  ['bijt',    'bijten'],
+  ['beet',    'bijten'],
+  ['beten',   'bijten'],
+  ['gebeten', 'bijten'],
+
+  // ── binden ────────────────────────────────────────────────────────────────
+  ['binden',   'binden'],
+  ['bind',     'binden'],
+  ['bindt',    'binden'],
+  ['bond',     'binden'],
+  ['bonden',   'binden'],
+  ['gebonden', 'binden'],
+
+  // ── vangen ────────────────────────────────────────────────────────────────
+  ['vangen',   'vangen'],
+  ['vang',     'vangen'],
+  ['vangt',    'vangen'],
+  ['ving',     'vangen'],
+  ['vingen',   'vangen'],
+  ['gevangen', 'vangen'],
+
+  // ── heten ─────────────────────────────────────────────────────────────────
+  ['heten',   'heten'],
+  ['heet',    'heten'],
+  ['heette',  'heten'],
+  ['heetten', 'heten'],
+  ['geheten', 'heten'],
+
+  // ── wassen ────────────────────────────────────────────────────────────────
+  ['wassen',   'wassen'],
+  // NB: 'was' is mapped to 'zijn' (OVT); 'zijn' takes priority in Tier-1 lookup
+  ['wast',     'wassen'],
+  ['waste',    'wassen'],
+  ['wasten',   'wassen'],
+  ['gewassen', 'wassen'],
+
+  // ── varen ─────────────────────────────────────────────────────────────────
+  ['varen',   'varen'],
+  ['vaar',    'varen'],
+  ['vaart',   'varen'],
+  ['voer',    'varen'],
+  ['voeren',  'varen'],
+  ['gevaren', 'varen'],
+
+  // ── smelten ───────────────────────────────────────────────────────────────
+  ['smelten',   'smelten'],
+  ['smelt',     'smelten'],
+  ['smolt',     'smelten'],
+  ['smolten',   'smelten'],
+  ['gesmolten', 'smelten'],
+
+  // ── begrijpen ─────────────────────────────────────────────────────────────
+  ['begrijpen', 'begrijpen'],
+  ['begrijp',   'begrijpen'],
+  ['begrijpt',  'begrijpen'],
+  ['begreep',   'begrijpen'],
+  ['begrepen',  'begrijpen'],
+
+  // ── besluiten ─────────────────────────────────────────────────────────────
+  ['besluiten', 'besluiten'],
+  ['besluit',   'besluiten'],
+  ['besloot',   'besluiten'],
+  ['besloten',  'besluiten'],
+
+  // ── ontluiken ─────────────────────────────────────────────────────────────
+  ['ontluiken', 'ontluiken'],
+  ['ontluikt',  'ontluiken'],
+  ['ontlook',   'ontluiken'],
+  ['ontloken',  'ontluiken'],
+
+  // ── schuiven ──────────────────────────────────────────────────────────────
+  ['schuiven',   'schuiven'],
+  ['schuif',     'schuiven'],
+  ['schuift',    'schuiven'],
+  ['schoof',     'schuiven'],
+  ['schoven',    'schuiven'],
+  ['geschoven',  'schuiven'],
+
+  // ── bieden ────────────────────────────────────────────────────────────────
+  ['bieden',  'bieden'],
+  ['bied',    'bieden'],
+  ['biedt',   'bieden'],
+  ['bood',    'bieden'],
+  ['boden',   'bieden'],
+  ['geboden', 'bieden'],
+
+  // ── schieten ──────────────────────────────────────────────────────────────
+  ['schieten',  'schieten'],
+  ['schiet',    'schieten'],
+  ['schoot',    'schieten'],
+  ['schoten',   'schieten'],
+  ['geschoten', 'schieten'],
+
+  // ── lijken ────────────────────────────────────────────────────────────────
+  ['lijken',  'lijken'],
+  ['lijk',    'lijken'],
+  ['lijkt',   'lijken'],
+  ['leek',    'lijken'],
+  ['leken',   'lijken'],
+  ['geleken', 'lijken'],
+
+  // ── zinken ────────────────────────────────────────────────────────────────
+  ['zinken',   'zinken'],
+  ['zink',     'zinken'],
+  ['zinkt',    'zinken'],
+  ['zonk',     'zinken'],
+  ['zonken',   'zinken'],
+  ['gezonken', 'zinken'],
+
+  // ── krimpen ───────────────────────────────────────────────────────────────
+  ['krimpen',   'krimpen'],
+  ['krimp',     'krimpen'],
+  ['krimpt',    'krimpen'],
+  ['kromp',     'krimpen'],
+  ['krompen',   'krimpen'],
+  ['gekrompen', 'krimpen'],
+
+  // ── schrikken ─────────────────────────────────────────────────────────────
+  ['schrikken',   'schrikken'],
+  ['schrik',      'schrikken'],
+  ['schrikt',     'schrikken'],
+  ['schrok',      'schrikken'],
+  ['schrokken',   'schrikken'],
+  ['geschrokken', 'schrikken'],
+
+  // ── stijgen ─ already above ─────────────────────────────────────────────
+
+  // ── drijven ───────────────────────────────────────────────────────────────
+  ['drijven',   'drijven'],
+  ['drijf',     'drijven'],
+  ['drijft',    'drijven'],
+  ['dreef',     'drijven'],
+  ['dreven',    'drijven'],
+  ['gedreven',  'drijven'],
+
+  // ── prijzen ───────────────────────────────────────────────────────────────
+  ['prijzen',  'prijzen'],
+  ['prijs',    'prijzen'],
+  ['prijst',   'prijzen'],
+  ['prees',    'prijzen'],
+  ['prezen',   'prijzen'],
+  ['geprezen', 'prijzen'],
+
+  // ── wijzen ────────────────────────────────────────────────────────────────
+  ['wijzen',   'wijzen'],
+  ['wijs',     'wijzen'],
+  ['wijst',    'wijzen'],
+  ['wees',     'wijzen'],
+  ['wezen',    'wijzen'],
+  ['gewezen',  'wijzen'],
+
+  // ── strijden ──────────────────────────────────────────────────────────────
+  ['strijden',   'strijden'],
+  ['strijd',     'strijden'],
+  ['strijdt',    'strijden'],
+  ['streed',     'strijden'],
+  ['streden',    'strijden'],
+  ['gestreden',  'strijden'],
+
+  // ── strijken ──────────────────────────────────────────────────────────────
+  ['strijken',  'strijken'],
+  ['strijk',    'strijken'],
+  ['strijkt',   'strijken'],
+  ['streek',    'strijken'],
+  ['streken',   'strijken'],
+  ['gestreken', 'strijken'],
+
+  // ── wegen ─────────────────────────────────────────────────────────────────
+  ['wegen',    'wegen'],
+  ['weeg',     'wegen'],
+  ['weegt',    'wegen'],
+  ['woog',     'wegen'],
+  ['wogen',    'wegen'],
+  ['gewogen',  'wegen'],
+
+  // ── werpen ────────────────────────────────────────────────────────────────
+  ['werpen',   'werpen'],
+  ['werp',     'werpen'],
+  ['werpt',    'werpen'],
+  ['wierp',    'werpen'],
+  ['wierpen',  'werpen'],
+  ['geworpen', 'werpen'],
+
+  // ── zwijgen ───────────────────────────────────────────────────────────────
+  ['zwijgen',  'zwijgen'],
+  ['zwijg',    'zwijgen'],
+  ['zwijgt',   'zwijgen'],
+  ['zweeg',    'zwijgen'],
+  ['zwegen',   'zwijgen'],
+  ['gezwegen', 'zwijgen'],
+
+  // ── zwellen ───────────────────────────────────────────────────────────────
+  ['zwellen',   'zwellen'],
+  ['zwel',      'zwellen'],
+  ['zwelt',     'zwellen'],
+  ['zwol',      'zwellen'],
+  ['zwollen',   'zwellen'],
+  ['gezwollen', 'zwellen'],
+
+  // ── lijden ─ already above ───────────────────────────────────────────────
+
+  // ── bakken ────────────────────────────────────────────────────────────────
+  // (NB: bakken has irregular participle but is treated as mixed)
+  ['bakken',   'bakken'],
+  ['bak',      'bakken'],
+  ['bakt',     'bakken'],
+  ['bakte',    'bakken'],
+  ['bakten',   'bakken'],
+  ['gebakken', 'bakken'],
+
+  // ── blazen ────────────────────────────────────────────────────────────────
+  ['blazen',   'blazen'],
+  ['blaas',    'blazen'],
+  ['blaast',   'blazen'],
+  ['blies',    'blazen'],
+  ['bliezen',  'blazen'],
+  ['geblazen', 'blazen'],
+
+  // ── steken ────────────────────────────────────────────────────────────────
+  ['steken',   'steken'],
+  ['steek',    'steken'],
+  ['steekt',   'steken'],
+  ['stak',     'steken'],
+  ['staken',   'steken'],
+  ['gestoken', 'steken'],
+
+  // ── heffen ────────────────────────────────────────────────────────────────
+  ['heffen',  'heffen'],
+  ['hef',     'heffen'],
+  ['heft',    'heffen'],
+  ['hief',    'heffen'],
+  ['hieven',  'heffen'],
+  ['geheven', 'heffen'],
+
+  // ── genieten ──────────────────────────────────────────────────────────────
+  ['genieten', 'genieten'],
+  ['geniet',   'genieten'],
+  ['genoot',   'genieten'],
+  ['genoten',  'genieten'],
+
+  // ── gieten ────────────────────────────────────────────────────────────────
+  ['gieten',  'gieten'],
+  ['giet',    'gieten'],
+  ['goot',    'gieten'],
+  ['goten',   'gieten'],
+  ['gegoten', 'gieten'],
+
+  // ── buigen ────────────────────────────────────────────────────────────────
+  ['buigen',  'buigen'],
+  ['buig',    'buigen'],
+  ['buigt',   'buigen'],
+  ['boog',    'buigen'],
+  ['bogen',   'buigen'],
+  ['gebogen', 'buigen'],
+
+  // ── zuigen ────────────────────────────────────────────────────────────────
+  ['zuigen',  'zuigen'],
+  ['zuig',    'zuigen'],
+  ['zuigt',   'zuigen'],
+  ['zoog',    'zuigen'],
+  ['zogen',   'zuigen'],
+  ['gezogen', 'zuigen'],
+
+  // ── ruiken ────────────────────────────────────────────────────────────────
+  ['ruiken',  'ruiken'],
+  ['ruik',    'ruiken'],
+  ['ruikt',   'ruiken'],
+  ['rook',    'ruiken'],
+  ['roken',   'ruiken'],
+  ['geroken', 'ruiken'],
+
+  // ── duiken ────────────────────────────────────────────────────────────────
+  ['duiken',  'duiken'],
+  ['duik',    'duiken'],
+  ['duikt',   'duiken'],
+  ['dook',    'duiken'],
+  ['doken',   'duiken'],
+  ['gedoken', 'duiken'],
+
+  // ── lijken ─ already above ────────────────────────────────────────────────
+
+  // ── plegen ────────────────────────────────────────────────────────────────
+  ['plegen',   'plegen'],
+  ['pleeg',    'plegen'],
+  ['pleegt',   'plegen'],
+  ['placht',   'plegen'],
+  ['plachten', 'plegen'],
+  ['gepleegd', 'plegen'],
+
+  // ── zwerven ───────────────────────────────────────────────────────────────
+  ['zwerven',   'zwerven'],
+  ['zwerf',     'zwerven'],
+  ['zwerft',    'zwerven'],
+  ['zwierf',    'zwerven'],
+  ['zwierven',  'zwerven'],
+  ['gezworven', 'zwerven'],
+
+  // ── rijzen ────────────────────────────────────────────────────────────────
+  ['rijzen',  'rijzen'],
+  ['rijst',   'rijzen'],
+  ['rees',    'rijzen'],
+  ['rezen',   'rijzen'],
+  ['gerezen', 'rijzen'],
+]);
+
+/**
+ * Convenience: look up a verb form in the hand-authored IRREGULAR_LEMMA_MAP.
+ * Returns the canonical infinitief or null.
+ */
+export function lookupIrregularLemma(form: string): string | null {
+  const norm = form.toLowerCase().trim();
+  return IRREGULAR_LEMMA_MAP.get(norm) ?? null;
+}
+
+// ============================================================================
 // Comprehensive Dutch Verb Lemmatization & Conjugation Matching Map
 // ============================================================================
 
@@ -2530,6 +3460,11 @@ function registerLemmaForms(
 export function initLemmatizationMap(): void {
   if (isLemmatizationInitialized) return;
   isLemmatizationInitialized = true;
+
+  // 0. Register all hand-curated irregular lemma forms (Tier-1 lookup)
+  for (const [form, inf] of IRREGULAR_LEMMA_MAP.entries()) {
+    VERB_LEMMATIZATION_MAP.set(form, inf);
+  }
 
   // 1. Register all infinitives directly to themselves (highest priority)
   for (const inf of Object.keys(IRREGULAR_VERBS)) {
@@ -2682,6 +3617,10 @@ export function resolveInfinitive(input: string): string | null {
 
   if (norm.length < 2) return null;
 
+  // 0. Direct fast-path check in hand-curated Tier-1 irregular map
+  const directIrreg = IRREGULAR_LEMMA_MAP.get(norm);
+  if (directIrreg) return directIrreg;
+
   initLemmatizationMap();
 
   // 1. Direct O(1) match in precomputed lemmatization map
@@ -2788,12 +3727,12 @@ export function conjugate(
   if (!infinitive) {
     throw new Error(`INVALID_DUTCH_VERB: Dit is geen geldig Nederlands werkwoord. ("${norm}")`);
   }
-  const sep = splitSeparableVerb(norm);
-  const stem = deriveStem(norm);
-  const irregular = IRREGULAR_VERBS[norm] || (sep.isSeparable && sep.baseVerb ? IRREGULAR_VERBS[sep.baseVerb] : null);
+  const sep = splitSeparableVerb(infinitive);
+  const stem = deriveStem(infinitive);
+  const irregular = IRREGULAR_VERBS[infinitive] || (sep.isSeparable && sep.baseVerb ? IRREGULAR_VERBS[sep.baseVerb] : null);
   const isIrreg = Boolean(irregular);
-  const aux = selectAuxiliary(norm);
-  const participle = getPastParticiple(norm);
+  const aux = selectAuxiliary(infinitive);
+  const participle = getPastParticiple(infinitive);
 
   // Present tense generation
   const present: Record<Person, string> = {
@@ -3104,10 +4043,10 @@ export function checkConjugation(params: {
   }
 
   // Diagnostic error classification
-  const stem = deriveStem(infinitive);
-  const sep = splitSeparableVerb(infinitive);
+  const stem = deriveStem(cleanInfinitive);
+  const sep = splitSeparableVerb(cleanInfinitive);
   const isPlural = person === '1p' || person === '2p' || person === '3p';
-  const isIrreg = isIrregular(infinitive);
+  const isIrreg = isIrregular(cleanInfinitive);
 
   // Irregular verbs: 't kofschip rule (-te / -de) MUST ONLY apply to regular (zwak) verbs.
   // For irregular verbs, directly explain the irregular forms without 't kofschip calculations.
@@ -3118,8 +4057,8 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: 'irregular_verb_past',
-        feedback: `'${infinitive}' is een onregelmatig werkwoord (sterk werkwoord). De 't kofschip-regel (-te / -de) geldt NIET voor onregelmatige werkwoorden! De juiste verleden tijd (O.V.T.) is: '${expectedAnswers.join("' of '")}'.`,
-        correctionTip: `'${infinitive}' is onregelmatig: ${expectedAnswers.join(', ')}.`,
+        feedback: `'${cleanInfinitive}' is een onregelmatig werkwoord (sterk werkwoord). De 't kofschip-regel (-te / -de) geldt NIET voor onregelmatige werkwoorden! De juiste verleden tijd (O.V.T.) is: '${expectedAnswers.join("' of '")}'.`,
+        correctionTip: `'${cleanInfinitive}' is onregelmatig: ${expectedAnswers.join(', ')}.`,
       };
     }
 
@@ -3129,8 +4068,8 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: 'irregular_verb_participle',
-        feedback: `'${infinitive}' is een onregelmatig werkwoord. Het voltooid deelwoord (V.T.T.) volgt niet de regel van 't kofschip (-t/-d). De juiste vorm is: '${expectedAnswers.join("' of '")}'.`,
-        correctionTip: `'${infinitive}' is onregelmatig: ${expectedAnswers.join(', ')}.`,
+        feedback: `'${cleanInfinitive}' is een onregelmatig werkwoord. Het voltooid deelwoord (V.T.T.) volgt niet de regel van 't kofschip (-t/-d). De juiste vorm is: '${expectedAnswers.join("' of '")}'.`,
+        correctionTip: `'${cleanInfinitive}' is onregelmatig: ${expectedAnswers.join(', ')}.`,
       };
     }
   }
@@ -3145,7 +4084,7 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: stem.voicedShift === 'v->f' ? 'pitfall_v_to_f_kofschip' : 'pitfall_z_to_s_kofschip',
-        feedback: `Pitfall: Although '${stem.cleanStem}' ends in '${stem.cleanStem.slice(-1)}', the original stem ends in '${origChar}' ('${infinitive}'). '${origChar}' is NOT in 't kofschip, so you must use -${isPlural ? 'den' : 'de'}, never -${wrongSuffix}!`,
+        feedback: `Pitfall: Although '${stem.cleanStem}' ends in '${stem.cleanStem.slice(-1)}', the original stem ends in '${origChar}' ('${cleanInfinitive}'). '${origChar}' is NOT in 't kofschip, so you must use -${isPlural ? 'den' : 'de'}, never -${wrongSuffix}!`,
         correctionTip: `Always check the consonant BEFORE the ${stem.voicedShift} spelling change.`,
       };
     }
@@ -3159,7 +4098,7 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: 'pitfall_vz_participle',
-        feedback: `Pitfall: '${infinitive}' originally ends in '${stem.originalEndConsonant}', which is not in 't kofschip. The participle must end in -d ('${expectedAnswers[0]}'), not -t.`,
+        feedback: `Pitfall: '${cleanInfinitive}' originally ends in '${stem.originalEndConsonant}', which is not in 't kofschip. The participle must end in -d ('${expectedAnswers[0]}'), not -t.`,
         correctionTip: `Consonants v and z are voiced and take -d.`,
       };
     }
@@ -3187,21 +4126,21 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: 'stem_ends_in_t',
-        feedback: `Stem ending in -t: The stem of '${infinitive}' is '${stem.cleanStem}', which already ends in 't'. Dutch never writes double 'tt' at the end of a verb form.`,
+        feedback: `Stem ending in -t: The stem of '${cleanInfinitive}' is '${stem.cleanStem}', which already ends in 't'. Dutch never writes double 'tt' at the end of a verb form.`,
         correctionTip: `Stem already ends in 't' -> do not add another 't'.`,
       };
     }
   }
 
   // 5. Inseparable prefix participle with unnecessary 'ge-'
-  const insep = getInseparablePrefix(infinitive);
+  const insep = getInseparablePrefix(cleanInfinitive);
   if (tense === 'pastParticiple' && insep && normUser.startsWith('ge')) {
     return {
       isCorrect: false,
       userAnswer,
       expected: expectedAnswers,
       ruleId: 'inseparable_prefix_no_ge',
-      feedback: `Inseparable prefix: '${infinitive}' starts with '${insep}-'. Verbs with inseparable prefixes (be-, er-, ge-, her-, ont-, ver-) never take 'ge-' in the participle.`,
+      feedback: `Inseparable prefix: '${cleanInfinitive}' starts with '${insep}-'. Verbs with inseparable prefixes (be-, er-, ge-, her-, ont-, ver-) never take 'ge-' in the participle.`,
       correctionTip: `Use '${expectedAnswers[0]}' without 'ge-'.`,
     };
   }
@@ -3236,7 +4175,7 @@ export function checkConjugation(params: {
 
   // 8. Auxiliary verb error in perfect tense (hebben vs zijn)
   if (tense === 'perfect') {
-    const aux = selectAuxiliary(infinitive, options.hasDestination);
+    const aux = selectAuxiliary(cleanInfinitive, options.hasDestination);
     const usesHebben = normUser.startsWith('heb') || normUser.startsWith('heeft');
     const usesZijn = normUser.startsWith('ben') || normUser.startsWith('bent') || normUser.startsWith('is') || normUser.startsWith('zijn');
 
@@ -3246,7 +4185,7 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: 'auxiliary_selection_zijn_required',
-        feedback: `'${infinitive}' indicates a change of state, arrival, or departure, and ALWAYS selects 'zijn' as its auxiliary verb.`,
+        feedback: `'${cleanInfinitive}' indicates a change of state, arrival, or departure, and ALWAYS selects 'zijn' as its auxiliary verb.`,
         correctionTip: `Use 'zijn' (ben/bent/is/zijn) instead of 'hebben'.`,
       };
     }
@@ -3257,7 +4196,7 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: 'auxiliary_selection_hebben_required',
-        feedback: `'${infinitive}' selects 'hebben' as its auxiliary verb in the perfect tense.`,
+        feedback: `'${cleanInfinitive}' selects 'hebben' as its auxiliary verb in the perfect tense.`,
         correctionTip: `Use 'hebben' (heb/hebt/heeft/hebben) instead of 'zijn'.`,
       };
     }
@@ -3273,7 +4212,7 @@ export function checkConjugation(params: {
         userAnswer,
         expected: expectedAnswers,
         ruleId: stem.isKofschip ? 'kofschip_expected_te' : 'kofschip_expected_de',
-        feedback: `'t Kofschip rule: The original end consonant of '${infinitive}' is '${stem.originalEndConsonant}', which ${
+        feedback: `'t Kofschip rule: The original end consonant of '${cleanInfinitive}' is '${stem.originalEndConsonant}', which ${
           stem.isKofschip ? 'IS' : 'is NOT'
         } in 't kofschip (t, k, f, s, ch, p, x). Use -${expectedSuffix}, not -${wrongSuffix}.`,
         correctionTip: stem.isKofschip ? `Consonant '${stem.originalEndConsonant}' is voiceless -> -${expectedSuffix}` : `Consonant '${stem.originalEndConsonant}' is voiced -> -${expectedSuffix}`,
@@ -3309,4 +4248,140 @@ export function getIrregularInfo(infinitive: string): IrregularVerbEntry | null 
 
 export function listIrregularVerbs(): string[] {
   return Object.keys(IRREGULAR_VERBS);
+}
+
+// ============================================================================
+// 3-Tier Search Engine (3 Kademeli Tersine Arama / Lemmatizasyon Motoru)
+// ============================================================================
+
+export type VerbSearchTier =
+  | 'tier1_conjugated'  // 1. Kademe: Çekimli form ➔ Doğrudan bağlı olduğu mastarın (infinitief) kartı
+  | 'tier2_regular'     // 2. Kademe: Düzenli fiil (infinitief) ➔ 't Kofschip kuralını uygula
+  | 'tier3_invalid';    // 3. Kademe: Geçersiz/Bilinmeyen kelime ➔ "Dit is geen geldig Nederlands werkwoord."
+
+export interface VerbSearchResult {
+  tier: 1 | 2 | 3;
+  tierType: VerbSearchTier;
+  input: string;
+  isValid: boolean;
+  infinitive: string | null;
+  conjugation: FullConjugation | null;
+  isConjugatedForm: boolean;
+  isIrregular: boolean;
+  kofschipApplies: boolean;
+  feedback: string;
+}
+
+/**
+ * 3-Tier Dutch Verb Search Engine (3 Kademeli Tersine Arama / Lemmatizasyon Motoru):
+ *
+ * 1. Kademe: Girilen kelime çekimli bir form mu (OTT, OVT, VD)?
+ *    ➔ Doğrudan bağlı olduğu mastarın (infinitief) kartını üretir (isConjugatedForm = true).
+ *
+ * 2. Kademe: Girilen kelime düzenli fiil mi?
+ *    ➔ 't Kofschip kuralını uygular (-te/-ten veya -de/-den; -t veya -d).
+ *
+ * 3. Kademe: Geçersiz / Bilinmeyen kelime ise
+ *    ➔ "Dit is geen geldig Nederlands werkwoord." mesajını gösterir.
+ */
+export function lookupVerb(
+  input: string,
+  options: { isInverted?: boolean; isSubordinate?: boolean } = {}
+): VerbSearchResult {
+  if (!input || !input.trim()) {
+    return {
+      tier: 3,
+      tierType: 'tier3_invalid',
+      input: input ?? '',
+      isValid: false,
+      infinitive: null,
+      conjugation: null,
+      isConjugatedForm: false,
+      isIrregular: false,
+      kofschipApplies: false,
+      feedback: 'Dit is geen geldig Nederlands werkwoord.',
+    };
+  }
+
+  const norm = input
+    .toLowerCase()
+    .trim()
+    .replace(/[?!.,;:]+$/, '')
+    .trim()
+    .replace(/\s+/g, ' ');
+
+  // Tersine arama / Lemmatizasyon: Kelimenin bağlı olduğu ana mastarı (infinitief) bul
+  const resolvedInfinitive = resolveInfinitive(norm);
+
+  // 3. Kademe: Geçersiz / Bilinmeyen kelime ise
+  if (!resolvedInfinitive) {
+    return {
+      tier: 3,
+      tierType: 'tier3_invalid',
+      input: norm,
+      isValid: false,
+      infinitive: null,
+      conjugation: null,
+      isConjugatedForm: false,
+      isIrregular: false,
+      kofschipApplies: false,
+      feedback: 'Dit is geen geldig Nederlands werkwoord.',
+    };
+  }
+
+  // Mastarın tüm çekim tablosunu ve kurallarını çıkar
+  const conjugation = conjugate(resolvedInfinitive, options);
+  const isConjugated = norm !== resolvedInfinitive;
+  const isIrreg = conjugation.isIrregular;
+
+  // 1. Kademe: Girilen kelime çekimli bir form mu? (örn: "ben", "was", "werkte", "gehad", "gingen", "gekocht")
+  // Doğrudan bağlı olduğu mastarın (infinitief) kartını bas.
+  if (isConjugated) {
+    return {
+      tier: 1,
+      tierType: 'tier1_conjugated',
+      input: norm,
+      isValid: true,
+      infinitive: resolvedInfinitive,
+      conjugation,
+      isConjugatedForm: true,
+      isIrregular: isIrreg,
+      kofschipApplies: !isIrreg,
+      feedback: `"${norm}" is een vervoegde vorm van het werkwoord "${resolvedInfinitive}".`,
+    };
+  }
+
+  // 2. Kademe: Girilen kelime düzenli fiil mi? ➔ 't Kofschip kuralını uygula
+  if (!isIrreg) {
+    const isKof = conjugation.stem.isKofschip;
+    const pastSuffix = isKof ? '-te / -ten' : '-de / -den';
+    const vdSuffix = isKof ? '-t' : '-d';
+    return {
+      tier: 2,
+      tierType: 'tier2_regular',
+      input: norm,
+      isValid: true,
+      infinitive: resolvedInfinitive,
+      conjugation,
+      isConjugatedForm: false,
+      isIrregular: false,
+      kofschipApplies: true,
+      feedback: `'t Kofschip kuralı uygulanır: Orijinal son ünsüz "${conjugation.stem.originalEndConsonant}", 't kofschip (${pastSuffix}, ${vdSuffix}) grubundadır.`,
+    };
+  }
+
+  // Düzensiz fiil mastarı doğrudan girildiğinde (örn: "zijn", "hebben", "gaan")
+  // Doğrudan bağlı olduğu mastarın kartını bas (Düzensiz fiillerde 't Kofschip uygulanmaz).
+  return {
+    tier: 1,
+    tierType: 'tier1_conjugated',
+    input: norm,
+    isValid: true,
+    infinitive: resolvedInfinitive,
+    conjugation,
+    isConjugatedForm: false,
+    isIrregular: true,
+    kofschipApplies: false,
+    feedback: `"${resolvedInfinitive}" is een onregelmatig werkwoord (sterk werkwoord). 't Kofschip geldt niet.`,
+  };
 }
