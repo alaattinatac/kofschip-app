@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import {
   conjugate,
   isValidDutchVerb,
+  resolveInfinitive,
   KOFSCHIP_CONSONANTS,
   type FullConjugation,
 } from '@execution/verb_engine';
@@ -47,6 +48,10 @@ export function VerbChecker({
       return null;
     }
   }, [isValid, normalizedVerb]);
+
+  // Lemmatization: detect when user typed a conjugated form rather than the infinitive
+  const resolvedInfinitive = conjugation?.infinitive ?? resolveInfinitive(normalizedVerb) ?? normalizedVerb;
+  const wasLemmatized = isValid && resolvedInfinitive !== normalizedVerb;
 
   const handleSearch = (verbToSearch?: string) => {
     const target = (verbToSearch ?? searchTerm).trim().toLowerCase();
@@ -108,7 +113,7 @@ export function VerbChecker({
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Typ een werkwoord, bijv. lopen, nemen..."
+              placeholder="Typ een werkwoord of vervoeging, bijv. lopen, liep, gelopen..."
               className={`w-full pl-3 pr-4 py-2 bg-transparent border-0 text-sm font-medium focus:outline-none ${
                 isDarkMode ? 'text-slate-100 placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
               }`}
@@ -165,6 +170,21 @@ export function VerbChecker({
               ? 'border-l-[#10B981]'  // Green — Regelmatig (Zwak), kofschip -te
               : 'border-l-[#3B82F6]'  // Blue  — Regelmatig (Zwak), geen kofschip -de
         } ${cardBg}`}>
+
+          {/* Lemmatization banner: shown when user typed a conjugated form */}
+          {wasLemmatized && (
+            <div className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border ${
+              isDarkMode
+                ? 'bg-blue-500/10 border-blue-500/25 text-blue-300'
+                : 'bg-blue-50 border-blue-200 text-blue-700'
+            }`}>
+              <span>🔍</span>
+              <span>
+                Je zocht op <strong>&ldquo;{normalizedVerb}&rdquo;</strong> — dit is een vervoeging van{' '}
+                <strong>{resolvedInfinitive}</strong>.
+              </span>
+            </div>
+          )}
 
           {/* ── Sectie 1: Stam & 't Kofschip ── */}
           <div>

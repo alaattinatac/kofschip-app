@@ -896,6 +896,783 @@ export const IRREGULAR_VERBS: Record<string, IrregularVerbEntry> = {
     pastParticiple: 'overleden',
     auxiliary: 'zijn',
   },
+  barsten: {
+    infinitive: 'barsten',
+    pastSingular: 'barstte',
+    pastPlural: 'barstten',
+    pastParticiple: 'gebarsten',
+    auxiliary: 'zijn',
+  },
+  bederven: {
+    infinitive: 'bederven',
+    pastSingular: 'bedierf',
+    pastPlural: 'bedierven',
+    pastParticiple: 'bedorven',
+    auxiliary: 'both',
+  },
+  bedriegen: {
+    infinitive: 'bedriegen',
+    pastSingular: 'bedroog',
+    pastPlural: 'bedrogen',
+    pastParticiple: 'bedrogen',
+    auxiliary: 'hebben',
+  },
+  behangen: {
+    infinitive: 'behangen',
+    pastSingular: 'behing',
+    pastPlural: 'behingen',
+    pastParticiple: 'behangen',
+    auxiliary: 'hebben',
+  },
+  bergen: {
+    infinitive: 'bergen',
+    pastSingular: 'borg',
+    pastPlural: 'borgen',
+    pastParticiple: 'geborgen',
+    auxiliary: 'hebben',
+  },
+  bevelen: {
+    infinitive: 'bevelen',
+    pastSingular: 'beval',
+    pastPlural: 'bevalen',
+    pastParticiple: 'bevolen',
+    auxiliary: 'hebben',
+  },
+  bewegen: {
+    infinitive: 'bewegen',
+    pastSingular: 'bewoog',
+    pastPlural: 'bewogen',
+    pastParticiple: 'bewogen',
+    auxiliary: 'hebben',
+  },
+  bewijzen: {
+    infinitive: 'bewijzen',
+    pastSingular: 'bewees',
+    pastPlural: 'bewezen',
+    pastParticiple: 'bewezen',
+    auxiliary: 'hebben',
+  },
+  bidden: {
+    infinitive: 'bidden',
+    pastSingular: 'bad',
+    pastPlural: 'baden',
+    pastParticiple: 'gebeden',
+    auxiliary: 'hebben',
+  },
+  bijten: {
+    infinitive: 'bijten',
+    pastSingular: 'beet',
+    pastPlural: 'beten',
+    pastParticiple: 'gebeten',
+    auxiliary: 'hebben',
+  },
+  binden: {
+    infinitive: 'binden',
+    pastSingular: 'bond',
+    pastPlural: 'bonden',
+    pastParticiple: 'gebonden',
+    auxiliary: 'hebben',
+  },
+  blazen: {
+    infinitive: 'blazen',
+    pastSingular: 'blies',
+    pastPlural: 'bliezen',
+    pastParticiple: 'geblazen',
+    auxiliary: 'hebben',
+  },
+  blijken: {
+    infinitive: 'blijken',
+    pastSingular: 'bleek',
+    pastPlural: 'bleken',
+    pastParticiple: 'gebleken',
+    auxiliary: 'zijn',
+  },
+  blinken: {
+    infinitive: 'blinken',
+    pastSingular: 'blonk',
+    pastPlural: 'blonken',
+    pastParticiple: 'geblonken',
+    auxiliary: 'hebben',
+  },
+  braden: {
+    infinitive: 'braden',
+    pastSingular: 'braadde',
+    pastPlural: 'braadden',
+    pastParticiple: 'gebraden',
+    auxiliary: 'hebben',
+  },
+  buigen: {
+    infinitive: 'buigen',
+    pastSingular: 'boog',
+    pastPlural: 'bogen',
+    pastParticiple: 'gebogen',
+    auxiliary: 'hebben',
+  },
+  drijven: {
+    infinitive: 'drijven',
+    pastSingular: 'dreef',
+    pastPlural: 'dreven',
+    pastParticiple: 'gedreven',
+    auxiliary: 'both',
+  },
+  dringen: {
+    infinitive: 'dringen',
+    pastSingular: 'drong',
+    pastPlural: 'drongen',
+    pastParticiple: 'gedrongen',
+    auxiliary: 'both',
+  },
+  druipen: {
+    infinitive: 'druipen',
+    pastSingular: 'droop',
+    pastPlural: 'dropen',
+    pastParticiple: 'gedropen',
+    auxiliary: 'both',
+  },
+  duiken: {
+    infinitive: 'duiken',
+    pastSingular: 'dook',
+    pastPlural: 'doken',
+    pastParticiple: 'gedoken',
+    auxiliary: 'both',
+  },
+  dwingen: {
+    infinitive: 'dwingen',
+    pastSingular: 'dwong',
+    pastPlural: 'dwongen',
+    pastParticiple: 'gedwongen',
+    auxiliary: 'hebben',
+  },
+  fluiten: {
+    infinitive: 'fluiten',
+    pastSingular: 'floot',
+    pastPlural: 'floten',
+    pastParticiple: 'gefloten',
+    auxiliary: 'hebben',
+  },
+  gelden: {
+    infinitive: 'gelden',
+    pastSingular: 'gold',
+    pastPlural: 'golden',
+    pastParticiple: 'gegolden',
+    auxiliary: 'hebben',
+  },
+  genezen: {
+    infinitive: 'genezen',
+    pastSingular: 'genas',
+    pastPlural: 'genazen',
+    pastParticiple: 'genezen',
+    auxiliary: 'both',
+  },
+  genieten: {
+    infinitive: 'genieten',
+    pastSingular: 'genoot',
+    pastPlural: 'genoten',
+    pastParticiple: 'genoten',
+    auxiliary: 'hebben',
+  },
+  gieten: {
+    infinitive: 'gieten',
+    pastSingular: 'goot',
+    pastPlural: 'goten',
+    pastParticiple: 'gegoten',
+    auxiliary: 'hebben',
+  },
+  glijden: {
+    infinitive: 'glijden',
+    pastSingular: 'gleed',
+    pastPlural: 'gleden',
+    pastParticiple: 'gegleden',
+    auxiliary: 'both',
+  },
+  glimmen: {
+    infinitive: 'glimmen',
+    pastSingular: 'glom',
+    pastPlural: 'glommen',
+    pastParticiple: 'geglommen',
+    auxiliary: 'hebben',
+  },
+  graven: {
+    infinitive: 'graven',
+    pastSingular: 'groef',
+    pastPlural: 'groeven',
+    pastParticiple: 'gegraven',
+    auxiliary: 'hebben',
+  },
+  grijpen: {
+    infinitive: 'grijpen',
+    pastSingular: 'greep',
+    pastPlural: 'grepen',
+    pastParticiple: 'gegrepen',
+    auxiliary: 'hebben',
+  },
+  heffen: {
+    infinitive: 'heffen',
+    pastSingular: 'hief',
+    pastPlural: 'hieven',
+    pastParticiple: 'geheven',
+    auxiliary: 'hebben',
+  },
+  heten: {
+    infinitive: 'heten',
+    pastSingular: 'heette',
+    pastPlural: 'heetten',
+    pastParticiple: 'geheten',
+    auxiliary: 'hebben',
+  },
+  hijsen: {
+    infinitive: 'hijsen',
+    pastSingular: 'hees',
+    pastPlural: 'hesen',
+    pastParticiple: 'gehesen',
+    auxiliary: 'hebben',
+  },
+  hoeven: {
+    infinitive: 'hoeven',
+    pastSingular: 'hoefde',
+    pastPlural: 'hoefden',
+    pastParticiple: 'gehoefd',
+    auxiliary: 'hebben',
+  },
+  houwen: {
+    infinitive: 'houwen',
+    pastSingular: 'houwde',
+    pastPlural: 'houwden',
+    pastParticiple: 'gehouwen',
+    auxiliary: 'hebben',
+  },
+  jagen: {
+    infinitive: 'jagen',
+    pastSingular: ['joeg', 'jaagde'],
+    pastPlural: ['joegen', 'jaagden'],
+    pastParticiple: 'gejaagd',
+    auxiliary: 'hebben',
+  },
+  klinken: {
+    infinitive: 'klinken',
+    pastSingular: 'klonk',
+    pastPlural: 'klonken',
+    pastParticiple: 'geklonken',
+    auxiliary: 'hebben',
+  },
+  kluiven: {
+    infinitive: 'kluiven',
+    pastSingular: 'kloof',
+    pastPlural: 'kloven',
+    pastParticiple: 'gekloven',
+    auxiliary: 'hebben',
+  },
+  knijpen: {
+    infinitive: 'knijpen',
+    pastSingular: 'kneep',
+    pastPlural: 'knepen',
+    pastParticiple: 'geknepen',
+    auxiliary: 'hebben',
+  },
+  krimpen: {
+    infinitive: 'krimpen',
+    pastSingular: 'kromp',
+    pastPlural: 'krompen',
+    pastParticiple: 'gekrompen',
+    auxiliary: 'zijn',
+  },
+  kwijten: {
+    infinitive: 'kwijten',
+    pastSingular: 'kweet',
+    pastPlural: 'kweten',
+    pastParticiple: 'gekweten',
+    auxiliary: 'hebben',
+  },
+  laden: {
+    infinitive: 'laden',
+    pastSingular: 'laadde',
+    pastPlural: 'laadden',
+    pastParticiple: 'geladen',
+    auxiliary: 'hebben',
+  },
+  liegen: {
+    infinitive: 'liegen',
+    pastSingular: 'loog',
+    pastPlural: 'logen',
+    pastParticiple: 'gelogen',
+    auxiliary: 'hebben',
+  },
+  lijden: {
+    infinitive: 'lijden',
+    pastSingular: 'leed',
+    pastPlural: 'leden',
+    pastParticiple: 'geleden',
+    auxiliary: 'hebben',
+  },
+  melken: {
+    infinitive: 'melken',
+    pastSingular: 'molk',
+    pastPlural: 'molken',
+    pastParticiple: 'gemolken',
+    auxiliary: 'hebben',
+  },
+  meten: {
+    infinitive: 'meten',
+    pastSingular: 'mat',
+    pastPlural: 'maten',
+    pastParticiple: 'gemeten',
+    auxiliary: 'hebben',
+  },
+  mijden: {
+    infinitive: 'mijden',
+    pastSingular: 'meed',
+    pastPlural: 'meden',
+    pastParticiple: 'gemeden',
+    auxiliary: 'hebben',
+  },
+  ontginnen: {
+    infinitive: 'ontginnen',
+    pastSingular: 'ontgon',
+    pastPlural: 'ontgonnen',
+    pastParticiple: 'ontgonnen',
+    auxiliary: 'hebben',
+  },
+  ontluiken: {
+    infinitive: 'ontluiken',
+    pastSingular: 'ontlook',
+    pastPlural: 'ontloken',
+    pastParticiple: 'ontloken',
+    auxiliary: 'zijn',
+  },
+  plegen: {
+    infinitive: 'plegen',
+    pastSingular: 'placht',
+    pastPlural: 'plachten',
+    pastParticiple: 'gepleegd',
+    auxiliary: 'hebben',
+  },
+  prijzen: {
+    infinitive: 'prijzen',
+    pastSingular: 'prees',
+    pastPlural: 'prezen',
+    pastParticiple: 'geprezen',
+    auxiliary: 'hebben',
+  },
+  raden: {
+    infinitive: 'raden',
+    pastSingular: ['raadde', 'ried'],
+    pastPlural: ['raadden', 'rieden'],
+    pastParticiple: 'geraden',
+    auxiliary: 'hebben',
+  },
+  rijgen: {
+    infinitive: 'rijgen',
+    pastSingular: 'reeg',
+    pastPlural: 'regen',
+    pastParticiple: 'geregen',
+    auxiliary: 'hebben',
+  },
+  rijzen: {
+    infinitive: 'rijzen',
+    pastSingular: 'rees',
+    pastPlural: 'rezen',
+    pastParticiple: 'gerezen',
+    auxiliary: 'zijn',
+  },
+  ruiken: {
+    infinitive: 'ruiken',
+    pastSingular: 'rook',
+    pastPlural: 'roken',
+    pastParticiple: 'geroken',
+    auxiliary: 'hebben',
+  },
+  scheiden: {
+    infinitive: 'scheiden',
+    pastSingular: 'scheidde',
+    pastPlural: 'scheidden',
+    pastParticiple: 'gescheiden',
+    auxiliary: 'both',
+  },
+  schelden: {
+    infinitive: 'schelden',
+    pastSingular: 'schold',
+    pastPlural: 'scholden',
+    pastParticiple: 'gescholden',
+    auxiliary: 'hebben',
+  },
+  schenden: {
+    infinitive: 'schenden',
+    pastSingular: 'schond',
+    pastPlural: 'schonden',
+    pastParticiple: 'geschonden',
+    auxiliary: 'hebben',
+  },
+  schenken: {
+    infinitive: 'schenken',
+    pastSingular: 'schonk',
+    pastPlural: 'schonken',
+    pastParticiple: 'geschonken',
+    auxiliary: 'hebben',
+  },
+  scheppen: {
+    infinitive: 'scheppen',
+    pastSingular: 'schiep',
+    pastPlural: 'schiepen',
+    pastParticiple: 'geschapen',
+    auxiliary: 'hebben',
+  },
+  scheren: {
+    infinitive: 'scheren',
+    pastSingular: 'schoor',
+    pastPlural: 'schoren',
+    pastParticiple: 'geschoren',
+    auxiliary: 'hebben',
+  },
+  schijnen: {
+    infinitive: 'schijnen',
+    pastSingular: 'scheen',
+    pastPlural: 'schenen',
+    pastParticiple: 'geschenen',
+    auxiliary: 'hebben',
+  },
+  schrikken: {
+    infinitive: 'schrikken',
+    pastSingular: 'schrok',
+    pastPlural: 'schrokken',
+    pastParticiple: 'geschrokken',
+    auxiliary: 'zijn',
+  },
+  schuilen: {
+    infinitive: 'schuilen',
+    pastSingular: ['school', 'schuilde'],
+    pastPlural: ['scholen', 'schuilden'],
+    pastParticiple: 'geschuild',
+    auxiliary: 'hebben',
+  },
+  slijpen: {
+    infinitive: 'slijpen',
+    pastSingular: 'sleep',
+    pastPlural: 'slepen',
+    pastParticiple: 'geslepen',
+    auxiliary: 'hebben',
+  },
+  slijten: {
+    infinitive: 'slijten',
+    pastSingular: 'sleet',
+    pastPlural: 'sleten',
+    pastParticiple: 'gesleten',
+    auxiliary: 'both',
+  },
+  sluipen: {
+    infinitive: 'sluipen',
+    pastSingular: 'sloop',
+    pastPlural: 'slopen',
+    pastParticiple: 'geslopen',
+    auxiliary: 'both',
+  },
+  smijten: {
+    infinitive: 'smijten',
+    pastSingular: 'smeet',
+    pastPlural: 'smeten',
+    pastParticiple: 'gesmeten',
+    auxiliary: 'hebben',
+  },
+  snuiten: {
+    infinitive: 'snuiten',
+    pastSingular: 'snoot',
+    pastPlural: 'snoten',
+    pastParticiple: 'gesnoten',
+    auxiliary: 'hebben',
+  },
+  spannen: {
+    infinitive: 'spannen',
+    pastSingular: 'spande',
+    pastPlural: 'spanden',
+    pastParticiple: 'gespannen',
+    auxiliary: 'hebben',
+  },
+  spijten: {
+    infinitive: 'spijten',
+    pastSingular: 'speet',
+    pastPlural: 'speten',
+    pastParticiple: 'gespeten',
+    auxiliary: 'hebben',
+  },
+  spinnen: {
+    infinitive: 'spinnen',
+    pastSingular: 'spon',
+    pastPlural: 'sponnen',
+    pastParticiple: 'gesponnen',
+    auxiliary: 'hebben',
+  },
+  splijten: {
+    infinitive: 'splijten',
+    pastSingular: 'spleet',
+    pastPlural: 'spleten',
+    pastParticiple: 'gespleten',
+    auxiliary: 'hebben',
+  },
+  springen: {
+    infinitive: 'springen',
+    pastSingular: 'sprong',
+    pastPlural: 'sprongen',
+    pastParticiple: 'gesprongen',
+    auxiliary: 'both',
+  },
+  spruiten: {
+    infinitive: 'spruiten',
+    pastSingular: 'sproot',
+    pastPlural: 'sproten',
+    pastParticiple: 'gesproten',
+    auxiliary: 'zijn',
+  },
+  spugen: {
+    infinitive: 'spugen',
+    pastSingular: ['spoog', 'spuugde'],
+    pastPlural: ['spogen', 'spuugden'],
+    pastParticiple: ['gespogen', 'gespuugd'],
+    auxiliary: 'hebben',
+  },
+  steken: {
+    infinitive: 'steken',
+    pastSingular: 'stak',
+    pastPlural: 'staken',
+    pastParticiple: 'gestoken',
+    auxiliary: 'hebben',
+  },
+  stijgen: {
+    infinitive: 'stijgen',
+    pastSingular: 'steeg',
+    pastPlural: 'stegen',
+    pastParticiple: 'gestegen',
+    auxiliary: 'zijn',
+  },
+  stinken: {
+    infinitive: 'stinken',
+    pastSingular: 'stonk',
+    pastPlural: 'stonken',
+    pastParticiple: 'gestunken',
+    auxiliary: 'hebben',
+  },
+  stoten: {
+    infinitive: 'stoten',
+    pastSingular: ['stootte', 'stiet'],
+    pastPlural: ['stootten', 'stieten'],
+    pastParticiple: 'gestoten',
+    auxiliary: 'hebben',
+  },
+  strijden: {
+    infinitive: 'strijden',
+    pastSingular: 'streed',
+    pastPlural: 'streden',
+    pastParticiple: 'gestreden',
+    auxiliary: 'hebben',
+  },
+  strijken: {
+    infinitive: 'strijken',
+    pastSingular: 'streek',
+    pastPlural: 'streken',
+    pastParticiple: 'gestreken',
+    auxiliary: 'hebben',
+  },
+  stuiven: {
+    infinitive: 'stuiven',
+    pastSingular: 'stoof',
+    pastPlural: 'stoven',
+    pastParticiple: 'gestoven',
+    auxiliary: 'both',
+  },
+  treden: {
+    infinitive: 'treden',
+    pastSingular: 'trad',
+    pastPlural: 'traden',
+    pastParticiple: 'getreden',
+    auxiliary: 'both',
+  },
+  treffen: {
+    infinitive: 'treffen',
+    pastSingular: 'trof',
+    pastPlural: 'troffen',
+    pastParticiple: 'getroffen',
+    auxiliary: 'hebben',
+  },
+  verbieden: {
+    infinitive: 'verbieden',
+    pastSingular: 'verbood',
+    pastPlural: 'verboden',
+    pastParticiple: 'verboden',
+    auxiliary: 'hebben',
+  },
+  verliezen: {
+    infinitive: 'verliezen',
+    pastSingular: 'verloor',
+    pastPlural: 'verloren',
+    pastParticiple: 'verloren',
+    auxiliary: 'both',
+  },
+  verraden: {
+    infinitive: 'verraden',
+    pastSingular: 'verraadde',
+    pastPlural: 'verraadden',
+    pastParticiple: 'verraden',
+    auxiliary: 'hebben',
+  },
+  verwijten: {
+    infinitive: 'verwijten',
+    pastSingular: 'verweet',
+    pastPlural: 'verweten',
+    pastParticiple: 'verweten',
+    auxiliary: 'hebben',
+  },
+  verzinnen: {
+    infinitive: 'verzinnen',
+    pastSingular: 'verzon',
+    pastPlural: 'verzonnen',
+    pastParticiple: 'verzonnen',
+    auxiliary: 'hebben',
+  },
+  vlechten: {
+    infinitive: 'vlechten',
+    pastSingular: 'vlocht',
+    pastPlural: 'vlochten',
+    pastParticiple: 'gevlochten',
+    auxiliary: 'hebben',
+  },
+  vouwen: {
+    infinitive: 'vouwen',
+    pastSingular: 'vouwde',
+    pastPlural: 'vouwden',
+    pastParticiple: 'gevouwen',
+    auxiliary: 'hebben',
+  },
+  vriezen: {
+    infinitive: 'vriezen',
+    pastSingular: 'vroor',
+    pastPlural: 'vroren',
+    pastParticiple: 'gevroren',
+    auxiliary: 'both',
+  },
+  waaien: {
+    infinitive: 'waaien',
+    pastSingular: ['waaide', 'woei'],
+    pastPlural: ['waaiden', 'woeien'],
+    pastParticiple: 'gewaaid',
+    auxiliary: 'both',
+  },
+  wegen: {
+    infinitive: 'wegen',
+    pastSingular: 'woog',
+    pastPlural: 'wogen',
+    pastParticiple: 'gewogen',
+    auxiliary: 'hebben',
+  },
+  werpen: {
+    infinitive: 'werpen',
+    pastSingular: 'wierp',
+    pastPlural: 'wierpen',
+    pastParticiple: 'geworpen',
+    auxiliary: 'hebben',
+  },
+  werven: {
+    infinitive: 'werven',
+    pastSingular: 'wierf',
+    pastPlural: 'wierven',
+    pastParticiple: 'geworven',
+    auxiliary: 'hebben',
+  },
+  weven: {
+    infinitive: 'weven',
+    pastSingular: 'weefde',
+    pastPlural: 'weefden',
+    pastParticiple: 'geweven',
+    auxiliary: 'hebben',
+  },
+  wijken: {
+    infinitive: 'wijken',
+    pastSingular: 'week',
+    pastPlural: 'weken',
+    pastParticiple: 'geweken',
+    auxiliary: 'zijn',
+  },
+  winden: {
+    infinitive: 'winden',
+    pastSingular: 'wond',
+    pastPlural: 'wonden',
+    pastParticiple: 'gewonden',
+    auxiliary: 'hebben',
+  },
+  wrijven: {
+    infinitive: 'wrijven',
+    pastSingular: 'wreef',
+    pastPlural: 'wreven',
+    pastParticiple: 'gewreven',
+    auxiliary: 'hebben',
+  },
+  wringen: {
+    infinitive: 'wringen',
+    pastSingular: 'wrong',
+    pastPlural: 'wrongen',
+    pastParticiple: 'gewrongen',
+    auxiliary: 'hebben',
+  },
+  zenden: {
+    infinitive: 'zenden',
+    pastSingular: 'zond',
+    pastPlural: 'zonden',
+    pastParticiple: 'gezonden',
+    auxiliary: 'hebben',
+  },
+  zinken: {
+    infinitive: 'zinken',
+    pastSingular: 'zonk',
+    pastPlural: 'zonken',
+    pastParticiple: 'gezonken',
+    auxiliary: 'zijn',
+  },
+  zinnen: {
+    infinitive: 'zinnen',
+    pastSingular: 'zon',
+    pastPlural: 'zonnen',
+    pastParticiple: 'gezonnen',
+    auxiliary: 'hebben',
+  },
+  zuigen: {
+    infinitive: 'zuigen',
+    pastSingular: 'zoog',
+    pastPlural: 'zogen',
+    pastParticiple: 'gezogen',
+    auxiliary: 'hebben',
+  },
+  zuipen: {
+    infinitive: 'zuipen',
+    pastSingular: 'zoop',
+    pastPlural: 'zopen',
+    pastParticiple: 'gezopen',
+    auxiliary: 'hebben',
+  },
+  zwellen: {
+    infinitive: 'zwellen',
+    pastSingular: 'zwol',
+    pastPlural: 'zwollen',
+    pastParticiple: 'gezwollen',
+    auxiliary: 'zijn',
+  },
+  zweren: {
+    infinitive: 'zweren',
+    pastSingular: 'zwoer',
+    pastPlural: 'zwoeren',
+    pastParticiple: 'gezworen',
+    auxiliary: 'hebben',
+  },
+  zwerven: {
+    infinitive: 'zwerven',
+    pastSingular: 'zwierf',
+    pastPlural: 'zwierven',
+    pastParticiple: 'gezworven',
+    auxiliary: 'both',
+  },
+  zwijgen: {
+    infinitive: 'zwijgen',
+    pastSingular: 'zweeg',
+    pastPlural: 'zwegen',
+    pastParticiple: 'gezwegen',
+    auxiliary: 'hebben',
+  },
 };
 
 // ============================================================================
@@ -909,237 +1686,468 @@ export const IRREGULAR_VERBS: Record<string, IrregularVerbEntry> = {
  *
  * This list covers common regular verbs used in NT2 education and daily Dutch.
  */
-const REGULAR_VERBS = new Set([
+/**
+ * Comprehensive whitelist of known regular Dutch verbs (regelmatige werkwoorden).
+ * Only verbs in this set OR in IRREGULAR_VERBS will be accepted for conjugation.
+ * Separable compounds (prefix + known base) are also accepted.
+ *
+ * This list covers common regular verbs used in NT2 education and daily Dutch.
+ */
+export const REGULAR_VERBS = new Set<string>([
   // ── A ──
-  'aanbieden', 'aanpassen', 'aantrekken', 'aarzelen', 'accepteren', 'achten',
-  'ademen', 'afhangen', 'afmaken', 'afrekenen', 'afspreken', 'afwachten',
-  'afwassen', 'antwoorden',
+  'aanbieden', 'aanhoren', 'aankleden', 'aanleggen', 'aanmaken', 'aanmelden',
+  'aannemen', 'aanpassen', 'aanraden', 'aanraken', 'aansluiten', 'aantasten',
+  'aantonen', 'aantrekken', 'aanvallen', 'aanvragen', 'aanvullen', 'aanwaaien',
+  'aanwijzen', 'aanzetten', 'aarzelen', 'abonneren', 'absorberen', 'accepteren',
+  'acclimatiseren', 'accommoderen', 'achten', 'acteren', 'activeren', 'actualiseren',
+  'ademen', 'adopteren', 'adviseren', 'afbakenen', 'afbedelen', 'afbellen',
+  'afbetalen', 'afbreken', 'afdalen', 'afdanken', 'afdelen', 'afdrogen',
+  'afgaan', 'afgeven', 'afhalen', 'afhandelen', 'afhangen', 'afhuren',
+  'afkeuren', 'afkijken', 'afkoelen', 'afkomen', 'afleggen', 'afleiden',
+  'aflopen', 'afmaken', 'afnemen', 'afpakken', 'afrekenen', 'afremmen',
+  'afscheiden', 'afschrijven', 'afsluiten', 'afsmeren', 'afsnijden', 'afspreken',
+  'afstappen', 'afstemmen', 'afstuderen', 'aftellen', 'aftreden', 'aftrekken',
+  'afvallen', 'afvoeren', 'afvragen', 'afwachten', 'afwassen', 'afwijzen',
+  'afwisselen', 'afzeggen', 'afzetten', 'afzien', 'ageren', 'alarmeren',
+  'amuseren', 'analyseren', 'anticiperen', 'antwoorden', 'apostroferen', 'applaudisseren',
+  'arriveren', 'articuleren', 'asfalteren', 'assimileren', 'associëren', 'attenderen',
   // ── B ──
-  'baden', 'bakken', 'bedanken', 'bedekken', 'bedoelen', 'bedreigen',
-  'bedriegen', 'beëindigen', 'begroeten', 'behandelen', 'beheren', 'behoren',
-  'bekijken', 'bekleden', 'bekommeren', 'belanden', 'belasten', 'beleven',
-  'bellen', 'belonen', 'beloven', 'benoemen', 'bepalen', 'bereiden',
-  'bereiken', 'berekenen', 'bergen', 'berichten', 'beschermen', 'beschikken',
-  'beschouwen', 'beschrijven', 'beseffen', 'beslissen', 'besmetten',
-  'besparen', 'bespreken', 'bestaan', 'besteden', 'bestellen', 'bestemmen',
-  'bestrijden', 'bestuderen', 'besturen', 'betalen', 'betekenen', 'betogen',
-  'betrekken', 'bevatten', 'bevelen', 'bevestigen', 'bevorderen',
-  'bevrijden', 'bewaken', 'bewaren', 'bewegen', 'bewerken', 'beweren',
-  'bewijzen', 'bewonderen', 'bewonen', 'bezetten', 'bezichtigen',
-  'bezoeken', 'bezorgen', 'bidden', 'bijdragen', 'bijten', 'bijwerken',
-  'binden', 'blazen', 'bleek', 'blij', 'blinken', 'bloeden', 'bloeien',
-  'blokkeren', 'boeken', 'boren', 'botsen', 'bouwen', 'braden', 'branden',
-  'breiden', 'buigen', 'bukken',
+  'baden', 'bakkeleien', 'bakken', 'balanceren', 'balen', 'bankieren',
+  'barricaderen', 'baseren', 'beantwoorden', 'becommentariëren', 'bedanken', 'bedekken',
+  'bedillen', 'bedoelen', 'bedreigen', 'bedriegen', 'bedrukken', 'bedwingen',
+  'beëindigen', 'befaamd', 'begaan', 'begeleiden', 'begraven', 'begroeten',
+  'behandelen', 'beheersen', 'beheren', 'behoren', 'behouden', 'bekampen',
+  'bekennen', 'bekijken', 'bekladden', 'beklagen', 'bekleden', 'beklemmen',
+  'beklemtonen', 'beklimmen', 'bekomen', 'bekommeren', 'bekonen', 'bekopen',
+  'bekorten', 'bekritiseren', 'belanden', 'belasten', 'beledigen', 'beleggen',
+  'beleven', 'bellen', 'belonen', 'beloven', 'beluisteren', 'bemannen',
+  'bemerken', 'bemiddelen', 'benaderen', 'benijden', 'benoemen', 'benutten',
+  'beoefenen', 'beogen', 'beoordelen', 'bepalen', 'beplanten', 'bepreken',
+  'beproeven', 'beramen', 'bereiden', 'bereiken', 'berekenen', 'bergen',
+  'berichten', 'berispen', 'berusten', 'beschadigen', 'beschermen', 'beschikken',
+  'beschilderen', 'beschouwen', 'beschrijven', 'beschuldigen', 'beseffen', 'beslissen',
+  'besmeren', 'besmetten', 'besnoeien', 'besparen', 'bespioneren', 'bespotten',
+  'bespreken', 'besproeien', 'bestaan', 'besteden', 'bestellen', 'bestemmen',
+  'bestoken', 'bestralen', 'bestrijden', 'bestuderen', 'besturen', 'betalen',
+  'betekenen', 'betichten', 'betitelen', 'betogen', 'betoveren', 'betrachten',
+  'betreffen', 'betrekken', 'betreuren', 'betuigen', 'betwijfelen', 'bevatten',
+  'beveiligen', 'bevelen', 'bevestigen', 'bevinden', 'bevlekken', 'bevloeien',
+  'bevolken', 'bevorderen', 'bevriezen', 'bevrijden', 'bewaken', 'bewandelen',
+  'bewaren', 'bewegen', 'beweren', 'bewerken', 'bewerkstelligen', 'bewijzen',
+  'bewolken', 'bewonderen', 'bewonen', 'bezetten', 'bezichtigen', 'bezinken',
+  'bezinnen', 'bezitten', 'bezoeken', 'bezorgen', 'bezuinigen', 'bezwaren',
+  'bezwijken', 'bidden', 'biechten', 'bijdragen', 'bijeenkomen', 'bijhouden',
+  'bijknippen', 'bijkomen', 'bijleggen', 'bijpraten', 'bijschaven', 'bijsluiten',
+  'bijstaan', 'bijsturen', 'bijtanken', 'bijten', 'bijvullen', 'bijwerken',
+  'bijwonen', 'bijzetten', 'binden', 'bivakkeren', 'bladeren', 'blankvoorn',
+  'blazen', 'bleek', 'bleken', 'blij', 'bliksemen', 'blinken',
+  'bloeden', 'bloeien', 'blokkeren', 'blozen', 'boeken', 'boeten',
+  'boetseren', 'bombarderen', 'bonzen', 'boren', 'borstelen', 'botsen',
+  'bouwen', 'boycotten', 'braden', 'braken', 'branden', 'brandmerken',
+  'breiden', 'breien', 'brullen', 'buigen', 'bukken', 'bundelen',
   // ── C ──
-  'camperen', 'chatten', 'checken', 'claimen', 'coachen', 'combineren',
-  'communiceren', 'compenseren', 'concentreren', 'concluderen', 'confronteren',
-  'constateren', 'consulteren', 'consumeren', 'contacteren', 'controleren',
-  'coördineren', 'corrigeren', 'creëren', 'cultiveren',
+  'calibreren', 'camoufleren', 'camperen', 'cancellen', 'canoniseren', 'capaciteren',
+  'casten', 'catapulteren', 'categoriseren', 'cederen', 'censureren', 'centreren',
+  'certificeren', 'charteren', 'chatten', 'chaufferen', 'checken', 'chicaneren',
+  'chocqueren', 'circuleren', 'citeren', 'claimen', 'classificeren', 'claxonneren',
+  'coachen', 'coderen', 'collaboreren', 'combineren', 'commanderen', 'communiceren',
+  'compareren', 'compenseren', 'compileren', 'completeren', 'complimenteren', 'componeren',
+  'composteren', 'compromitteren', 'concentreren', 'concluderen', 'concurreren', 'condoleren',
+  'confereren', 'configureren', 'confirmeren', 'confronteren', 'connecten', 'consolideren',
+  'constateren', 'construeren', 'consulteren', 'consumeren', 'contacteren', 'contamineren',
+  'continueren', 'contracteren', 'contrasteren', 'controleren', 'converseren', 'converteren',
+  'coördineren', 'corrigeren', 'corrumperen', 'creëren', 'cultiveren',
   // ── D ──
-  'dalen', 'dampen', 'dansen', 'debatteren', 'delen', 'demonstreren',
-  'dienen', 'discussiëren', 'domineren', 'dompelen', 'doneren', 'dopen',
-  'douchen', 'draaien', 'dromen', 'drogen', 'drukken', 'druppelen',
-  'duiken', 'dunken', 'duren', 'durven', 'duwen', 'dwalen', 'dwingen',
+  'dalen', 'dampen', 'dansen', 'daperen', 'darmelen', 'dateren',
+  'debatteren', 'debuteren', 'declareren', 'decolleteren', 'decoreren', 'deduceren',
+  'definiëren', 'degraderen', 'dekken', 'delegeren', 'delen', 'demaskeren',
+  'demonstreren', 'deponeren', 'deporten', 'deporteren', 'deprimeren', 'derven',
+  'desinfecteren', 'destabiliseren', 'destilleren', 'detecteren', 'determineren', 'devalueren',
+  'dialogeren', 'dicteren', 'dienen', 'differentiëren', 'diffunderen', 'dijken',
+  'dimmen', 'diplomeren', 'dirigeren', 'disconteren', 'discrimineren', 'discussiëren',
+  'diskwalificeren', 'dispenseren', 'distantiëren', 'distribueren', 'divergeren', 'diversifiëren',
+  'documenteren', 'dolen', 'domineren', 'dompelen', 'donderen', 'doneren',
+  'dopen', 'doseren', 'douchen', 'downloaden', 'draaien', 'draineren',
+  'dramatiseren', 'dreigen', 'drempelen', 'drentelen', 'dreunen', 'dribbelen',
+  'drogen', 'dromen', 'druisen', 'drukken', 'druppelen', 'duelleren',
+  'duiden', 'duiken', 'dulden', 'dumpen', 'dunken', 'duren',
+  'durven', 'duwen', 'dwalen', 'dwarsbomen', 'dwingen',
   // ── E ──
-  'echoen', 'eerbiedigen', 'eindigen', 'eisen', 'elimineren', 'emigreren',
-  'erkennen', 'ervaren', 'erven', 'evalueren', 'evenaren', 'exploiteren',
-  'exporteren',
+  'ebben', 'echobereken', 'echoen', 'echoën', 'editen', 'educeren',
+  'eenmaken', 'eerbiedigen', 'egaliseren', 'eigenen', 'eindigen', 'eisen',
+  'elimineren', 'emanciperen', 'emigreren', 'emitteren', 'emuleren', 'encrypteren',
+  'engageren', 'enquêteren', 'enteren', 'enthousiasmeren', 'equipen', 'ergeren',
+  'erkennen', 'ervaren', 'erven', 'escaleren', 'escorteren', 'etableren',
+  'etaleren', 'etiketteren', 'evalueren', 'evangeliseren', 'evenaren', 'evolueren',
+  'examineren', 'excelleren', 'excluderen', 'executeren', 'exemplifiëren', 'experimenteren',
+  'expliceren', 'exploderen', 'exploiteren', 'exporteren', 'exposeren', 'extrapoleren',
   // ── F ──
-  'falen', 'fascineren', 'faxen', 'feliciteren', 'fietsen', 'filmen',
-  'filosoferen', 'filteren', 'financieren', 'fluisteren', 'focussen',
-  'folteren', 'forceren', 'formeren', 'formuleren', 'fotograferen',
-  'frustreren', 'functioneren',
+  'fabriceren', 'faciliteren', 'factureren', 'falen', 'falsifiëren', 'fascineren',
+  'fatsoeneren', 'favoriseren', 'faxen', 'federeren', 'feesten', 'feliciteren',
+  'fêteren', 'fietsen', 'figureren', 'fileren', 'filmen', 'filosoferen',
+  'filteren', 'filtreren', 'financieren', 'fingeren', 'finishen', 'fixeren',
+  'flaneren', 'flapperen', 'flirten', 'flitsen', 'fluctueren', 'fluisteren',
+  'focussen', 'foetelen', 'folteren', 'forceren', 'forenzen', 'formateren',
+  'formeren', 'formuleren', 'fotograferen', 'fragmenteren', 'frankeren', 'frequenteren',
+  'frituren', 'fronzen', 'frustreren', 'functioneren', 'funderen', 'fusioneren',
   // ── G ──
-  'garanderen', 'gebruiken', 'gehoorzamen', 'geloven', 'genieten',
-  'geraken', 'gissen', 'glanzen', 'glimmen', 'glijden', 'gluren',
-  'goedkeuren', 'golven', 'googelen', 'gooien', 'grappen', 'graven',
-  'grenzen', 'grijnzen', 'grijpen', 'groeien', 'groeten', 'gronden',
-  'gunnen',
+  'galmen', 'galopperen', 'gapen', 'garanderen', 'gebaren', 'gebruiken',
+  'geeuwen', 'gehoorzamen', 'geldeisen', 'gelijken', 'geloven', 'genereren',
+  'genieten', 'geraken', 'geschieden', 'getuigen', 'geuren', 'gidsen',
+  'gillen', 'gissen', 'glanzen', 'glijden', 'glimlachen', 'glimmen',
+  'glinsteren', 'glooien', 'gluren', 'goedkeuren', 'golven', 'goochelen',
+  'googelen', 'gooien', 'gourmetten', 'grabbelen', 'grappen', 'graven',
+  'grenzen', 'grijnzen', 'grijpen', 'grissen', 'groeien', 'groeten',
+  'grommen', 'gronden', 'gruwen', 'gummen', 'gunnen',
   // ── H ──
-  'haasten', 'hakken', 'handelen', 'hanteren', 'haten', 'helen',
-  'herbergen', 'herdenken', 'herhaaldelijk', 'herhalen', 'herinneren',
-  'herkennen', 'herroepen', 'herstellen', 'herzien', 'heten', 'hinderen',
-  'hoesten', 'hopen', 'huilen', 'huisvesten', 'huldigen', 'huren',
-  'huwen',
+  'haasten', 'haken', 'hakkelen', 'hakken', 'halen', 'halveren',
+  'hameren', 'handelen', 'handhaven', 'handtekenen', 'hanteren', 'haperen',
+  'harden', 'harken', 'harmonieren', 'harmoniseren', 'harsen', 'haten',
+  'havenen', 'hechten', 'heersen', 'helen', 'helmteken', 'heractiveren',
+  'herademen', 'herberekenen', 'herbergen', 'herbouwen', 'herdefiniëren', 'herdenken',
+  'herformuleren', 'herhaaldelijk', 'herhalen', 'herinneren', 'herkennen', 'herlezen',
+  'hernieuwen', 'hernoemen', 'heropenen', 'heroverwegen', 'herplaatsen', 'herpositioneren',
+  'herprogrammeren', 'herroepen', 'herstellen', 'hervatten', 'herwaarderen', 'herzien',
+  'heten', 'hijgen', 'hikken', 'hinderen', 'hinkelen', 'hoesten',
+  'homogeniseren', 'hopen', 'hoppen', 'horen', 'hosten', 'huichelen',
+  'huilen', 'huisvesten', 'huiveren', 'huldigen', 'huren', 'huwen',
   // ── I ──
-  'identificeren', 'illustreren', 'immigreren', 'implementeren',
-  'impliceren', 'importeren', 'imponeren', 'indiceren', 'informeren',
-  'inloggen', 'innoveren', 'inrichten', 'inschatten', 'inschrijven',
-  'inspannen', 'inspireren', 'installeren', 'instellen', 'instrueren',
-  'integreren', 'interesseren', 'interpreteren', 'introduceren', 'investeren',
-  'inzetten',
+  'idealiseren', 'identificeren', 'ijveren', 'illustreren', 'imiteren', 'immigreren',
+  'immuniseren', 'impacten', 'implementeren', 'impliceren', 'imponeren', 'importeren',
+  'improviseren', 'inademen', 'inburgeren', 'incasseren', 'includeren', 'indelen',
+  'indiceren', 'indoctrineren', 'indrukken', 'infecteren', 'informeren', 'ingrijpen',
+  'inhalen', 'inhouden', 'inleveren', 'inlijsten', 'inloggen', 'inmaken',
+  'innemen', 'innoveren', 'inpakken', 'inrichten', 'inschatten', 'inschrijven',
+  'insinueren', 'insmeren', 'inspannen', 'inspecteren', 'inspireren', 'installeren',
+  'instappen', 'instellen', 'instemmen', 'instrueren', 'integreren', 'intensiveren',
+  'interacteren', 'interesseren', 'interfereren', 'internaliseren', 'interpreteren', 'interrumperen',
+  'interviewen', 'intimideren', 'introduceren', 'investeren', 'inviteren', 'invullen',
+  'inzamelen', 'inzetten', 'inzien', 'inzoomen', 'irriteren', 'isoleren',
   // ── J ──
-  'jagen', 'jammeren', 'janken', 'joggen', 'juichen', 'jutten',
+  'jagen', 'jammen', 'jammeren', 'janken', 'jatten', 'joggen',
+  'jongleren', 'jubelen', 'juichen', 'justeren', 'jutten',
   // ── K ──
-  'kalmeren', 'kammen', 'kampen', 'kamperen', 'kankeren', 'kappen',
-  'kenmerken', 'kennen', 'keren', 'kermen', 'ketsen', 'kibbelen',
-  'kietelen', 'klagen', 'klappen', 'kleden', 'kleppen', 'kletsen',
-  'kleuren', 'klikken', 'klinken', 'kloppen', 'knagen', 'knallen',
-  'knappen', 'kneden', 'knielen', 'knikken', 'knippen', 'knoeien',
-  'knopen', 'knuffelen', 'knuppelen', 'koersen', 'koken', 'kopiëren',
-  'koppelen', 'kosten', 'krassen', 'krabben', 'krijsen', 'kruisen',
-  'kuchen', 'kussen', 'kweken', 'kwellen', 'kwetsen',
+  'kaartspelen', 'kaatsen', 'kabbelen', 'kajakken', 'kalmeren', 'kammen',
+  'kampen', 'kamperen', 'kankeren', 'kantelen', 'kappen', 'karakteriseren',
+  'kassieren', 'katapulteren', 'keilen', 'kelderen', 'kenmerken', 'kennen',
+  'kenteren', 'keren', 'kermen', 'kerven', 'ketenen', 'ketsen',
+  'kibbelen', 'kiemen', 'kietelen', 'kijven', 'klagen', 'klappen',
+  'kleden', 'kleppen', 'kletsen', 'kleuren', 'klikken', 'klimatiseren',
+  'klinken', 'kloppen', 'kluisteren', 'knabbelen', 'knagen', 'knakken',
+  'knallen', 'knappen', 'knarsen', 'kneden', 'knielen', 'kniezen',
+  'knikken', 'knippen', 'knipperen', 'knoeien', 'knopen', 'knorren',
+  'knotten', 'knuffelen', 'knuppelen', 'knutselen', 'koersen', 'koesteren',
+  'koffiezetten', 'koken', 'kolken', 'kopiëren', 'koppelen', 'kortsluiten',
+  'kosten', 'kotsen', 'krabben', 'kraken', 'krassen', 'kriebelen',
+  'krijsen', 'krijten', 'kritiseren', 'kronkelen', 'kruiden', 'kruien',
+  'kruisen', 'kuchen', 'kussen', 'kwaken', 'kwakkelen', 'kwalificeren',
+  'kweken', 'kwelen', 'kwellen', 'kwetsen', 'kwispelen',
   // ── L ──
-  'lachen', 'laden', 'laken', 'landen', 'lappen', 'leggen', 'leiden',
-  'lekken', 'lenen', 'leren', 'letten', 'leunen', 'leveren', 'leven',
-  'lichten', 'liefhebben', 'lijden', 'lijmen', 'lijsten', 'linken',
-  'logeren', 'lokken', 'lonken', 'lossen', 'loven', 'luiden', 'luiken',
-  'luisteren', 'lukken', 'lunchen',
+  'lachen', 'laden', 'laken', 'lakken', 'lamleggen', 'landen',
+  'lappen', 'laseren', 'lassen', 'lasteren', 'lauweren', 'laveren',
+  'leasen', 'lebberen', 'ledigen', 'leeglopen', 'leegmaken', 'leegruimen',
+  'leggen', 'leiden', 'lekken', 'lenen', 'leren', 'lesgeven',
+  'lessen', 'letten', 'leunen', 'leuteren', 'leven', 'leveren',
+  'liberaliseren', 'lichten', 'liefhebben', 'lijden', 'lijmen', 'lijnen',
+  'lijsten', 'likken', 'limiteren', 'linken', 'logeren', 'loggen',
+  'lokken', 'lonken', 'loochenen', 'loodsen', 'lossen', 'loven',
+  'lozen', 'luchten', 'luiden', 'luieren', 'luiken', 'luisteren',
+  'lukken', 'lunchen', 'lurken', 'lusten',
   // ── M ──
-  'maaien', 'maken', 'malen', 'manen', 'manoeuvreren', 'markeren',
-  'masseren', 'meedelen', 'meemaken', 'meenemen', 'melden', 'mengen',
-  'merken', 'meten', 'mikken', 'missen', 'moderniseren', 'moedigen',
-  'monteren', 'motiveren', 'muilkorven',
+  'maaien', 'machtigen', 'mailen', 'maken', 'malen', 'manen',
+  'mankeren', 'manoeuvreren', 'markeren', 'martelen', 'maskeren', 'masseren',
+  'matchen', 'matigen', 'maximaliseren', 'mechaniseren', 'mededelen', 'mediëren',
+  'mediteren', 'meedelen', 'meedingen', 'meedoen', 'meegaan', 'meegeven',
+  'meehelpen', 'meekomen', 'meeleven', 'meemaken', 'meenemen', 'meerijden',
+  'meespelen', 'meewerken', 'meezingen', 'melden', 'mengen', 'merken',
+  'mesten', 'meten', 'metselen', 'meubileren', 'middelen', 'mijmeren',
+  'mijnen', 'mikken', 'minderen', 'minimaliseren', 'mislukken', 'mismaken',
+  'misnoegen', 'misrekenen', 'missen', 'mistasten', 'misten', 'misvatten',
+  'modelleren', 'modereren', 'moderniseren', 'modificeren', 'moederen', 'moedigen',
+  'monteren', 'mopperen', 'morren', 'morsen', 'motiveren', 'motoriseren',
+  'muilkorven', 'murmureren', 'muteren',
   // ── N ──
-  'naderen', 'najagen', 'nalaten', 'naleven', 'natrekken', 'neerzetten',
-  'negeren', 'neigen', 'nemen', 'nestelen', 'niezen', 'noemen', 'nopen',
-  'noteren', 'nuanceren',
+  'naaien', 'nabootsen', 'nabrengen', 'nademen', 'nadenken', 'naderen',
+  'nadoen', 'nagelen', 'nagloeien', 'najagen', 'nakijken', 'nakomen',
+  'nalaten', 'naleven', 'namaken', 'narekenen', 'naspelen', 'naspeuren',
+  'nastreven', 'natellen', 'natrekken', 'navigeren', 'nazoeken', 'neerbuigen',
+  'neerhalen', 'neerklappen', 'neerleggen', 'neerploffen', 'neerschieten', 'neerstorten',
+  'neerzetten', 'negeren', 'neigen', 'nemen', 'nestelen', 'netwerken',
+  'neutraliseren', 'nevelen', 'niezen', 'nihileren', 'niksen', 'noemen',
+  'noodzaken', 'nopen', 'normaliseren', 'noteren', 'notificeren', 'nuanceren',
+  'nummeren', 'nuttigen',
   // ── O ──
-  'oefenen', 'omdraaien', 'omhelzen', 'omschrijven', 'omvatten',
-  'onderhouden', 'ondernemen', 'onderschatten', 'onderscheiden',
-  'ondersteunen', 'onderstrepen', 'ondertekenen', 'onderwijzen',
-  'onderzoeken', 'ontbijten', 'ontdekken', 'ontkennen', 'ontmoeten',
-  'ontnemen', 'ontslaan', 'ontsnappen', 'ontstaan', 'ontvangen',
-  'ontvluchten', 'ontwerpen', 'ontwikkelen', 'ontzeggen', 'oordelen',
-  'opbellen', 'opbouwen', 'opdoen', 'opdragen', 'opeisen', 'openen',
-  'opereren', 'ophalen', 'ophangen', 'opheffen', 'ophouden',
-  'opklimmen', 'opknappen', 'opkomen', 'opleiden', 'opleveren',
-  'oplichten', 'oplopen', 'oplossen', 'opmerken', 'opnemen', 'opofferen',
-  'oppakken', 'oppassen', 'oprichten', 'oproepen', 'opruimen', 'opslaan',
-  'opstaan', 'opstarten', 'opstellen', 'optreden', 'opvallen',
-  'opvangen', 'opvoeden', 'opwekken', 'opzetten', 'opzoeken',
-  'ordenen', 'organiseren', 'overhandigen', 'overheersen', 'overkomen',
-  'overlappen', 'overlaten', 'overleggen', 'overlijden', 'overmaken',
-  'overnemen', 'overplaatsen', 'oversteken', 'overstromen',
-  'overtuigen', 'overuren', 'overwegen', 'overwinnen',
+  'oefenen', 'oeuvreren', 'offeren', 'omarmen', 'ombouwen', 'omcirkelen',
+  'omdraaien', 'omheinen', 'omhelzen', 'omkaderen', 'omkeren', 'omkijken',
+  'omkomen', 'omkopen', 'omleiden', 'omrekenen', 'omschrijven', 'omspelen',
+  'omstoten', 'omvatten', 'omverblazen', 'omwaaien', 'omwandelen', 'omwisselen',
+  'omzeilen', 'omzetten', 'omzwaaien', 'onderbouwen', 'onderbreken', 'onderbrengen',
+  'ondergaan', 'onderhandelen', 'onderhouden', 'onderkennen', 'onderkoelen', 'ondernemen',
+  'onderschatten', 'onderscheiden', 'ondersteunen', 'onderstrepen', 'ondertekenen', 'onderwijzen',
+  'onderzoeken', 'ontbijten', 'ontbranden', 'ontdekken', 'ontdoen', 'onteren',
+  'ontfermen', 'ontfutselen', 'ontgassen', 'ontgroenen', 'ontharen', 'onthouden',
+  'onthullen', 'ontkennen', 'ontkiemen', 'ontkleuren', 'ontkoppelen', 'ontladen',
+  'ontlasten', 'ontleden', 'ontlenen', 'ontlopen', 'ontmantelen', 'ontmaskeren',
+  'ontmoeten', 'ontnemen', 'ontnuchteren', 'ontploffen', 'ontplooien', 'ontraden',
+  'ontrafelen', 'ontremmen', 'ontroeren', 'ontrollen', 'ontronen', 'ontroven',
+  'ontruimen', 'ontslaan', 'ontsnappen', 'ontspannen', 'ontsporen', 'ontspringen',
+  'ontstaan', 'ontsteken', 'ontstemmen', 'ontvangen', 'ontvlammen', 'ontvluchten',
+  'ontvolken', 'ontvouwen', 'ontvreemden', 'ontwaken', 'ontwapenen', 'ontwerpen',
+  'ontwijken', 'ontwikkelen', 'ontwortelen', 'ontzeggen', 'ontzetten', 'oordelen',
+  'opbellen', 'opbergen', 'opbeuren', 'opbieden', 'opbinden', 'opblazen',
+  'opbouwen', 'opbrengen', 'opdagen', 'opdelven', 'opdienen', 'opdoen',
+  'opdragen', 'opdraven', 'opdrinken', 'opdrogen', 'opduiken', 'opeisen',
+  'openbaren', 'openbreken', 'opendoen', 'openen', 'opengaan', 'openmaken',
+  'openstaan', 'opereren', 'opeten', 'opfrissen', 'opgaan', 'opgeven',
+  'opgroeien', 'ophalen', 'ophangen', 'opheffen', 'ophelderen', 'ophitsen',
+  'ophopen', 'ophouden', 'opjagen', 'opkammen', 'opkijken', 'opklaren',
+  'opklimmen', 'opknappen', 'opkomen', 'opkopen', 'opladen', 'oplaten',
+  'opleggen', 'opleiden', 'oplepelen', 'opleven', 'opleveren', 'oplichten',
+  'oplopen', 'oplossen', 'opmaken', 'opmerken', 'opnemen', 'opofferen',
+  'oppakken', 'oppassen', 'opperen', 'oppoetsen', 'oppompen', 'oprakelen',
+  'opredderen', 'opregelen', 'oprichten', 'oprijden', 'oprispen', 'oproepen',
+  'oprollen', 'opruimen', 'oprukken', 'opschalen', 'opschieten', 'opschonen',
+  'opschorten', 'opschrijven', 'opslaan', 'opslokken', 'opsluiten', 'opsmukken',
+  'opsnuiven', 'opsporen', 'opstaan', 'opstapelen', 'opstappen', 'opstarten',
+  'opsteken', 'opstellen', 'opstoken', 'opsturen', 'optafelen', 'optellen',
+  'optillen', 'optimaliseren', 'optreden', 'optrekken', 'opvallen', 'opvangen',
+  'opvatten', 'opvoeden', 'opvoeren', 'opvolgen', 'opvouwen', 'opvullen',
+  'opwarmen', 'opwekken', 'opwerpen', 'opzetten', 'opzoeken', 'opzouten',
+  'opzwellen', 'ordenen', 'organiseren', 'oriënteren', 'overblijven', 'overbrengen',
+  'overbruggen', 'overdenken', 'overdragen', 'overdrijven', 'overeenkomen', 'overgaan',
+  'overgieten', 'overgroeien', 'overhalen', 'overhandigen', 'overheersen', 'overhellen',
+  'overkappen', 'overkoken', 'overkomen', 'overkruisen', 'overladen', 'overlappen',
+  'overlaten', 'overleggen', 'overleven', 'overlijden', 'overmaken', 'overmeesteren',
+  'overnachten', 'overnemen', 'overpeinzen', 'overplaatsen', 'overrompelen', 'overschakelen',
+  'overschatten', 'overschrijden', 'overschrijven', 'overspoelen', 'overstappen', 'oversteken',
+  'overstromen', 'overtellen', 'overtuigen', 'overuren', 'overvallen', 'overvaren',
+  'overvechten', 'overvliegen', 'overvloeien', 'overwegen', 'overweldigen', 'overwinnen',
+  'overwinteren', 'overzenden', 'overzetten', 'overzien',
   // ── P ──
   'paaien', 'paardrij', 'paarrij', 'paden', 'pakken', 'paniekeren',
-  'parkeren', 'passen', 'passeren', 'pellen', 'pennen', 'persen',
-  'pikken', 'plakken', 'plannen', 'planten', 'plaatsen', 'plegen',
-  'plezieren', 'ploeteren', 'plukken', 'poetsen', 'polijsten', 'polsen',
-  'pompen', 'poten', 'praten', 'presteren', 'pretenderen', 'prikken',
-  'proberen', 'profiteren', 'programmeren', 'protesteren', 'pruttelen',
-  'publiceren', 'puzzelen',
+  'panikeren', 'paraderen', 'parkeren', 'participeren', 'passen', 'passeren',
+  'patrouilleren', 'pauzeren', 'peddelen', 'peilen', 'peinzen', 'pellen',
+  'pendelen', 'penetreren', 'pennen', 'peperen', 'perfectioneren', 'perforeren',
+  'persen', 'persisteren', 'personaliseren', 'pesten', 'peuteren', 'piekeren',
+  'piepen', 'pijlen', 'pijnigen', 'pikken', 'pinnen', 'pionieren',
+  'pissen', 'pitchen', 'plaatsen', 'plakken', 'plannen', 'planten',
+  'plassen', 'plaveien', 'plegen', 'pleisteren', 'pleiten', 'plempen',
+  'plengen', 'pleuren', 'plezieren', 'ploeteren', 'ploffen', 'plooien',
+  'pluizen', 'plukken', 'plunderen', 'pochen', 'poederen', 'poetsen',
+  'pogen', 'polariseren', 'polijsten', 'polsen', 'pompen', 'poneren',
+  'populariseren', 'porteren', 'positioneren', 'posten', 'poten', 'prakken',
+  'praktiseren', 'praten', 'preken', 'prepareren', 'presenteren', 'pressen',
+  'presteren', 'pretenderen', 'prevaleren', 'prikkelen', 'prikken', 'prioriteren',
+  'privatiseren', 'proberen', 'procederen', 'produceren', 'proeven', 'profileren',
+  'profiteren', 'programmeren', 'projecteren', 'promoten', 'promoveren', 'pronken',
+  'propageren', 'proppen', 'prospereren', 'prostitueren', 'protesteren', 'pruttelen',
+  'publiceren', 'pulsen', 'pulseren', 'pushen', 'puzzelen',
+  // ── Q ──
+  'quilten', 'quizzen', 'quoten',
   // ── R ──
-  'raden', 'raken', 'rangschikken', 'reageren', 'realiseren', 'recyclen',
-  'redden', 'redeneren', 'reduceren', 'regelen', 'regeren', 'registreren',
-  'reiken', 'reinigen', 'reizen', 'rekenen', 'rekken', 'remmen',
-  'rennen', 'renoveren', 'repareren', 'repeteren', 'reserveren',
-  'respecteren', 'resten', 'resulteren', 'richten', 'rijden', 'rijmen',
-  'riskeren', 'roeren', 'roesten', 'roken', 'rollen', 'rommelen',
-  'rondleiden', 'roven', 'ruiken', 'ruilen', 'ruimen', 'rusten',
-  'rukken',
+  'racen', 'raden', 'radicaliseren', 'raffelen', 'raken', 'rammen',
+  'rangschikken', 'rapporteren', 'raspen', 'ratelen', 'rationaliseren', 'ravotten',
+  'reageren', 'realiseren', 'rebooten', 'recapituleren', 'recyclen', 'redden',
+  'redderen', 'redeneren', 'redistribueren', 'reduceren', 'refereren', 'reflecteren',
+  'reformeren', 'regelen', 'regeren', 'registreren', 'reiken', 'reilen',
+  'reinigen', 'reizen', 'rekenen', 'rekken', 'rekruteren', 'relativeren',
+  'relaxen', 'releveren', 'remmen', 'renderen', 'rennen', 'renoveren',
+  'rentenieren', 'reorganiseren', 'repareren', 'repatriëren', 'repeteren', 'repliceren',
+  'representeren', 'reproduceren', 'reserveren', 'resetten', 'resideren', 'resigneren',
+  'resisteren', 'respecteren', 'responderen', 'restaureren', 'resten', 'resteren',
+  'restitueren', 'resulteren', 'resumeren', 'retailen', 'retarderen', 'retireren',
+  'retoucheren', 'retourneren', 'revideren', 'revitaliseren', 'richten', 'rijden',
+  'rijmen', 'rijpen', 'rimpelen', 'rinkelen', 'riskeren', 'ritselen',
+  'rivaliseren', 'roeien', 'roeren', 'roesten', 'roken', 'rollen',
+  'romantiseren', 'rommelen', 'rondbrengen', 'ronddelen', 'ronddraaien', 'rondgaan',
+  'rondkijken', 'rondleiden', 'rondlopen', 'rondreizen', 'rondsturen', 'roosteren',
+  'roteren', 'rotsen', 'rotzooien', 'rouleren', 'rouwen', 'roven',
+  'ruiken', 'ruilen', 'ruimen', 'ruisen', 'rukken', 'rusten',
+  'ruziën',
   // ── S ──
-  'samenstellen', 'samenvatten', 'samenwerken', 'schaden', 'schaffen',
-  'schakelen', 'schamen', 'schatten', 'schaatsen', 'scheiden',
-  'schelen', 'schenken', 'scheppen', 'scheren', 'schetsen', 'schikken',
-  'schilderen', 'schillen', 'schitteren', 'schokken', 'schommelen',
-  'schonen', 'schoolen', 'schoppen', 'schreeuwen', 'schrikken',
-  'schudden', 'schuilen', 'selecteren', 'serveren', 'signaleren',
-  'slachten', 'slagen', 'slepen', 'slijpen', 'slijten', 'slikken',
-  'slingeren', 'sloffen', 'slopen', 'smaken', 'smeden', 'smeren',
-  'smijten', 'smokken', 'snakken', 'snappen', 'sneeuwen', 'snijden',
-  'snoepen', 'snuiten', 'solliciteren', 'sorteren', 'spannen',
-  'sparen', 'specialiseren', 'spelen', 'spenderen', 'spijkeren',
-  'splitsen', 'spotten', 'spreiden', 'springen', 'spugen', 'staken',
-  'stamelen', 'stampen', 'stappen', 'starten', 'stationeren', 'stelen',
+  'saboteren', 'salderen', 'samenstellen', 'samenvatten', 'samenwerken', 'saneren',
+  'sauzen', 'scannen', 'schaatsen', 'schaden', 'schaduwen', 'schaffen',
+  'schakelen', 'schamen', 'schatten', 'schaven', 'scheiden', 'schelen',
+  'schenken', 'scheppen', 'scheren', 'schetsen', 'schiften', 'schikken',
+  'schilderen', 'schillen', 'schimmelen', 'schitteren', 'schoffelen', 'schofferen',
+  'schokken', 'schommelen', 'schonen', 'schoolen', 'schoonmaken', 'schoppen',
+  'schorsen', 'schotelen', 'schrapen', 'schrappen', 'schreeuwen', 'schrikken',
+  'schrobben', 'schromen', 'schudden', 'schuieren', 'schuifelen', 'schuilen',
+  'schuimen', 'schutteren', 'sealen', 'segmenteren', 'seinen', 'selecteren',
+  'separeren', 'seponeren', 'serveren', 'settelen', 'shoppen', 'shorten',
+  'showen', 'signaleren', 'signeren', 'simuleren', 'sjouwen', 'skeeleren',
+  'slachten', 'slagen', 'slenteren', 'slepen', 'sleutelen', 'slijpen',
+  'slijten', 'slikken', 'slingeren', 'sloffen', 'slopen', 'sluieren',
+  'slurpen', 'smachten', 'smaken', 'smakken', 'smeden', 'smeken',
+  'smeren', 'smijten', 'smokkelen', 'smokken', 'smoren', 'smullen',
+  'snakken', 'snappen', 'snauwen', 'sneeuwen', 'snerpen', 'snijden',
+  'snoepen', 'snorkelen', 'snotteren', 'snuffelen', 'snuiten', 'solliciteren',
+  'sommeren', 'sorteren', 'souperen', 'spalken', 'spannen', 'sparen',
+  'sparren', 'specialiseren', 'specifiëren', 'speculeren', 'spelen', 'spenderen',
+  'spieden', 'spiegelen', 'spijkeren', 'spitten', 'splitsen', 'spoeden',
+  'spoelen', 'sponsoren', 'sporten', 'spotten', 'spreiden', 'springen',
+  'sproeien', 'spugen', 'spuiten', 'staken', 'stamelen', 'stampen',
+  'stappen', 'starten', 'stationeren', 'staven', 'stechelen', 'stelen',
   'stellen', 'stemmen', 'stempelen', 'steunen', 'stichten', 'stijgen',
-  'stilstaan', 'stimuleren', 'stinken', 'stoeien', 'stoffen', 'stomen',
-  'stooien', 'storen', 'storten', 'stoten', 'straffen', 'stralen',
-  'strelen', 'streven', 'strijden', 'strijken', 'strikken', 'stromen',
-  'struikelen', 'studeren', 'stuiteren', 'sturen', 'steunen',
+  'stikken', 'stillen', 'stilstaan', 'stimuleren', 'stinken', 'stipuleren',
+  'stoeien', 'stoffen', 'stofferen', 'stomen', 'stooien', 'stoppen',
+  'storen', 'stormen', 'storten', 'stoten', 'straffen', 'stralen',
+  'stranden', 'strekken', 'strelen', 'stremmen', 'strepen', 'streven',
+  'strijden', 'strijken', 'strikken', 'stromen', 'strooien', 'struikelen',
+  'struinen', 'studeren', 'stuiteren', 'sturen', 'stylen', 'subsidiëren',
+  'substitueren', 'subsumeren', 'succederen', 'suggereren', 'suizen', 'supporteren',
+  'surfen', 'surveilleren', 'symboliseren', 'sympathiseren', 'synchroniseren', 'synthetiseren',
+  'systematiseren',
   // ── T ──
-  'tasten', 'tekenen', 'tellen', 'temmen', 'tentoonstellen', 'testen',
-  'tillen', 'timmeren', 'toekennen', 'toelaten', 'toenemen',
-  'toepassen', 'toestaan', 'tolken', 'tonen', 'toppen', 'torsen',
-  'toveren', 'trainen', 'transformeren', 'transporteren', 'trappen',
-  'treden', 'treffen', 'treuren', 'troepen', 'troosten', 'trouwen',
-  'twijfelen', 'typen',
+  'tackelen', 'takelen', 'tanken', 'tapdansen', 'tappen', 'tasten',
+  'tatoeëren', 'taxeren', 'teisteren', 'tekenen', 'telefoneren', 'tellen',
+  'temmen', 'temperen', 'tentoonstellen', 'terugbellen', 'terugbrengen', 'terugdenken',
+  'terugdoen', 'teruggeven', 'terughalen', 'terugkeren', 'terugkijken', 'terugkomen',
+  'terugkrijgen', 'terugleggen', 'terugleiden', 'terugnemen', 'terugreizen', 'terugrijden',
+  'terugroepen', 'terugschakelen', 'terugschrikken', 'terugsturen', 'terugtrekken', 'terugvallen',
+  'terugvinden', 'terugvragen', 'terugzetten', 'terugzien', 'testen', 'tillen',
+  'timmeren', 'tintelen', 'tippelen', 'tippen', 'titelen', 'toedienen',
+  'toegeven', 'toejuichen', 'toekennen', 'toekijken', 'toekomen', 'toelaten',
+  'toelichten', 'toemaken', 'toenemen', 'toepassen', 'toerekenen', 'toerusten',
+  'toeschouwen', 'toeslaan', 'toespreken', 'toestaan', 'toestemmen', 'toesturen',
+  'toetreden', 'toetsen', 'toevoegen', 'toewijzen', 'toezeggen', 'toezien',
+  'tolereren', 'tolken', 'tonen', 'toppen', 'torsen', 'toucheren',
+  'toveren', 'trainen', 'transformeren', 'transpireren', 'transplanteren', 'transporteren',
+  'trappelen', 'trappen', 'treden', 'treffen', 'treiteren', 'treuren',
+  'triggeren', 'triomferen', 'trippelen', 'troepen', 'trommelen', 'troosten',
+  'trouwen', 'tuimelen', 'tuinieren', 'turen', 'twijfelen', 'typen',
+  'typeren',
   // ── U ──
-  'uitdagen', 'uitdelen', 'uitdrukken', 'uitgaan', 'uitgeven',
-  'uithouden', 'uitkijken', 'uitkomen', 'uitleggen', 'uitmaken',
-  'uitnodigen', 'uitoefenen', 'uitpakken', 'uitputten', 'uitrekenen',
-  'uitrusten', 'uitschakelen', 'uitspreken', 'uitstellen', 'uitstrekken',
-  'uitvallen', 'uitvinden', 'uitvoeren', 'uitwisselen', 'uitzenden',
-  'uitzetten', 'uitzoeken',
+  'uitademen', 'uitbarsten', 'uitbeelden', 'uitbellen', 'uitblijven', 'uitbreiden',
+  'uitbrengen', 'uitdagen', 'uitdelen', 'uitdoen', 'uitdragen', 'uitdrogen',
+  'uitdrukken', 'uitdunnen', 'uiteten', 'uitfluiten', 'uitgaan', 'uitgeven',
+  'uitgieten', 'uitglijden', 'uitgooien', 'uitgraven', 'uitgroeien', 'uithalen',
+  'uithangen', 'uitharden', 'uithollen', 'uithouden', 'uitjouwen', 'uitkeren',
+  'uitkiezen', 'uitkijken', 'uitklappen', 'uitkleden', 'uitkomen', 'uitkopen',
+  'uitkrijgen', 'uitlachen', 'uitladen', 'uitlaten', 'uitleggen', 'uitleiden',
+  'uitlezen', 'uitlichten', 'uitloggen', 'uitlokken', 'uitlopen', 'uitmaken',
+  'uitmeten', 'uitmonden', 'uitnodigen', 'uitoefenen', 'uitpakken', 'uitpeinzen',
+  'uitpersen', 'uitpeuteren', 'uitpikken', 'uitpluizen', 'uitpraten', 'uitproberen',
+  'uitputten', 'uitrazen', 'uitreiken', 'uitrekenen', 'uitrijden', 'uitroepen',
+  'uitrukken', 'uitrusten', 'uitschakelen', 'uitscheiden', 'uitschelden', 'uitschieten',
+  'uitschotelen', 'uitschrapen', 'uitschrijven', 'uitslapen', 'uitsluiten', 'uitsmeren',
+  'uitsnijden', 'uitspannen', 'uitspelen', 'uitspitten', 'uitspreken', 'uitspringen',
+  'uitstaan', 'uitstappen', 'uitsteken', 'uitstellen', 'uitsterven', 'uitstijgen',
+  'uitstoten', 'uitstralen', 'uitstrekken', 'uitstrooien', 'uitsturen', 'uittellen',
+  'uittesten', 'uittrekken', 'uitvallen', 'uitvangen', 'uitvaren', 'uitvechten',
+  'uitvinden', 'uitvissen', 'uitvlakken', 'uitvliegen', 'uitvloeien', 'uitvoeren',
+  'uitvouwen', 'uitvragen', 'uitwassen', 'uitwerken', 'uitwijken', 'uitwijzen',
+  'uitwisselen', 'uitwissen', 'uitwonen', 'uitzenden', 'uitzetten', 'uitzien',
+  'uitzingen', 'uitzitten', 'uitzoeken', 'uitzwaaien', 'updaten', 'upgraden',
+  'uploaden', 'usurperen', 'utiliseren',
   // ── V ──
-  'vallen', 'vangen', 'variëren', 'vaststellen', 'verachten',
-  'veranderen', 'verbeelden', 'verbergen', 'verbeteren', 'verbieden',
-  'verbinden', 'verblinden', 'verbranden', 'verbreden', 'verbreken',
-  'verdenken', 'verdelen', 'verdienen', 'verdiepen', 'verdragen',
-  'verdrijven', 'verdwalen', 'vereenvoudigen', 'verenigen', 'vereren',
-  'verfraaien', 'vergaderen', 'vergelden', 'vergelijken', 'vergemakkelijken',
-  'vergen', 'vergissen', 'vergoeden', 'vergroten', 'vergunnen',
-  'verhalen', 'verhandelen', 'verharden', 'verheugen', 'verhinderen',
-  'verhogen', 'verhoren', 'verhuizen', 'verhuren', 'verijdelen',
-  'verjagen', 'verjaren', 'verkiezen', 'verkleden', 'verklaren',
-  'verkopen', 'verkorten', 'verkrijgen', 'verlagen', 'verlangen',
-  'verlaten', 'verleggen', 'verlenen', 'verlengen', 'verlichten',
-  'verliezen', 'verlokken', 'verlopen', 'vermaken', 'vermeerderen',
-  'vermelden', 'vermengen', 'vermijden', 'verminderen', 'vermoeden',
-  'vermoeien', 'vermoorden', 'vernietigen', 'vernoemen', 'verontrusten',
-  'verontwaardiging', 'veroordelen', 'veroorzaken', 'verorberen',
-  'verouderen', 'verplaatsen', 'verplichting', 'verraden', 'verrassen',
-  'verrekenen', 'verrijken', 'verrotten', 'verschaffen', 'verschijnen',
-  'verschuiven', 'verslaan', 'verslapen', 'verslechteren', 'verslikken',
-  'versnellen', 'versperren', 'verspillen', 'verspreiden', 'verstaan',
-  'versterken', 'verstoppen', 'verstoren', 'versturen', 'vertalen',
-  'vertellen', 'vertegenwoordigen', 'vertonen', 'vertragen', 'vertrouwen',
-  'vertrouwen', 'verven', 'vervangen', 'vervelen', 'vervolgen',
-  'vervullen', 'verwaarlozen', 'verwachten', 'verwanten', 'verwarmen',
-  'verwarren', 'verwelkomen', 'verwerken', 'verwerpen', 'verwerven',
-  'verwijderen', 'verwijten', 'verwijzen', 'verwisselen', 'verwonden',
-  'verzamelen', 'verzekeren', 'verzenden', 'verzetten', 'verzoeken',
-  'verzorgen', 'verzwakken', 'vestigen', 'vieren', 'vinden', 'vissen',
-  'vluchten', 'voeden', 'voegen', 'voelen', 'volbrengen', 'voldoen',
-  'volgen', 'volhouden', 'voltooien', 'vonken', 'voorbereiden',
-  'voorkomen', 'voorlezen', 'voorlichten', 'voorschrijven', 'voorspellen',
-  'voorstellen', 'vorderen', 'vormen', 'vragen', 'vrezen', 'vrijlaten',
-  'vrijen', 'vullen',
+  'vacumeren', 'valideren', 'vallen', 'valoriseren', 'valsspelen', 'vangen',
+  'variëren', 'vastbinden', 'vasthangen', 'vasthouden', 'vastklemmen', 'vastklikken',
+  'vastknopen', 'vastleggen', 'vastmaken', 'vastnagelen', 'vastpakken', 'vastpinnen',
+  'vastroesten', 'vaststellen', 'vastzitten', 'vegeteren', 'veinzen', 'ventileren',
+  'verachten', 'verademen', 'veranderen', 'verankeren', 'verarmen', 'verbannen',
+  'verbazen', 'verbeelden', 'verbergen', 'verbeteren', 'verbeuren', 'verbieden',
+  'verbijsteren', 'verbinden', 'verbitteren', 'verbleken', 'verblinden', 'verbloemen',
+  'verbouwen', 'verbranden', 'verbreden', 'verbreiden', 'verbreken', 'verbrokkelen',
+  'verdampen', 'verdedigen', 'verdelen', 'verdenken', 'verdichten', 'verdienen',
+  'verdiepen', 'verdikken', 'verdoezelen', 'verdoven', 'verdragen', 'verdrijven',
+  'verdrukken', 'verdubbelen', 'verduidelijken', 'verduisteren', 'verdunnen', 'verduurzamen',
+  'verdwalen', 'vereenvoudigen', 'vereenzelvigen', 'vereisen', 'verenigen', 'vereren',
+  'verergeren', 'verfraaien', 'verfrissen', 'vergaderen', 'vergelden', 'vergelijken',
+  'vergemakkelijken', 'vergen', 'vergiftigen', 'vergissen', 'verglazen', 'vergoeden',
+  'vergroten', 'vergunnen', 'verhalen', 'verhandelen', 'verharden', 'verhaspelen',
+  'verheffen', 'verhelderen', 'verheugen', 'verhinderen', 'verhogen', 'verhoren',
+  'verhuizen', 'verhullen', 'verhuren', 'verijdelen', 'verinnerlijken', 'verjagen',
+  'verjaren', 'verjongen', 'verkassen', 'verkavelen', 'verkeren', 'verkiezen',
+  'verklaren', 'verkleden', 'verkleinen', 'verklemmen', 'verklikken', 'verknallen',
+  'verknopen', 'verkoelen', 'verkoken', 'verkopen', 'verkorten', 'verkrampen',
+  'verkrijgen', 'verkwanselen', 'verkwikken', 'verkwisten', 'verlagen', 'verlammen',
+  'verlanden', 'verlangen', 'verlaten', 'verleggen', 'verleiden', 'verlekkeren',
+  'verlenen', 'verlengen', 'verlichten', 'verliezen', 'verlinken', 'verlokken',
+  'verloochenen', 'verlopen', 'verlossen', 'verloten', 'verloven', 'verluchten',
+  'verlustigen', 'vermageren', 'vermaken', 'vermannen', 'vermeerderen', 'vermeesteren',
+  'vermelden', 'vermengen', 'vermeubelen', 'vermijden', 'verminderen', 'vermoeden',
+  'vermoeien', 'vermoorden', 'vermorzelen', 'vernaaien', 'vernederen', 'vernevelen',
+  'vernietigen', 'vernieuwen', 'vernoemen', 'vernuchteren', 'verongelukken', 'verontreinigen',
+  'verontrusten', 'verontschuldigen', 'verontwaardiging', 'veroordelen', 'veroorloven', 'veroorzaken',
+  'verorberen', 'verouderen', 'veroveren', 'verpachten', 'verpakken', 'verpesten',
+  'verplaatsen', 'verplanten', 'verplegen', 'verplichten', 'verplichting', 'verprutsen',
+  'verraden', 'verrassen', 'verrekenen', 'verrijken', 'verroeren', 'verrotten',
+  'verruimen', 'verruwen', 'verschaffen', 'verschansen', 'verschijnen', 'verschillen',
+  'verschonen', 'verschrompelen', 'verschuiven', 'versieren', 'versimpelen', 'verslaan',
+  'verslapen', 'verslappen', 'verslechteren', 'verslepen', 'verslikken', 'versluieren',
+  'versmallen', 'versnellen', 'versnipperen', 'versoberen', 'versoepelen', 'versperren',
+  'verspieden', 'verspillen', 'verspreiden', 'verstaan', 'verstalen', 'verstappen',
+  'verstarren', 'verstellen', 'versterken', 'verstikken', 'verstommen', 'verstoppen',
+  'verstoren', 'verstoten', 'verstrakken', 'verstrikken', 'verstrooien', 'verstruikelen',
+  'versturen', 'vertakken', 'vertalen', 'vertegenwoordigen', 'vertellen', 'verteren',
+  'vertimmeren', 'vertoeven', 'vertolken', 'vertonen', 'vertragen', 'vertrappen',
+  'vertroebelen', 'vertroetelen', 'vertroosten', 'vertrouwen', 'vertwijfelen', 'vervaardigen',
+  'vervalsen', 'vervangen', 'vervelen', 'verven', 'verversen', 'vervliegen',
+  'vervloeien', 'vervluchtigen', 'vervoeren', 'vervolgen', 'vervolledigen', 'vervolmaken',
+  'vervormen', 'vervreemden', 'vervuilen', 'vervullen', 'verwaarlozen', 'verwachten',
+  'verwanten', 'verwarmen', 'verwarren', 'verwateren', 'verweken', 'verwelken',
+  'verwelkomen', 'verwerken', 'verwerpen', 'verwerven', 'verwijden', 'verwijderen',
+  'verwijten', 'verwijzen', 'verwisselen', 'verwoesten', 'verwonden', 'verwonderen',
+  'verzachten', 'verzadigen', 'verzakken', 'verzamelen', 'verzegelen', 'verzekeren',
+  'verzenden', 'verzetten', 'verzilveren', 'verzoeken', 'verzoenen', 'verzoeten',
+  'verzorgen', 'verzuimen', 'verzuiveren', 'verzwakken', 'verzwaren', 'vestigen',
+  'vieren', 'viesmaken', 'vijlen', 'vinden', 'vissen', 'vlammen',
+  'vleien', 'vloeien', 'vlotten', 'vluchten', 'voeden', 'voegen',
+  'voelen', 'voeren', 'volbrengen', 'voldoen', 'volgen', 'volharden',
+  'volhouden', 'volmaken', 'volstaan', 'voltooien', 'vonken', 'voorbereiden',
+  'voorbijgaan', 'voorbijkomen', 'voorbijlopen', 'voorbijrijden', 'voordoen', 'voorgeven',
+  'voorhangen', 'voorhebben', 'voorhouden', 'voorkomen', 'voorlezen', 'voorlichten',
+  'voorliggen', 'voornemen', 'voorschotelen', 'voorschrijven', 'voorsorteren', 'voorspellen',
+  'voorstaan', 'voorstellen', 'vooruitgaan', 'vooruitkijken', 'vooruitlopen', 'vooruitzien',
+  'voorzien', 'vorderen', 'vormen', 'vragen', 'vrezen', 'vrijen',
+  'vrijlaten', 'vrijmaken', 'vrijspreken', 'vrijstellen', 'vullen',
   // ── W ──
-  'waarborgen', 'waarden', 'waardelen', 'waarderen', 'waarnemen',
-  'waarschuwen', 'wachten', 'wagen', 'wandelen', 'wankelen', 'wassen',
-  'wegen', 'weggaan', 'weigeren', 'wekken', 'wenden', 'wenken', 'wennen',
-  'wensen', 'werken', 'werpen', 'weren', 'weven', 'wieden', 'wiegen',
-  'wijden', 'wijken', 'wijten', 'wijzigen', 'wikken', 'winkelen',
-  'wisselen', 'woekeren', 'wonen', 'worstelen', 'wreken', 'wrijven',
+  'waarborgen', 'waardelen', 'waarden', 'waarderen', 'waarnemen', 'waarschuwen',
+  'wachten', 'wagen', 'waggelen', 'wallen', 'walsen', 'wandelen',
+  'wankelen', 'warmen', 'wassen', 'wateren', 'wauwelen', 'wecken',
+  'wedden', 'wederkeren', 'wederopbouwen', 'weergalmen', 'weerhouden', 'weerkaatsen',
+  'weerklinken', 'weerleggen', 'weerstaan', 'weerzien', 'wegblijven', 'wegbrengen',
+  'wegdoen', 'wegdragen', 'wegduwen', 'wegen', 'wegflitsen', 'weggaan',
+  'weggeven', 'weggooien', 'weghalen', 'wegjagen', 'wegkappen', 'wegkijken',
+  'wegkomen', 'wegkruipen', 'weglaten', 'wegleggen', 'weglopen', 'wegmaken',
+  'wegnemen', 'wegpakken', 'wegrennen', 'wegrijden', 'wegroepen', 'wegrukken',
+  'wegschieten', 'wegschoffelen', 'wegschrapen', 'wegschuiven', 'wegslaan', 'wegslikken',
+  'wegsluipen', 'wegsmelten', 'wegsmijten', 'wegspoelen', 'wegsteken', 'wegstoppen',
+  'wegsturen', 'wegtrekken', 'wegvallen', 'wegvangen', 'wegvaren', 'wegvegen',
+  'wegvliegen', 'wegvloeien', 'wegvoeren', 'wegwaaien', 'wegwerpen', 'wegwezen',
+  'wegwijzen', 'wegwissen', 'wegzakken', 'wegzenden', 'wegzetten', 'wegzinken',
+  'weiden', 'weigeren', 'wekken', 'welken', 'welkomen', 'wellen',
+  'wenden', 'wenken', 'wennen', 'wensen', 'wentelen', 'weren',
+  'werken', 'werpen', 'weven', 'wieden', 'wiegelen', 'wiegen',
+  'wijden', 'wijken', 'wijten', 'wijzigen', 'wikkelen', 'wikken',
+  'willigen', 'wimmelen', 'windsurfen', 'winkelen', 'wippen', 'wisselen',
+  'wissen', 'woeden', 'woekeren', 'woelen', 'wonen', 'worstelen',
+  'wreken', 'wrijven', 'wroeten', 'wurgen',
   // ── Z ──
-  'zakken', 'zeilen', 'zenden', 'zetten', 'zorgen', 'zouten', 'zuigen',
-  'zuinigen', 'zuiveren', 'zullen', 'zussen', 'zwaaien', 'zwakken',
-  'zwemmen', 'zweren', 'zweten', 'zwijgen', 'zwoegen',
+  'zakken', 'zanden', 'zegevieren', 'zeggen', 'zeiken', 'zeilen',
+  'zenden', 'zepen', 'zetten', 'zeuren', 'zieden', 'ziften',
+  'zigzaggen', 'zoeken', 'zoemen', 'zoenen', 'zomeren', 'zondigen',
+  'zonnebaden', 'zorgen', 'zouten', 'zuchten', 'zuigen', 'zuinigen',
+  'zuiveren', 'zullen', 'zussen', 'zwaaien', 'zwakken', 'zwalken',
+  'zwammen', 'zwartmaken', 'zwelgen', 'zwemmen', 'zweren', 'zweten',
+  'zweven', 'zwiepen', 'zwijgen', 'zwijmelen', 'zwoegen',
 ]);
 
 /**
- * Validates whether the given string is a recognised Dutch verb infinitive.
- *
- * Strict whitelist approach — ONLY the following are accepted:
- * 1. Registered in IRREGULAR_VERBS dictionary.
- * 2. Registered in REGULAR_VERBS whitelist.
- * 3. A separable compound whose base verb is in one of the above.
- * 4. Listed in AUXILIARY_ZIJN_VERBS or AUXILIARY_BOTH_VERBS.
- *
- * Everything else is rejected. No structural guessing.
- *
- * @returns `true` if the word is a known Dutch verb; `false` otherwise.
+ * Checks whether an infinitive is a recognised Dutch verb infinitive (regular, irregular, or separable).
  */
-export function isValidDutchVerb(input: string): boolean {
-  const norm = input.toLowerCase().trim();
-
-  // Quick sanity: must be at least 2 chars and contain only valid Dutch chars
+export function isValidInfinitive(word: string): boolean {
+  if (!word) return false;
+  const norm = word.toLowerCase().trim();
   if (norm.length < 2) return false;
-  if (!/^[a-züïëéèêöä]+$/i.test(norm)) return false;
+  if (!/^[a-züïëéèêöä\s-]+$/i.test(norm)) return false;
 
-  // 1. Direct match in irregular verbs dictionary
   if (IRREGULAR_VERBS[norm]) return true;
-
-  // 2. Direct match in regular verbs whitelist
   if (REGULAR_VERBS.has(norm)) return true;
-
-  // 3. Direct match in auxiliary verb sets (zijn / both)
   if (AUXILIARY_ZIJN_VERBS.has(norm)) return true;
   if (AUXILIARY_BOTH_VERBS.has(norm)) return true;
 
-  // 4. Separable compound: prefix + known base verb
   const sep = splitSeparableVerb(norm);
   if (sep.isSeparable && sep.baseVerb) {
     if (IRREGULAR_VERBS[sep.baseVerb]) return true;
@@ -1148,7 +2156,6 @@ export function isValidDutchVerb(input: string): boolean {
     if (AUXILIARY_BOTH_VERBS.has(sep.baseVerb)) return true;
   }
 
-  // Everything else is rejected — no structural guessing
   return false;
 }
 
@@ -1293,7 +2300,7 @@ export function deriveStem(verb: string): StemResult {
   const isUnstressedSuffix =
     norm.endsWith('elen') ||
     norm.endsWith('enen') ||
-    norm.endsWith('emen') ||
+    (norm.endsWith('emen') && !norm.endsWith('nemen')) ||
     norm.endsWith('eren') &&
       !/(e|i|u|o)reren$/.test(norm) && // loanwords like studeren, proberen end in stressed -eren
       !norm.endsWith('leren') &&
@@ -1464,15 +2471,322 @@ export function getPastParticiple(infinitive: string): string {
  *
  * @throws {Error} If the input is not a valid Dutch verb infinitive.
  */
+// ============================================================================
+// Comprehensive Dutch Verb Lemmatization & Conjugation Matching Map
+// ============================================================================
+
+/**
+ * Global map of every recognized Dutch conjugated verb form (and infinitive)
+ * to its canonical infinitive lemma.
+ *
+ * e.g.
+ * 'liep' -> 'lopen'
+ * 'gelopen' -> 'lopen'
+ * 'loopt' -> 'lopen'
+ * 'loop' -> 'lopen'
+ * 'lopen' -> 'lopen'
+ * 'nam' -> 'nemen'
+ * 'werkte' -> 'werken'
+ * 'opgebeld' -> 'opbellen'
+ * 'belde op' -> 'opbellen'
+ */
+export const VERB_LEMMATIZATION_MAP = new Map<string, string>();
+
+let isLemmatizationInitialized = false;
+
+function registerLemmaForm(form: string | undefined | null, infinitive: string): void {
+  if (!form) return;
+  const clean = form.toLowerCase().trim();
+  if (clean.length < 2) return;
+  // If an exact infinitive is already in the map mapping to itself, do not overwrite
+  if (VERB_LEMMATIZATION_MAP.has(clean) && VERB_LEMMATIZATION_MAP.get(clean) === clean) {
+    return;
+  }
+  // Prefer shorter/simpler infinitives over separable compounds:
+  // e.g. "loopt" should map to "lopen" not "weglopen"
+  const existing = VERB_LEMMATIZATION_MAP.get(clean);
+  if (existing && existing !== clean && existing.length <= infinitive.length) {
+    return; // Keep the existing shorter/simpler mapping
+  }
+  VERB_LEMMATIZATION_MAP.set(clean, infinitive);
+}
+
+function registerLemmaForms(
+  forms: (string | undefined | null)[] | string | undefined | null,
+  infinitive: string
+): void {
+  if (!forms) return;
+  if (Array.isArray(forms)) {
+    for (const f of forms) registerLemmaForm(f, infinitive);
+  } else {
+    registerLemmaForm(forms, infinitive);
+  }
+}
+
+/**
+ * Initializes the comprehensive reverse-lookup conjugation map.
+ * Precomputes forms for all irregular and regular verbs in the database.
+ */
+export function initLemmatizationMap(): void {
+  if (isLemmatizationInitialized) return;
+  isLemmatizationInitialized = true;
+
+  // 1. Register all infinitives directly to themselves (highest priority)
+  for (const inf of Object.keys(IRREGULAR_VERBS)) {
+    VERB_LEMMATIZATION_MAP.set(inf, inf);
+  }
+  for (const inf of REGULAR_VERBS) {
+    VERB_LEMMATIZATION_MAP.set(inf, inf);
+  }
+  for (const inf of AUXILIARY_ZIJN_VERBS) {
+    VERB_LEMMATIZATION_MAP.set(inf, inf);
+  }
+  for (const inf of AUXILIARY_BOTH_VERBS) {
+    VERB_LEMMATIZATION_MAP.set(inf, inf);
+  }
+
+  // 2. Index irregular verbs with their specialized conjugations
+  for (const [inf, entry] of Object.entries(IRREGULAR_VERBS)) {
+    registerLemmaForms(entry.pastSingular, inf);
+    registerLemmaForms(entry.pastPlural, inf);
+    registerLemmaForms(entry.pastParticiple, inf);
+
+    if (entry.present) {
+      for (const forms of Object.values(entry.present)) {
+        registerLemmaForms(forms, inf);
+      }
+    }
+    if (entry.presentInverted) {
+      for (const forms of Object.values(entry.presentInverted)) {
+        registerLemmaForms(forms, inf);
+      }
+    }
+
+    // Default regular present for irregular verbs without explicit present overrides
+    try {
+      const stem = deriveStem(inf);
+      registerLemmaForm(stem.cleanStem, inf);
+      if (!stem.cleanStem.endsWith('t')) {
+        registerLemmaForm(`${stem.cleanStem}t`, inf);
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  // 3. Index regular verbs
+  for (const inf of REGULAR_VERBS) {
+    try {
+      const stem = deriveStem(inf);
+      const clean = stem.cleanStem;
+      registerLemmaForm(clean, inf);
+      const tForm = clean.endsWith('t') ? clean : `${clean}t`;
+      registerLemmaForm(tForm, inf);
+
+      const suffixSing = stem.isKofschip ? 'te' : 'de';
+      const suffixPlur = stem.isKofschip ? 'ten' : 'den';
+      registerLemmaForm(`${clean}${suffixSing}`, inf);
+      registerLemmaForm(`${clean}${suffixPlur}`, inf);
+
+      const participle = getPastParticiple(inf);
+      registerLemmaForm(participle, inf);
+    } catch {
+      // ignore
+    }
+  }
+
+  // 4. Index common separable verbs and their split/joined forms
+  const allKnownInfinitives = new Set([
+    ...Object.keys(IRREGULAR_VERBS),
+    ...REGULAR_VERBS,
+    ...AUXILIARY_ZIJN_VERBS,
+    ...AUXILIARY_BOTH_VERBS,
+  ]);
+
+  for (const inf of allKnownInfinitives) {
+    const sep = splitSeparableVerb(inf);
+    if (sep.isSeparable && sep.prefix && sep.baseVerb) {
+      const prefix = sep.prefix;
+      const base = sep.baseVerb;
+      const baseIrreg = IRREGULAR_VERBS[base];
+      const baseStem = deriveStem(base);
+
+      // Participle (e.g. "opgebeld", "aangekomen")
+      try {
+        const part = getPastParticiple(inf);
+        registerLemmaForm(part, inf);
+      } catch {
+        // ignore
+      }
+
+      // Past forms
+      let pastSingList: string[] = [];
+      let pastPlurList: string[] = [];
+      if (baseIrreg) {
+        pastSingList = Array.isArray(baseIrreg.pastSingular) ? baseIrreg.pastSingular : [baseIrreg.pastSingular];
+        pastPlurList = Array.isArray(baseIrreg.pastPlural) ? baseIrreg.pastPlural : [baseIrreg.pastPlural];
+      } else {
+        const suffixSing = baseStem.isKofschip ? 'te' : 'de';
+        const suffixPlur = baseStem.isKofschip ? 'ten' : 'den';
+        pastSingList = [`${baseStem.cleanStem}${suffixSing}`];
+        pastPlurList = [`${baseStem.cleanStem}${suffixPlur}`];
+      }
+
+      for (const ps of pastSingList) {
+        registerLemmaForm(`${ps} ${prefix}`, inf); // e.g. "belde op", "kwam aan"
+        registerLemmaForm(`${prefix}${ps}`, inf);   // subordinate: "opbelde", "aankwam"
+      }
+      for (const pp of pastPlurList) {
+        registerLemmaForm(`${pp} ${prefix}`, inf); // e.g. "belden op", "kwamen aan"
+        registerLemmaForm(`${prefix}${pp}`, inf);   // subordinate: "opbelden", "aankwamen"
+      }
+
+      // Present forms
+      const ikBase = baseStem.cleanStem;
+      const tBase = ikBase.endsWith('t') ? ikBase : `${ikBase}t`;
+      registerLemmaForm(`${ikBase} ${prefix}`, inf); // "bel op"
+      registerLemmaForm(`${tBase} ${prefix}`, inf);  // "belt op"
+      registerLemmaForm(`${prefix}${ikBase}`, inf);  // "opbel"
+      registerLemmaForm(`${prefix}${tBase}`, inf);   // "opbelt"
+    }
+  }
+}
+
+// Ensure map is initialized on module load
+initLemmatizationMap();
+
+/**
+ * Resolves any valid Dutch verb form (infinitive, conjugated present/past,
+ * participle, or separable form) to its canonical infinitive (lemma).
+ *
+ * Returns `null` if the input is not a recognized Dutch verb.
+ *
+ * @example
+ * resolveInfinitive("liep")      // "lopen"
+ * resolveInfinitive("gelopen")   // "lopen"
+ * resolveInfinitive("loopt")     // "lopen"
+ * resolveInfinitive("lopen")     // "lopen"
+ * resolveInfinitive("werkte")    // "werken"
+ * resolveInfinitive("opgebeld")  // "opbellen"
+ * resolveInfinitive("belde op")  // "opbellen"
+ * resolveInfinitive("hello")     // null
+ */
+export function resolveInfinitive(input: string): string | null {
+  if (!input) return null;
+  const norm = input
+    .toLowerCase()
+    .trim()
+    .replace(/[?!.,;:]+$/, '')
+    .trim()
+    .replace(/\s+/g, ' ');
+
+  if (norm.length < 2) return null;
+
+  initLemmatizationMap();
+
+  // 1. Direct O(1) match in precomputed lemmatization map
+  const exact = VERB_LEMMATIZATION_MAP.get(norm);
+  if (exact) return exact;
+
+  // 2. Direct infinitive check
+  if (isValidInfinitive(norm)) return norm;
+
+  // 3. Multi-word checks:
+  const words = norm.split(' ');
+  if (words.length === 2) {
+    const [w1, w2] = words;
+
+    // Auxiliary + past participle: e.g. "heeft gewerkt", "ben gegaan", "is geweest"
+    const auxForms = new Set([
+      'heb', 'hebt', 'heeft', 'hebben', 'had', 'hadden',
+      'ben', 'bent', 'is', 'zijn', 'was', 'waren',
+      'word', 'wordt', 'werd', 'werden', 'geworden'
+    ]);
+    if (auxForms.has(w1)) {
+      const matchParticiple = VERB_LEMMATIZATION_MAP.get(w2);
+      if (matchParticiple) return matchParticiple;
+    }
+
+    // Separable verb position: e.g. "loopt mee", "kwam aan", "belde op"
+    for (const prefix of SEPARABLE_PREFIXES) {
+      if (w2 === prefix) {
+        const baseLemma = VERB_LEMMATIZATION_MAP.get(w1);
+        if (baseLemma) {
+          const candidateCompound = `${prefix}${baseLemma}`;
+          if (isValidInfinitive(candidateCompound)) {
+            return candidateCompound;
+          }
+        }
+      }
+    }
+  }
+
+  // 4. Separable past participle pattern: prefix + 'ge' + participle rest (e.g. "opgebeld", "aangekomen")
+  for (const prefix of SEPARABLE_PREFIXES) {
+    if (norm.startsWith(prefix + 'ge') && norm.length > prefix.length + 4) {
+      const baseParticiple = norm.slice(prefix.length); // "gebeld", "gekomen"
+      const baseLemma = VERB_LEMMATIZATION_MAP.get(baseParticiple);
+      if (baseLemma) {
+        const candidateCompound = `${prefix}${baseLemma}`;
+        if (isValidInfinitive(candidateCompound)) {
+          return candidateCompound;
+        }
+      }
+    }
+  }
+
+  // 5. Separable compound prefix + base verb / base form
+  for (const prefix of SEPARABLE_PREFIXES) {
+    if (norm.startsWith(prefix) && norm.length > prefix.length + 2) {
+      const rest = norm.slice(prefix.length);
+      const baseLemma = VERB_LEMMATIZATION_MAP.get(rest);
+      if (baseLemma) {
+        const candidateCompound = `${prefix}${baseLemma}`;
+        if (isValidInfinitive(candidateCompound)) {
+          return candidateCompound;
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
+/** Alias for resolveInfinitive */
+export const lemmatizeVerb = resolveInfinitive;
+
+/**
+ * Checks whether the input is a valid Dutch verb (infinitive or conjugated form).
+ */
+export function isValidDutchVerb(input: string): boolean {
+  if (!input) return false;
+  const norm = input.toLowerCase().trim();
+  if (norm.length < 2) return false;
+  if (!/^[a-züïëéèêöä\s-]+$/i.test(norm)) return false;
+
+  return resolveInfinitive(norm) !== null;
+}
+
+/**
+ * Checks whether the input is strictly an infinitive of a recognized Dutch verb.
+ */
+export function isDutchVerbInfinitive(input: string): boolean {
+  if (!input) return false;
+  const norm = input.toLowerCase().trim();
+  const resolved = resolveInfinitive(norm);
+  return resolved !== null && resolved === norm;
+}
+
 export function conjugate(
-  infinitive: string,
+  verbOrForm: string,
   options: { isInverted?: boolean; isSubordinate?: boolean } = {}
 ): FullConjugation {
-  const norm = infinitive.toLowerCase().trim();
+  const norm = verbOrForm.toLowerCase().trim();
 
-  // Guard: reject non-Dutch / non-verb inputs before running any algorithm
-  if (!isValidDutchVerb(norm)) {
-    throw new Error(`INVALID_DUTCH_VERB: "${norm}" is not a valid Dutch verb infinitive.`);
+  // Guard: lemmatize and reject non-Dutch / non-verb inputs before running any algorithm
+  const infinitive = resolveInfinitive(norm);
+  if (!infinitive) {
+    throw new Error(`INVALID_DUTCH_VERB: Dit is geen geldig Nederlands werkwoord. ("${norm}")`);
   }
   const sep = splitSeparableVerb(norm);
   const stem = deriveStem(norm);
@@ -1487,9 +2801,9 @@ export function conjugate(
     '2s': '',
     '2s_formal': '',
     '3s': '',
-    '1p': norm,
-    '2p': norm,
-    '3p': norm,
+    '1p': infinitive,
+    '2p': infinitive,
+    '3p': infinitive,
   };
   const presentInverted: Partial<Record<Person, string>> = {};
 
@@ -1525,9 +2839,9 @@ export function conjugate(
       present['2s'] = `${sep.prefix}${getBaseForm('2s')}`;
       present['2s_formal'] = `${sep.prefix}${getBaseForm('2s_formal')}`;
       present['3s'] = `${sep.prefix}${getBaseForm('3s')}`;
-      present['1p'] = norm;
-      present['2p'] = norm;
-      present['3p'] = norm;
+      present['1p'] = infinitive;
+      present['2p'] = infinitive;
+      present['3p'] = infinitive;
     } else {
       // Main clause: base verb in position 2, prefix at end ("Ik bel op")
       present['1s'] = `${getBaseForm('1s')} ${sep.prefix}`;
@@ -1550,9 +2864,9 @@ export function conjugate(
     present['2s'] = tForm;
     present['2s_formal'] = tForm;
     present['3s'] = tForm;
-    present['1p'] = norm;
-    present['2p'] = norm;
-    present['3p'] = norm;
+    present['1p'] = infinitive;
+    present['2p'] = infinitive;
+    present['3p'] = infinitive;
 
     // Jij-inversie drops the -t: "Werk jij?"
     presentInverted['2s'] = ikForm;
@@ -1611,7 +2925,7 @@ export function conjugate(
   };
 
   return {
-    infinitive: norm,
+    infinitive: infinitive,
     stem,
     separable: sep,
     isIrregular: isIrreg,
@@ -1768,12 +3082,15 @@ export function checkConjugation(params: {
 }): CheckResult {
   const { infinitive, tense, person, userAnswer, options = {} } = params;
 
-  // Guard: only process known/valid Dutch verbs
-  if (!isValidDutchVerb(infinitive.toLowerCase().trim())) {
-    throw new Error(`INVALID_DUTCH_VERB: "${infinitive}" is not a valid Dutch verb infinitive.`);
+  // Guard: only process known/valid Dutch verbs (resolving conjugated forms if provided)
+  const normInf = infinitive.toLowerCase().trim();
+  const resolved = resolveInfinitive(normInf);
+  if (!resolved) {
+    throw new Error(`INVALID_DUTCH_VERB: Dit is geen geldig Nederlands werkwoord. ("${infinitive}")`);
   }
+  const cleanInfinitive = resolved;
   const normUser = normalizeAnswer(userAnswer);
-  const expectedAnswers = getExpectedAnswers(infinitive, tense, person, options);
+  const expectedAnswers = getExpectedAnswers(cleanInfinitive, tense, person, options);
   const isCorrect = expectedAnswers.some((ans) => normalizeAnswer(ans) === normUser);
 
   if (isCorrect) {
