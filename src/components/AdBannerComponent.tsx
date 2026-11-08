@@ -4,10 +4,20 @@
  * - localStorage'da `adFree: true` ise görünmez.
  * - Stripe Payment Link'e yönlendirir.
  * - Kullanıcı verisini dışarıya göndermez (100% yerel kontrol).
+ *
+ * TEST MODU: TEST_AD_BANNER=true ise gerçek banner yerine
+ * görsel placeholder kutusu gösterilir (build'e dahil olmaz).
  */
 
 import { useState, useEffect } from 'react';
 import { Sparkles, X } from 'lucide-react';
+
+// ---------------------------------------------------------------------------
+// TEST ÇERÇEVE — sadece geliştirme sırasında aktif
+// Üretim build'inde bu değişkeni false bırakın (ya da env'den okuyun).
+// ---------------------------------------------------------------------------
+const TEST_AD_BANNER = false;
+// ---------------------------------------------------------------------------
 
 export interface AdBannerComponentProps {
   isDarkMode?: boolean;
@@ -35,6 +45,37 @@ export function AdBannerComponent({
     window.addEventListener('kofschip_premium_changed', handlePremiumChange);
     return () => window.removeEventListener('kofschip_premium_changed', handlePremiumChange);
   }, []);
+
+  // -------------------------------------------------------------------------
+  // TEST ÇERÇEVE MODU
+  // -------------------------------------------------------------------------
+  if (TEST_AD_BANNER) {
+    // adFree true → hiçbir şey render etme
+    if (isAdFree) return null;
+
+    // adFree false → görsel placeholder kutusu
+    return (
+      <div
+        role="presentation"
+        aria-label="Reklam alanı (test modu)"
+        style={{
+          border: '2px dashed #94a3b8',
+          borderRadius: '12px',
+          backgroundColor: '#f8fafc',
+          padding: '14px 18px',
+          textAlign: 'center',
+          color: '#64748b',
+          fontSize: '13px',
+          fontFamily: 'sans-serif',
+          letterSpacing: '0.01em',
+          userSelect: 'none',
+        }}
+      >
+        📢 Advertentie Ruimte (Test Banner) · Upgrade naar Pro om te verwijderen
+      </div>
+    );
+  }
+  // -------------------------------------------------------------------------
 
   if (isAdFree || dismissed) return null;
 
