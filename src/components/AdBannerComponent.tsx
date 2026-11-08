@@ -13,10 +13,10 @@ import { useState, useEffect } from 'react';
 import { Sparkles, X } from 'lucide-react';
 
 // ---------------------------------------------------------------------------
-// TEST ÇERÇEVE — sadece geliştirme sırasında aktif
-// Üretim build'inde bu değişkeni false bırakın (ya da env'den okuyun).
+// TEST ÇERÇEVE — localStorage kontrolünü devre dışı bırakır, her koşulda
+// kesikli çerçeveli test kutusunu gösterir.
 // ---------------------------------------------------------------------------
-const TEST_AD_BANNER = false;
+const TEST_AD_BANNER = true;
 // ---------------------------------------------------------------------------
 
 export interface AdBannerComponentProps {
@@ -47,31 +47,29 @@ export function AdBannerComponent({
   }, []);
 
   // -------------------------------------------------------------------------
-  // TEST ÇERÇEVE MODU
+  // TEST ÇERÇEVE MODU — localStorage kontrolü devre dışı, her koşulda görünür
   // -------------------------------------------------------------------------
   if (TEST_AD_BANNER) {
-    // adFree true → hiçbir şey render etme
-    if (isAdFree) return null;
-
-    // adFree false → görsel placeholder kutusu
     return (
       <div
         role="presentation"
         aria-label="Reklam alanı (test modu)"
         style={{
-          border: '2px dashed #94a3b8',
+          border: '2px dashed #ef4444',
           borderRadius: '12px',
-          backgroundColor: '#f8fafc',
-          padding: '14px 18px',
+          backgroundColor: '#fff5f5',
+          padding: '1rem',
+          margin: '1rem 0',
           textAlign: 'center',
-          color: '#64748b',
-          fontSize: '13px',
+          color: '#b91c1c',
+          fontSize: '14px',
           fontFamily: 'sans-serif',
+          fontWeight: 'bold',
           letterSpacing: '0.01em',
           userSelect: 'none',
         }}
       >
-        📢 Advertentie Ruimte (Test Banner) · Upgrade naar Pro om te verwijderen
+        📢 TEST REKLAM ALANI (AdBannerComponent Burada Duruyor)
       </div>
     );
   }

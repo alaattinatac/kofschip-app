@@ -246,15 +246,13 @@ export function HomePage() {
           />
         </section>
 
-        {/* ── Section 3: Reclame Banner (onder kaart, alleen voor niet-premium) ── */}
-        {!isPremium && (
-          <section aria-label="Pro upgrade aanbieding">
-            <AdBannerComponent
-              isDarkMode={isDarkMode}
-              stripePaymentLink={STRIPE_PAYMENT_LINK}
-            />
-          </section>
-        )}
+        {/* ── Section 3: Reclame Banner (TEST: !isPremium kontrolü geçici devre dışı) ── */}
+        <section aria-label="Pro upgrade aanbieding">
+          <AdBannerComponent
+            isDarkMode={isDarkMode}
+            stripePaymentLink={STRIPE_PAYMENT_LINK}
+          />
+        </section>
 
         {/* ── Section 4: "Verwijder advertenties" knop (mobiel, onder kaart) ── */}
         {!isPremium && (
