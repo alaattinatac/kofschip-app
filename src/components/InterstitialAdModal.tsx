@@ -64,7 +64,7 @@ export function InterstitialAdModal({
         e.stopPropagation();
       }}
     >
-      {/* Modal Kutusu */}
+      {/* Modaalvenster */}
       <div
         className={`relative w-full max-w-sm rounded-3xl shadow-2xl border overflow-hidden flex flex-col ${
           isDarkMode
@@ -73,13 +73,26 @@ export function InterstitialAdModal({
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ── Üst Alan: Başlık ── */}
+        {/* ── Sluiten (X) knop — sağ üst köşe ── */}
+        <button
+          onClick={onClose}
+          className={`absolute top-3 right-3 z-10 p-1.5 rounded-lg border transition-all active:scale-95 ${
+            isDarkMode
+              ? 'text-slate-400 hover:text-slate-200 hover:bg-white/10 border-white/10'
+              : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100 border-slate-200'
+          }`}
+          aria-label="Sluit advertentie"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        {/* ── Bovenste sectie: Titel ── */}
         <div
           className={`px-5 pt-5 pb-4 border-b ${
             isDarkMode ? 'border-white/8' : 'border-slate-100'
           }`}
         >
-          {/* "Advertentie" etiketi */}
+          {/* "Advertentie" label */}
           <span
             className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider mb-3 ${
               isDarkMode
@@ -90,7 +103,7 @@ export function InterstitialAdModal({
             Advertentie
           </span>
 
-          {/* Merkez ikon */}
+          {/* Centraal icoon */}
           <div className="flex justify-center mb-4">
             <div
               className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${
@@ -103,7 +116,7 @@ export function InterstitialAdModal({
             </div>
           </div>
 
-          {/* Başlık */}
+          {/* Titel */}
           <h2
             id="interstitial-ad-title"
             className={`text-center text-lg font-extrabold tracking-tight leading-tight ${
@@ -114,55 +127,66 @@ export function InterstitialAdModal({
           </h2>
         </div>
 
-        {/* ── İçerik Alanı ── */}
+        {/* ── Inhoudsgebied ── */}
         <div className="px-5 py-5 space-y-4">
-          {/* Sahte reklam içeriği (placeholder banner) */}
+          {/* ── Belirgin test banner kutusu (alt banner stijl) ── */}
           <div
-            className={`w-full h-24 rounded-2xl flex items-center justify-center border ${
+            className={`w-full rounded-2xl border-2 overflow-hidden ${
               isDarkMode
-                ? 'bg-[#151D2A] border-white/8'
-                : 'bg-slate-50 border-slate-200'
+                ? 'border-[#3B82F6]/40 bg-gradient-to-br from-indigo-950/80 to-blue-950/60'
+                : 'border-blue-300 bg-gradient-to-br from-blue-50 to-indigo-50'
             }`}
-            aria-label="Advertentie ruimte"
+            aria-label="Advertentie test banner"
           >
-            <p
-              className={`text-xs font-medium ${
-                isDarkMode ? 'text-slate-500' : 'text-slate-400'
+            {/* Banner başlık şeridi */}
+            <div
+              className={`px-4 py-2 flex items-center gap-2 border-b ${
+                isDarkMode
+                  ? 'bg-[#3B82F6]/20 border-[#3B82F6]/30'
+                  : 'bg-blue-100 border-blue-200'
               }`}
             >
-              [ Advertentie ]
-            </p>
+              <span className="text-sm">📢</span>
+              <span
+                className={`text-xs font-extrabold uppercase tracking-wider ${
+                  isDarkMode ? 'text-blue-300' : 'text-blue-700'
+                }`}
+              >
+                Advertentie (Pop-up Test)
+              </span>
+            </div>
+            {/* Banner içerik */}
+            <div className="px-4 py-3">
+              <p
+                className={`text-xs leading-relaxed ${
+                  isDarkMode ? 'text-slate-300' : 'text-slate-600'
+                }`}
+              >
+                Geniet van een snelle en reclamevrije ervaring op al uw apparaten.
+              </p>
+            </div>
           </div>
 
-          {/* Alt Metin — Pro upgrade daveti */}
-          <p
-            className={`text-xs text-center leading-relaxed ${
-              isDarkMode ? 'text-slate-400' : 'text-slate-500'
-            }`}
+          {/* Hoofd-CTA knop */}
+          <a
+            href={stripePaymentLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Upgrade naar Pro voor €14.99 eenmalig"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-sm transition-all shadow-sm"
           >
-            Wilt u geen advertenties meer zien?{' '}
-            <a
-              href={stripePaymentLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`font-semibold underline underline-offset-2 transition-colors ${
-                isDarkMode
-                  ? 'text-blue-400 hover:text-blue-300'
-                  : 'text-blue-600 hover:text-blue-800'
-              }`}
-            >
-              Upgrade naar Pro voor €15.99
-            </a>
-          </p>
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span>Upgrade naar Pro (€14.99)</span>
+          </a>
         </div>
 
-        {/* ── Butonlar ── */}
+        {/* ── Knoppen ── */}
         <div
           className={`px-5 pb-5 pt-1 flex flex-col gap-2.5 border-t ${
             isDarkMode ? 'border-white/8' : 'border-slate-100'
           }`}
         >
-          {/* Herstel Aankoop butonu */}
+          {/* Herstel Aankoop knop */}
           <button
             onClick={handleHerstelAankoop}
             disabled={isRestoring}
@@ -183,7 +207,7 @@ export function InterstitialAdModal({
             )}
           </button>
 
-          {/* Sluiten (X) butonu */}
+          {/* Alt Sluiten knop */}
           <button
             onClick={onClose}
             className={`w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-xs font-semibold transition-all active:scale-95 ${

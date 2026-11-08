@@ -8,7 +8,7 @@ import { InterstitialAdModal } from '../components/InterstitialAdModal';
 import { Search, Sun, Moon, Volume2, X, Sparkles } from 'lucide-react';
 import { isLocalPremium } from '../lib/purchases';
 
-/** Her kaç aramada bir interstitial reklam gösterilsin */
+/** Elke hoeveel zoekopdrachten een interstitial-advertentie tonen */
 const INTERSTITIAL_EVERY_N_SEARCHES = 3;
 
 // Stripe Payment Link — vervang door uw eigen Stripe Payment Link URL
@@ -31,8 +31,8 @@ export function HomePage() {
   const [legalModal, setLegalModal] = useState<LegalModalType>(null);
   const [isPremium, setIsPremium] = useState<boolean>(false);
 
-  // ── Interstitial reklam sayacı ──
-  // useRef: sayacı her render'da sıfırlamadan korur
+  // ── Teller voor interstitial-advertenties ──
+  // useRef: behoudt teller tussen renders
   const searchCountRef = useRef<number>(0);
   const [showInterstitial, setShowInterstitial] = useState<boolean>(false);
 
@@ -72,11 +72,11 @@ export function HomePage() {
     setActiveVerbForChecker(target);
     setSearchInputValue(target);
 
-    // ── Interstitial sayaç mantığı ──
-    // adFree (isPremium) ise hiç sayma
+    // ── Teller logica voor interstitial ──
+    // Niet tellen wanneer adFree (isPremium)
     if (!isPremium) {
       searchCountRef.current += 1;
-      if (searchCountRef.current % INTERSTITIAL_EVERY_N_SEARCHES === 0) {
+      if (searchCountRef.current > 0 && searchCountRef.current % INTERSTITIAL_EVERY_N_SEARCHES === 0) {
         setShowInterstitial(true);
       }
     }
@@ -264,13 +264,16 @@ export function HomePage() {
           />
         </section>
 
-        {/* ── Section 3: Reclame Banner (TEST: !isPremium kontrolü geçici devre dışı) ── */}
+        {/* ── Sectie 3: Advertentiebanner (verborgen wanneer isPremium) ── */}
+        {!isPremium && (
         <section aria-label="Pro upgrade aanbieding">
           <AdBannerComponent
             isDarkMode={isDarkMode}
             stripePaymentLink={STRIPE_PAYMENT_LINK}
+            adFree={isPremium}
           />
         </section>
+        )}
 
         {/* ── Section 4: "Verwijder advertenties" knop (mobiel, onder kaart) ── */}
         {!isPremium && (
@@ -349,12 +352,13 @@ export function HomePage() {
         isDarkMode={isDarkMode}
       />
 
-      {/* ── Interstitial Reklam Modalı (her 3 aramada bir, adFree değilse) ── */}
+      {/* ── Interstitial Advertentiepop-up (elke 3 zoekopdrachten, alleen bij niet-premium) ── */}
       <InterstitialAdModal
         isOpen={showInterstitial}
         onClose={() => setShowInterstitial(false)}
         isDarkMode={isDarkMode}
         stripePaymentLink={STRIPE_PAYMENT_LINK}
+        adFree={isPremium}
       />
     </div>
   );
