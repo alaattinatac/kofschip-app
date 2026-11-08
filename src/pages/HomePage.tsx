@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { VerbChecker } from '../components/VerbChecker';
 import { KofschipLogo } from '../components/KofschipLogo';
 import { AdBannerComponent } from '../components/AdBannerComponent';
 import { CookieConsentBanner } from '../components/CookieConsentBanner';
 import { LegalModal, type LegalModalType } from '../components/LegalModal';
+import { InterstitialAdModal } from '../components/InterstitialAdModal';
 import { Search, Sun, Moon, Volume2, X, Sparkles } from 'lucide-react';
 import { isLocalPremium } from '../lib/purchases';
+
+/** Her kaç aramada bir interstitial reklam gösterilsin */
+const INTERSTITIAL_EVERY_N_SEARCHES = 3;
 
 // Stripe Payment Link — vervang door uw eigen Stripe Payment Link URL
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/kofschip_lifetime_1499';
@@ -26,6 +30,11 @@ export function HomePage() {
   const [searchInputValue, setSearchInputValue] = useState<string>('leven');
   const [legalModal, setLegalModal] = useState<LegalModalType>(null);
   const [isPremium, setIsPremium] = useState<boolean>(false);
+
+  // ── Interstitial reklam sayacı ──
+  // useRef: sayacı her render'da sıfırlamadan korur
+  const searchCountRef = useRef<number>(0);
+  const [showInterstitial, setShowInterstitial] = useState<boolean>(false);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -62,6 +71,15 @@ export function HomePage() {
     if (!target) return;
     setActiveVerbForChecker(target);
     setSearchInputValue(target);
+
+    // ── Interstitial sayaç mantığı ──
+    // adFree (isPremium) ise hiç sayma
+    if (!isPremium) {
+      searchCountRef.current += 1;
+      if (searchCountRef.current % INTERSTITIAL_EVERY_N_SEARCHES === 0) {
+        setShowInterstitial(true);
+      }
+    }
   };
 
   const handlePronounce = (textToSpeak?: string) => {
@@ -329,6 +347,14 @@ export function HomePage() {
         type={legalModal}
         onClose={() => setLegalModal(null)}
         isDarkMode={isDarkMode}
+      />
+
+      {/* ── Interstitial Reklam Modalı (her 3 aramada bir, adFree değilse) ── */}
+      <InterstitialAdModal
+        isOpen={showInterstitial}
+        onClose={() => setShowInterstitial(false)}
+        isDarkMode={isDarkMode}
+        stripePaymentLink={STRIPE_PAYMENT_LINK}
       />
     </div>
   );
