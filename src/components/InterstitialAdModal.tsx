@@ -1,10 +1,10 @@
 /**
- * InterstitialAdModal — Geçiş Reklam Modalı
+ * InterstitialAdModal — Tussenliggende Advertentiepop-up
  *
- * Her 3 fiil aramasında bir kez tam ekran olarak gösterilir.
- * Kullanıcı adFree/Pro ise hiçbir zaman açılmaz.
+ * Wordt elke 3 werkwoordzoekopdrachten één keer schermvullend getoond.
+ * Wordt nooit geopend wanneer de gebruiker adFree/Pro is.
  *
- * Metinler %100 Hollandaca.
+ * Alle teksten zijn 100% Nederlandstalig.
  */
 
 import { X, Sparkles, RotateCw } from 'lucide-react';
@@ -12,14 +12,16 @@ import { useState } from 'react';
 import { restorePurchases } from '../lib/purchases';
 
 export interface InterstitialAdModalProps {
-  /** Modalın açık/kapalı durumu */
+  /** Open/gesloten toestand van het modaal */
   isOpen: boolean;
-  /** Modal kapatma callback'i */
+  /** Callback om het modaal te sluiten */
   onClose: () => void;
-  /** Dark/Light mod */
+  /** Dark/Light modus */
   isDarkMode?: boolean;
-  /** Pro yükseltme sayfasına yönlendirme URL'si */
+  /** URL voor Pro-upgrade via Stripe */
   stripePaymentLink?: string;
+  /** Wanneer true: modaal wordt nooit getoond */
+  adFree?: boolean;
 }
 
 export function InterstitialAdModal({
@@ -27,10 +29,12 @@ export function InterstitialAdModal({
   onClose,
   isDarkMode = true,
   stripePaymentLink,
+  adFree = false,
 }: InterstitialAdModalProps) {
   const [isRestoring, setIsRestoring] = useState<boolean>(false);
 
-  if (!isOpen) return null;
+  // Nooit tonen wanneer gebruiker adFree/Pro is, of modaal gesloten is
+  if (!isOpen || adFree) return null;
 
   const handleHerstelAankoop = async () => {
     setIsRestoring(true);
@@ -56,7 +60,7 @@ export function InterstitialAdModal({
       aria-labelledby="interstitial-ad-title"
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-fadeIn"
       onClick={(e) => {
-        // Arka plana tıklamayı engelle — reklam modalı yalnızca butonlarla kapanır
+        // Klikken op achtergrond geblokkeerd — advertentiepop-up sluit alleen via knoppen
         e.stopPropagation();
       }}
     >
