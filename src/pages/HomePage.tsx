@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
 import { VerbChecker } from '../components/VerbChecker';
 import { KofschipLogo } from '../components/KofschipLogo';
-import { Search, Sun, Moon, Volume2, X } from 'lucide-react';
+import { AdBannerComponent } from '../components/AdBannerComponent';
+import { CookieConsentBanner } from '../components/CookieConsentBanner';
+import { LegalModal, type LegalModalType } from '../components/LegalModal';
+import { Search, Sun, Moon, Volume2, X, Sparkles } from 'lucide-react';
+import { isLocalPremium } from '../lib/purchases';
+
+// Stripe Payment Link — vervang door uw eigen Stripe Payment Link URL
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/kofschip_lifetime_1499';
 
 const COMMON_EXAMPLE_VERBS = [
   { verb: 'werken',     tag: "-te" },
@@ -17,6 +24,8 @@ const COMMON_EXAMPLE_VERBS = [
 export function HomePage() {
   const [activeVerbForChecker, setActiveVerbForChecker] = useState<string>('leven');
   const [searchInputValue, setSearchInputValue] = useState<string>('leven');
+  const [legalModal, setLegalModal] = useState<LegalModalType>(null);
+  const [isPremium, setIsPremium] = useState<boolean>(false);
 
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -26,6 +35,17 @@ export function HomePage() {
     }
     return true;
   });
+
+  // Premium status bijhouden
+  useEffect(() => {
+    setIsPremium(isLocalPremium());
+    const handlePremiumChange = (e: Event) => {
+      const custom = e as CustomEvent<{ isPremium: boolean }>;
+      if (custom.detail?.isPremium) setIsPremium(true);
+    };
+    window.addEventListener('kofschip_premium_changed', handlePremiumChange);
+    return () => window.removeEventListener('kofschip_premium_changed', handlePremiumChange);
+  }, []);
 
   useEffect(() => {
     if (isDarkMode) {
@@ -56,20 +76,28 @@ export function HomePage() {
     }
   };
 
-  return (
-    <div className={`relative min-h-screen flex flex-col overflow-x-hidden selection:bg-blue-500/20 selection:text-blue-700 transition-colors duration-200 ${
-      isDarkMode
-        ? 'bg-[#0B0F19] text-[#E2E8F0]'
-        : 'bg-[#F8FAFC] text-[#0F172A]'
-    }`}>
+  const headerBg = isDarkMode
+    ? 'bg-[#0B0F19]/80 border-white/10'
+    : 'bg-white/90 border-slate-200 shadow-xs';
 
-      {/* Header: Logo + Volume + Theme Toggle */}
-      <header className={`sticky top-0 z-40 backdrop-blur-2xl border-b safe-area-top transition-colors duration-200 ${
+  const iconBtn = isDarkMode
+    ? 'text-[#E2E8F0] hover:bg-white/10 border-white/10 bg-[#151D2A]/80'
+    : 'text-[#0F172A] hover:bg-slate-100 border-slate-200 bg-white shadow-xs';
+
+  return (
+    <div
+      className={`relative min-h-screen flex flex-col overflow-x-hidden selection:bg-blue-500/20 selection:text-blue-700 transition-colors duration-200 ${
         isDarkMode
-          ? 'bg-[#0B0F19]/80 border-white/10'
-          : 'bg-white/90 border-slate-200 shadow-xs'
-      }`}>
-        <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
+          ? 'bg-[#0B0F19] text-[#E2E8F0]'
+          : 'bg-[#F8FAFC] text-[#0F172A]'
+      }`}
+    >
+      {/* ── Header ── */}
+      <header
+        className={`sticky top-0 z-40 backdrop-blur-2xl border-b safe-area-top transition-colors duration-200 ${headerBg}`}
+      >
+        <div className="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between gap-2">
+          {/* Logo */}
           <button
             onClick={() => {
               setSearchInputValue('leven');
@@ -83,16 +111,30 @@ export function HomePage() {
           </button>
 
           <div className="flex items-center gap-2">
+            {/* "Verwijder advertenties" knop — alleen zichtbaar als niet-premium */}
+            {!isPremium && (
+              <a
+                href={STRIPE_PAYMENT_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Verwijder advertenties voor €14,99 eenmalig"
+                className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all active:scale-95 ${
+                  isDarkMode
+                    ? 'bg-gradient-to-r from-indigo-950/60 to-blue-950/60 border-blue-500/25 text-blue-300 hover:border-blue-400/40'
+                    : 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 hover:border-blue-400 shadow-xs'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span>Verwijder advertenties (€14,99 eenmalig)</span>
+              </a>
+            )}
+
             {/* Volume Toggle */}
             <button
               onClick={() => handlePronounce(activeVerbForChecker)}
               title={`Beluister '${activeVerbForChecker}'`}
               aria-label={`Beluister '${activeVerbForChecker}'`}
-              className={`p-2 rounded-xl border transition-all active:scale-95 ${
-                isDarkMode
-                  ? 'text-[#E2E8F0] hover:bg-white/10 border-white/10 bg-[#151D2A]/80'
-                  : 'text-[#0F172A] hover:bg-slate-100 border-slate-200 bg-white shadow-xs'
-              }`}
+              className={`p-2 rounded-xl border transition-all active:scale-95 ${iconBtn}`}
             >
               <Volume2 className="w-4 h-4" />
             </button>
@@ -102,11 +144,7 @@ export function HomePage() {
               onClick={() => setIsDarkMode((prev) => !prev)}
               title="Wissel thema"
               aria-label="Wissel thema"
-              className={`p-2 rounded-xl border transition-all active:scale-95 ${
-                isDarkMode
-                  ? 'text-[#E2E8F0] hover:bg-white/10 border-white/10 bg-[#151D2A]/80'
-                  : 'text-[#0F172A] hover:bg-slate-100 border-slate-200 bg-white shadow-xs'
-              }`}
+              className={`p-2 rounded-xl border transition-all active:scale-95 ${iconBtn}`}
             >
               {isDarkMode ? (
                 <Sun className="w-4 h-4 text-[#F59E0B]" />
@@ -118,7 +156,7 @@ export function HomePage() {
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* ── Main Content ── */}
       <main className="relative z-10 flex-1 max-w-2xl mx-auto w-full px-4 pt-5 pb-12 space-y-6">
 
         {/* ── Section 1: Hero Search Bar ── */}
@@ -136,7 +174,7 @@ export function HomePage() {
               type="text"
               value={searchInputValue}
               onChange={(e) => setSearchInputValue(e.target.value)}
-              placeholder="Typ een werkwoord, bijv. lopen, nemen..."
+              placeholder="Typ een werkwoord, bijv. lopen, liep, nemen..."
               className={`flex-1 bg-transparent border-0 text-sm font-medium focus:outline-none ${
                 isDarkMode
                   ? 'text-[#E2E8F0] placeholder:text-slate-500'
@@ -198,7 +236,7 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* ── Section 2: Fiil Çekim Kartı ── */}
+        {/* ── Section 2: Werkwoord Vervoegingen Kaart ── */}
         <section aria-label="Werkwoord Vervoegingen">
           <VerbChecker
             key={activeVerbForChecker}
@@ -207,7 +245,93 @@ export function HomePage() {
             isDarkMode={isDarkMode}
           />
         </section>
+
+        {/* ── Section 3: Reclame Banner (onder kaart, alleen voor niet-premium) ── */}
+        {!isPremium && (
+          <section aria-label="Pro upgrade aanbieding">
+            <AdBannerComponent
+              isDarkMode={isDarkMode}
+              stripePaymentLink={STRIPE_PAYMENT_LINK}
+            />
+          </section>
+        )}
+
+        {/* ── Section 4: "Verwijder advertenties" knop (mobiel, onder kaart) ── */}
+        {!isPremium && (
+          <section className="sm:hidden" aria-label="Verwijder advertenties">
+            <a
+              href={STRIPE_PAYMENT_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`w-full flex items-center justify-center gap-2 py-3 px-5 rounded-2xl border font-bold text-sm transition-all active:scale-95 ${
+                isDarkMode
+                  ? 'bg-gradient-to-r from-indigo-950/60 to-blue-950/60 border-blue-500/25 text-blue-300 hover:border-blue-400/40'
+                  : 'bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 text-blue-700 shadow-xs'
+              }`}
+            >
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              Verwijder advertenties (€14,99 eenmalig)
+            </a>
+          </section>
+        )}
       </main>
+
+      {/* ── Footer ── */}
+      <footer
+        className={`relative z-10 border-t py-6 safe-area-bottom transition-colors ${
+          isDarkMode ? 'border-white/10' : 'border-slate-200'
+        }`}
+      >
+        <div className="max-w-2xl mx-auto px-4 flex flex-col items-center gap-3">
+          {/* Footer links */}
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <button
+              onClick={() => setLegalModal('privacy')}
+              className={`text-xs font-medium underline-offset-2 hover:underline transition-colors ${
+                isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-500 hover:text-slate-700'
+              }`}
+            >
+              Privacybeleid
+            </button>
+            <span className={`text-xs ${isDarkMode ? 'text-slate-700' : 'text-slate-300'}`}>·</span>
+            <button
+              onClick={() => setLegalModal('voorwaarden')}
+              className={`text-xs font-medium underline-offset-2 hover:underline transition-colors ${
+                isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-500 hover:text-slate-700'
+              }`}
+            >
+              Voorwaarden
+            </button>
+            <span className={`text-xs ${isDarkMode ? 'text-slate-700' : 'text-slate-300'}`}>·</span>
+            <button
+              onClick={() => setLegalModal('herstel')}
+              className={`text-xs font-medium underline-offset-2 hover:underline transition-colors ${
+                isDarkMode ? 'text-slate-500 hover:text-slate-300' : 'text-slate-500 hover:text-slate-700'
+              }`}
+            >
+              Herstel Aankoop
+            </button>
+          </div>
+
+          {/* Copyright */}
+          <p className={`text-[11px] text-center ${isDarkMode ? 'text-slate-600' : 'text-slate-400'}`}>
+            &copy; {new Date().getFullYear()} Kofschip · Meester in Nederlandse Werkwoorden
+          </p>
+        </div>
+      </footer>
+
+      {/* ── Cookie Consent Banner (AB/GDPR) ── */}
+      <CookieConsentBanner
+        isDarkMode={isDarkMode}
+        onOpenPrivacy={() => setLegalModal('privacy')}
+      />
+
+      {/* ── Legal Modal (Privacy / Voorwaarden / Herstel) ── */}
+      <LegalModal
+        type={legalModal}
+        onClose={() => setLegalModal(null)}
+        isDarkMode={isDarkMode}
+      />
     </div>
   );
 }
