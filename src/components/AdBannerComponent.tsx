@@ -15,7 +15,7 @@ export interface AdBannerComponentProps {
   adFree?: boolean;
 }
 
-const STRIPE_DEFAULT_URL = 'https://buy.stripe.com/kofschip_lifetime_1599';
+const STRIPE_DEFAULT_URL = 'https://buy.stripe.com/kofschip_lifetime_1499';
 
 export function AdBannerComponent({
   isDarkMode = true,
@@ -59,7 +59,7 @@ export function AdBannerComponent({
             isDarkMode ? 'text-blue-400' : 'text-blue-600'
           }`}
         >
-          📢 Advertentieruimte · Upgrade naar Pro voor €15.99 om reclamevrij te gebruiken
+          📢 Advertentieruimte · Upgrade naar Pro voor €14.99 om reclamevrij te gebruiken
         </p>
 
         {/* CTA */}
@@ -67,7 +67,7 @@ export function AdBannerComponent({
           href={stripePaymentLink}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Upgrade naar Pro voor €15.99 om reclamevrij te gebruiken"
+          aria-label="Upgrade naar Pro voor €14.99 om reclamevrij te gebruiken"
           className="shrink-0 inline-flex items-center gap-1.5 bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-xs transition-all"
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-300" />

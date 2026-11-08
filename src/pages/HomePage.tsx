@@ -10,7 +10,7 @@ import { Search, Sun, Moon, Volume2, X, Sparkles } from 'lucide-react';
 const INTERSTITIAL_EVERY_N_SEARCHES = 3;
 
 // Stripe Payment Link — vervang door uw eigen Stripe Payment Link URL
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/kofschip_lifetime_1599';
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/kofschip_lifetime_1499';
 
 const COMMON_EXAMPLE_VERBS = [
   { verb: 'werken',     tag: "-te" },
@@ -133,7 +133,7 @@ export function HomePage() {
                 href={STRIPE_PAYMENT_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Verwijder advertenties voor €15,99 eenmalig"
+                aria-label="Verwijder advertenties voor €14.99 eenmalig"
                 className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all active:scale-95 ${
                   isDarkMode
                     ? 'bg-gradient-to-r from-indigo-950/60 to-blue-950/60 border-blue-500/25 text-blue-300 hover:border-blue-400/40'
@@ -141,7 +141,7 @@ export function HomePage() {
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>Verwijder advertenties (€15,99 eenmalig)</span>
+                <span>Verwijder advertenties (€14.99 eenmalig)</span>
               </a>
             )}
 
@@ -271,6 +271,7 @@ export function HomePage() {
               href={STRIPE_PAYMENT_LINK}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Verwijder advertenties voor €14.99 eenmalig"
               className={`w-full flex items-center justify-center gap-2 py-3 px-5 rounded-2xl border font-bold text-sm transition-all active:scale-95 ${
                 isDarkMode
                   ? 'bg-gradient-to-r from-indigo-950/60 to-blue-950/60 border-blue-500/25 text-blue-300 hover:border-blue-400/40'
@@ -278,7 +279,7 @@ export function HomePage() {
               }`}
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              Verwijder advertenties (€15,99 eenmalig)
+              Verwijder advertenties (€14.99 eenmalig)
             </a>
           </section>
         )}

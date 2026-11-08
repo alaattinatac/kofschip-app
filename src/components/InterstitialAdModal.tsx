@@ -24,7 +24,7 @@ export interface InterstitialAdModalProps {
   adFree?: boolean;
 }
 
-const STRIPE_DEFAULT_URL = 'https://buy.stripe.com/kofschip_lifetime_1599';
+const STRIPE_DEFAULT_URL = 'https://buy.stripe.com/kofschip_lifetime_1499';
 
 export function InterstitialAdModal({
   isOpen,
@@ -174,11 +174,11 @@ export function InterstitialAdModal({
             href={stripePaymentLink}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Upgrade naar Pro voor €15.99 om reclamevrij te gebruiken"
+            aria-label="Upgrade naar Pro voor €14.99 om reclamevrij te gebruiken"
             className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-sm transition-all shadow-sm"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>Upgrade naar Pro (€15.99)</span>
+            <span>Upgrade naar Pro (€14.99)</span>
           </a>
         </div>
 
