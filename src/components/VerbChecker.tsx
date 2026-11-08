@@ -5,11 +5,16 @@ import {
   type FullConjugation,
 } from '@execution/verb_engine';
 import { Search, Volume2 } from 'lucide-react';
+import { AdBannerComponent } from './AdBannerComponent';
+import { InterstitialAdModal } from './InterstitialAdModal';
 
 export interface VerbCheckerProps {
   initialVerb?: string;
   hideSearch?: boolean;
   isDarkMode?: boolean;
+  /** TEST MODU GARANTİSİ: adFree varsayılan olarak false */
+  adFree?: boolean;
+  stripePaymentLink?: string;
 }
 
 const COMMON_EXAMPLE_VERBS = [
@@ -27,9 +32,15 @@ export function VerbChecker({
   initialVerb = 'leven',
   hideSearch = false,
   isDarkMode = true,
+  adFree = false,
+  stripePaymentLink,
 }: VerbCheckerProps) {
   const [searchTerm, setSearchTerm] = useState<string>(initialVerb);
   const [activeVerb, setActiveVerb] = useState<string>(initialVerb);
+
+  // ── Reklam / Sayaç State ──
+  const [searchCount, setSearchCount] = useState<number>(0);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const normalizedVerb = activeVerb.trim().toLowerCase();
   
@@ -48,6 +59,15 @@ export function VerbChecker({
     if (!target) return;
     setSearchTerm(target);
     setActiveVerb(target);
+
+    // ── Reklam Sayaç Mantığı ──
+    // Arama butonuna her basıldığında searchCount sayacını 1 artır.
+    const newCount = searchCount + 1;
+    setSearchCount(newCount);
+    // Her 3. aramada (searchCount % 3 === 0) tam ekran InterstitialAdModal bileşenini görünür yap (showModal = true).
+    if (!adFree && newCount % 3 === 0) {
+      setShowModal(true);
+    }
   };
 
   const handlePronounce = (text: string) => {
@@ -133,7 +153,7 @@ export function VerbChecker({
                   }`}
                 >
                   {item.verb}
-                  <span className="ml-1 opacity-60 text-[10px]">({item.tag})</span>
+                  <span className="ml-1 opacity-60 text-[10px] ({item.tag})">({item.tag})</span>
                 </button>
               );
             })}
@@ -369,6 +389,22 @@ export function VerbChecker({
           </h3>
         </div>
       )}
+
+      {/* ── Alt Banner (AdBannerComponent): Fiil kartının altında her koşulda kesikli çerçeveli test kutusu ── */}
+      <AdBannerComponent
+        isDarkMode={isDarkMode}
+        stripePaymentLink={stripePaymentLink}
+        adFree={adFree}
+      />
+
+      {/* ── Pop-up Geçiş Reklamı (InterstitialAdModal): Her 3. aramada tam ekran görünür ── */}
+      <InterstitialAdModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        isDarkMode={isDarkMode}
+        stripePaymentLink={stripePaymentLink}
+        adFree={adFree}
+      />
     </div>
   );
 }

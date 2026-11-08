@@ -2,7 +2,7 @@
  * InterstitialAdModal — Tussenliggende Advertentiepop-up
  *
  * Wordt elke 3 werkwoordzoekopdrachten één keer schermvullend getoond.
- * Wordt nooit geopend wanneer de gebruiker adFree/Pro is.
+ * TEST MODU GARANTİSİ: adFree varsayılan olarak false (localStorage'dan bağımsız ekranları görünür kıl).
  *
  * Alle teksten zijn 100% Nederlandstalig.
  */
@@ -20,20 +20,22 @@ export interface InterstitialAdModalProps {
   isDarkMode?: boolean;
   /** URL voor Pro-upgrade via Stripe */
   stripePaymentLink?: string;
-  /** Wanneer true: modaal wordt nooit getoond */
+  /** Wanneer true: modaal wordt nooit getoond (TEST MODU: standaard false) */
   adFree?: boolean;
 }
+
+const STRIPE_DEFAULT_URL = 'https://buy.stripe.com/kofschip_lifetime_1599';
 
 export function InterstitialAdModal({
   isOpen,
   onClose,
   isDarkMode = true,
-  stripePaymentLink,
+  stripePaymentLink = STRIPE_DEFAULT_URL,
   adFree = false,
 }: InterstitialAdModalProps) {
   const [isRestoring, setIsRestoring] = useState<boolean>(false);
 
-  // Nooit tonen wanneer gebruiker adFree/Pro is, of modaal gesloten is
+  // Nooit tonen wanneer adFree actief is, of modaal gesloten is
   if (!isOpen || adFree) return null;
 
   const handleHerstelAankoop = async () => {
@@ -73,7 +75,7 @@ export function InterstitialAdModal({
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ── Sluiten (X) knop — sağ üst köşe ── */}
+        {/* ── Sluiten (X) knop — rechtsboven ── */}
         <button
           onClick={onClose}
           className={`absolute top-3 right-3 z-10 p-1.5 rounded-lg border transition-all active:scale-95 ${
@@ -129,7 +131,7 @@ export function InterstitialAdModal({
 
         {/* ── Inhoudsgebied ── */}
         <div className="px-5 py-5 space-y-4">
-          {/* ── Belirgin test banner kutusu (alt banner stijl) ── */}
+          {/* ── Belirgin test banner kutusu ── */}
           <div
             className={`w-full rounded-2xl border-2 overflow-hidden ${
               isDarkMode
@@ -172,11 +174,11 @@ export function InterstitialAdModal({
             href={stripePaymentLink}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Upgrade naar Pro voor €14.99 eenmalig"
+            aria-label="Upgrade naar Pro voor €15.99 om reclamevrij te gebruiken"
             className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-sm transition-all shadow-sm"
           >
             <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>Upgrade naar Pro (€14.99)</span>
+            <span>Upgrade naar Pro (€15.99)</span>
           </a>
         </div>
 
@@ -207,7 +209,7 @@ export function InterstitialAdModal({
             )}
           </button>
 
-          {/* Alt Sluiten knop */}
+          {/* Sluiten (X) knop */}
           <button
             onClick={onClose}
             className={`w-full flex items-center justify-center gap-1.5 py-3 rounded-xl text-xs font-semibold transition-all active:scale-95 ${

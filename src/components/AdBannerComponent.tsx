@@ -1,7 +1,7 @@
 /**
  * AdBannerComponent — Freemium advertentieband (GDPR/AVG-conform)
  *
- * - Verborgen wanneer localStorage `adFree: true` is.
+ * - TEST MODU GARANTİSİ: adFree varsayılan olarak false (localStorage'dan bağımsız).
  * - Verwijst naar Stripe Payment Link.
  * - Verzendt geen gebruikersgegevens (100% lokale controle).
  */
@@ -15,20 +15,22 @@ export interface AdBannerComponentProps {
   adFree?: boolean;
 }
 
-const STRIPE_DEFAULT_URL = 'https://buy.stripe.com/kofschip_lifetime_1499';
+const STRIPE_DEFAULT_URL = 'https://buy.stripe.com/kofschip_lifetime_1599';
 
 export function AdBannerComponent({
   isDarkMode = true,
   stripePaymentLink = STRIPE_DEFAULT_URL,
-  adFree: adFreeProp,
+  adFree: adFreeProp = false,
 }: AdBannerComponentProps) {
+  // TEST MODU GARANTİSİ: adFree durumunu test aşamasında varsayılan olarak false yap
+  // (localStorage'dan bağımsız ekranları görünür kıl).
   const [isAdFree, setIsAdFree] = useState<boolean>(false);
   const [dismissed, setDismissed] = useState<boolean>(false);
 
   useEffect(() => {
-    // Lokaal controleren — geen externe API-aanroep (AVG-eis)
-    const adFree = localStorage.getItem('adFree') === 'true';
-    setIsAdFree(adFree);
+    // TEST MODU: localStorage kontrolü yerine test aşamasında varsayılan false
+    // Ekranları görünür kılmak için isAdFree false tutulur.
+    setIsAdFree(false);
 
     const handlePremiumChange = (e: Event) => {
       const custom = e as CustomEvent<{ isPremium: boolean }>;
@@ -38,7 +40,7 @@ export function AdBannerComponent({
     return () => window.removeEventListener('kofschip_premium_changed', handlePremiumChange);
   }, []);
 
-  // Volledig verbergen wanneer adFree actief is (via prop of localStorage)
+  // Volledig verbergen wanneer adFree actief is (via prop of state) of weggedrukt
   if (adFreeProp || isAdFree || dismissed) return null;
 
   return (
@@ -57,7 +59,7 @@ export function AdBannerComponent({
             isDarkMode ? 'text-blue-400' : 'text-blue-600'
           }`}
         >
-          📢 Advertentieruimte · Upgrade naar Pro voor €14.99 om reclamevrij te gebruiken
+          📢 Advertentieruimte · Upgrade naar Pro voor €15.99 om reclamevrij te gebruiken
         </p>
 
         {/* CTA */}
@@ -65,7 +67,7 @@ export function AdBannerComponent({
           href={stripePaymentLink}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Upgrade naar Pro voor €14.99 eenmalig"
+          aria-label="Upgrade naar Pro voor €15.99 om reclamevrij te gebruiken"
           className="shrink-0 inline-flex items-center gap-1.5 bg-[#3B82F6] hover:bg-blue-600 active:scale-95 text-white font-bold text-xs px-3.5 py-1.5 rounded-xl shadow-xs transition-all"
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-300" />

@@ -1,18 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { VerbChecker } from '../components/VerbChecker';
 import { KofschipLogo } from '../components/KofschipLogo';
-import { AdBannerComponent } from '../components/AdBannerComponent';
 import { CookieConsentBanner } from '../components/CookieConsentBanner';
 import { LegalModal, type LegalModalType } from '../components/LegalModal';
 import { InterstitialAdModal } from '../components/InterstitialAdModal';
 import { Search, Sun, Moon, Volume2, X, Sparkles } from 'lucide-react';
-import { isLocalPremium } from '../lib/purchases';
 
 /** Elke hoeveel zoekopdrachten een interstitial-advertentie tonen */
 const INTERSTITIAL_EVERY_N_SEARCHES = 3;
 
 // Stripe Payment Link — vervang door uw eigen Stripe Payment Link URL
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/kofschip_lifetime_1499';
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/kofschip_lifetime_1599';
 
 const COMMON_EXAMPLE_VERBS = [
   { verb: 'werken',     tag: "-te" },
@@ -45,9 +43,9 @@ export function HomePage() {
     return true;
   });
 
-  // Premium status bijhouden
+  // Premium status bijhouden (TEST MODU: standaard false, localStorage'dan bağımsız)
   useEffect(() => {
-    setIsPremium(isLocalPremium());
+    setIsPremium(false);
     const handlePremiumChange = (e: Event) => {
       const custom = e as CustomEvent<{ isPremium: boolean }>;
       if (custom.detail?.isPremium) setIsPremium(true);
@@ -135,7 +133,7 @@ export function HomePage() {
                 href={STRIPE_PAYMENT_LINK}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Verwijder advertenties voor €14,99 eenmalig"
+                aria-label="Verwijder advertenties voor €15,99 eenmalig"
                 className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all active:scale-95 ${
                   isDarkMode
                     ? 'bg-gradient-to-r from-indigo-950/60 to-blue-950/60 border-blue-500/25 text-blue-300 hover:border-blue-400/40'
@@ -143,7 +141,7 @@ export function HomePage() {
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>Verwijder advertenties (€14,99 eenmalig)</span>
+                <span>Verwijder advertenties (€15,99 eenmalig)</span>
               </a>
             )}
 
@@ -254,28 +252,19 @@ export function HomePage() {
           </div>
         </section>
 
-        {/* ── Section 2: Werkwoord Vervoegingen Kaart ── */}
+        {/* ── Section 2: Werkwoord Vervoegingen Kaart (inclusief AdBannerComponent onder de kaart) ── */}
         <section aria-label="Werkwoord Vervoegingen">
           <VerbChecker
             key={activeVerbForChecker}
             initialVerb={activeVerbForChecker}
             hideSearch={true}
             isDarkMode={isDarkMode}
-          />
-        </section>
-
-        {/* ── Sectie 3: Advertentiebanner (verborgen wanneer isPremium) ── */}
-        {!isPremium && (
-        <section aria-label="Pro upgrade aanbieding">
-          <AdBannerComponent
-            isDarkMode={isDarkMode}
-            stripePaymentLink={STRIPE_PAYMENT_LINK}
             adFree={isPremium}
+            stripePaymentLink={STRIPE_PAYMENT_LINK}
           />
         </section>
-        )}
 
-        {/* ── Section 4: "Verwijder advertenties" knop (mobiel, onder kaart) ── */}
+        {/* ── Section 3: "Verwijder advertenties" knop (mobiel, onder kaart) ── */}
         {!isPremium && (
           <section className="sm:hidden" aria-label="Verwijder advertenties">
             <a
@@ -289,7 +278,7 @@ export function HomePage() {
               }`}
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              Verwijder advertenties (€14,99 eenmalig)
+              Verwijder advertenties (€15,99 eenmalig)
             </a>
           </section>
         )}
